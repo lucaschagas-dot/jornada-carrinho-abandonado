@@ -1,0 +1,378 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-5x);
+  padding-bottom: var(--space-10x);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+  margin-top: var(--space-4x);
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-md);
+  color: #586880;
+  margin-top: var(--space-1x);
+}
+
+/* ---------- cards de planos ---------- */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4x);
+  margin-top: var(--space-6x);
+  align-items: stretch;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background: var(--grey-0);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-4x);
+}
+
+.cardHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-half);
+}
+
+.planName {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  color: #192c50;
+}
+
+.regNumber {
+  font-size: var(--font-size-3xs);
+  color: #929eb1;
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-1x);
+  margin-top: var(--space-3x);
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-half);
+}
+
+.priceCurrency {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+}
+
+.priceValue {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+  line-height: var(--line-height-default);
+}
+
+.vigencia {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #929eb1;
+  margin-top: var(--space-1x);
+}
+
+.planSubtitle {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #929eb1;
+  max-width: 240px;
+}
+
+.featureList {
+  list-style: none;
+  margin: var(--space-3x) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2x);
+  color: #68c0e8;
+}
+
+.featureItem svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.featureItem span {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-lg);
+  color: #192c50;
+}
+
+.featureDestaque span {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.verMais {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1x);
+  margin-top: var(--space-3x);
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+  text-decoration: underline;
+  text-align: left;
+}
+
+.verMais svg {
+  color: #192c50;
+  flex-shrink: 0;
+}
+
+.escolherButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  margin-top: var(--space-4x);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ---------- modal "Características Gerais" ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgb(24 25 26 / var(--opacity-high));
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--space-6x) var(--space-2x);
+  overflow-y: auto;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  background: var(--grey-0);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-3);
+  padding: var(--space-4x);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-3x);
+  right: var(--space-3x);
+  display: inline-flex;
+  color: #006fa9;
+}
+
+.modalTitle {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+  padding-right: var(--space-6x);
+}
+
+.modalPlanName {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-md);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+  margin-top: var(--space-2x);
+}
+
+.modalParagraph {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+  margin-top: var(--space-3x);
+  max-width: 800px;
+}
+
+.downloadList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+  margin-top: var(--space-3x);
+}
+
+.downloadItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #192c50;
+  font-size: var(--font-size-2xs);
+  text-align: left;
+}
+
+.downloadItem svg {
+  flex-shrink: 0;
+}
+
+.accordion {
+  margin-top: var(--space-4x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--grey-0);
+}
+
+.accordionItem + .accordionItem {
+  border-top: var(--border-width-xs) solid #dce0e8;
+}
+
+.accordionHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  background: none;
+  border: none;
+  padding: var(--space-2x) var(--space-4x);
+  text-align: left;
+}
+
+.accordionHeader svg {
+  color: var(--cyan-500);
+  flex-shrink: 0;
+}
+
+.accordionHeaderTitle {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+}
+
+.accordionBody {
+  padding: 0 var(--space-4x) var(--space-4x);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3x);
+}
+
+.legalPlanTag {
+  font-size: var(--font-size-2xs);
+  color: #929eb1;
+}
+
+.legalDeclaration {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.legalSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+}
+
+.legalSectionTitle {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #586880;
+  margin: 0;
+}
+
+.legalList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+}
+
+.legalItem {
+  display: flex;
+  gap: var(--space-2x);
+}
+
+.legalNumber {
+  flex-shrink: 0;
+  width: 26px;
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.legalText {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: var(--space-3x) var(--space-1x);
+  }
+
+  .modal {
+    padding: var(--space-3x) var(--space-2x);
+  }
+
+  .modalTitle {
+    font-size: var(--font-size-md);
+    padding-right: var(--space-5x);
+  }
+
+  .accordionHeader {
+    padding: var(--space-2x);
+  }
+
+  .accordionBody {
+    padding: 0 var(--space-2x) var(--space-2x);
+  }
+
+  .legalItem {
+    gap: var(--space-1x);
+  }
+}

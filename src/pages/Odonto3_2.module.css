@@ -1,0 +1,329 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-5x);
+  padding-bottom: var(--space-10x);
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+  margin-top: var(--space-4x);
+}
+
+.subtitle {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+  margin-top: var(--space-1x);
+}
+
+/* ---------- grid de planos ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3x);
+  margin-top: var(--space-5x);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background: var(--surface-01);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-2x) var(--space-4x) var(--space-4x);
+}
+
+.cardHeader {
+  text-align: center;
+}
+
+.planName {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+}
+
+.planReg {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+  margin-top: var(--space-half);
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: var(--space-2x);
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.currency {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+}
+
+.priceValue {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+}
+
+.vigencia {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #929eb1;
+  margin-top: var(--space-1x);
+}
+
+.coparticipacao {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #929eb1;
+  max-width: 240px;
+  margin-top: var(--space-1x);
+}
+
+.features {
+  list-style: none;
+  margin: var(--space-2_5x) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+}
+
+.featureItem,
+.featureHighlight {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1x);
+  color: #68c0e8;
+}
+
+.featureItem span {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+}
+
+.featureHighlight span {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.featureItem svg,
+.featureHighlight svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.moreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  margin-top: var(--space-3x);
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+  text-decoration: underline;
+}
+
+.moreLink svg {
+  color: #192c50;
+  text-decoration: none;
+}
+
+.chooseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76%;
+  margin: var(--space-3x) auto 0;
+  height: 48px;
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .chooseButton {
+    width: 100%;
+  }
+}
+
+/* ---------- dialog "Características Gerais" ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4x);
+  background: rgb(24 25 26 / var(--opacity-high));
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: var(--surface-01);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-3);
+  padding: var(--space-5x) var(--space-6x) var(--space-8x);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-3x);
+  right: var(--space-4x);
+  display: inline-flex;
+  color: #006fa9;
+}
+
+.modalTitle {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+  padding-right: var(--space-6x);
+}
+
+.modalPlanName {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #586880;
+  margin-top: var(--space-2x);
+}
+
+.modalDescription {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+  max-width: 848px;
+  margin-top: var(--space-2x);
+}
+
+.downloadList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+  margin-top: var(--space-3x);
+}
+
+.downloadItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1x);
+  width: fit-content;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-size: var(--font-size-2xs);
+  color: #192c50;
+}
+
+.accordion {
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-sm);
+  margin-top: var(--space-2x);
+  overflow: hidden;
+  background: var(--surface-01);
+}
+
+.accordionHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  padding: var(--space-2x) var(--space-4x);
+  background: none;
+  border: none;
+  text-align: left;
+}
+
+.accordionTitle {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+}
+
+.accordionIcon {
+  flex-shrink: 0;
+  color: var(--cyan-500);
+}
+
+.accordionBody {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--space-4x) var(--space-2x);
+}
+
+.accordionRow {
+  padding-top: var(--space-1_5x);
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.accordionRow strong {
+  font-weight: var(--font-weight-bold);
+}
+
+@media (max-width: 640px) {
+  .modal {
+    padding: var(--space-4x) var(--space-3x) var(--space-5x);
+  }
+
+  .modalTitle {
+    font-size: var(--font-size-lg);
+    padding-right: var(--space-5x);
+  }
+
+  .accordionHeader {
+    padding: var(--space-2x);
+  }
+
+  .accordionBody {
+    padding: 0 var(--space-2x) var(--space-2x);
+  }
+}

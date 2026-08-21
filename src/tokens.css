@@ -1,0 +1,190 @@
+/*
+  Design tokens extraídos do DSU (Design System Unimed) — paleta global +
+  aliases semânticos do tema "light" da marca Unimed.
+  Fonte: dsu-tokens/dictionary (global/colors, global/shape, global/type,
+  brands/unimed/themes/light/*). Valores copiados manualmente (não há
+  dependência do pacote @unimed/dsu-tokens neste repo, que é standalone).
+  Se quiser tipografia pixel-perfect, adicione os arquivos da fonte
+  "Unimed Sans" em src/assets/fonts e declare @font-face acima do bloco :root.
+*/
+
+:root {
+  /* ---------- paleta global ---------- */
+  --grey-0: #FFFFFF;
+  --grey-50: #F8F9FC;
+  --grey-100: #E6EAF2;
+  --grey-200: #D3D7DF;
+  --grey-300: #B7BEC9;
+  --grey-400: #8993A3;
+  --grey-500: #494F59;
+  --grey-600: #363A42;
+  --grey-700: #2E3138;
+  --grey-800: #242629;
+  --grey-900: #18191A;
+
+  --blue-0: #F2F7FF;
+  --blue-50: #D6E6FF;
+  --blue-100: #B4D0FD;
+  --blue-200: #8DB7FC;
+  --blue-300: #5E95ED;
+  --blue-400: #2B75EE;
+  --blue-500: #115CD4;
+  --blue-600: #094BB3;
+  --blue-700: #043C95;
+  --blue-800: #002D74;
+  --blue-900: #001E4C;
+
+  --cyan-0: #EBF9FF;
+  --cyan-50: #D6F4FF;
+  --cyan-100: #B4E5F9;
+  --cyan-200: #88D4F2;
+  --cyan-300: #51C0EC;
+  --cyan-400: #22AEE7;
+  --cyan-500: #009EDB;
+  --cyan-600: #0084B8;
+  --cyan-700: #00648C;
+  --cyan-800: #004A66;
+  --cyan-900: #00384D;
+
+  --green-0: #EFFBF3;
+  --green-50: #E9F5EE;
+  --green-100: #C9E8DC;
+  --green-200: #A7E2CA;
+  --green-300: #79D2AF;
+  --green-400: #3BB081;
+  --green-500: #00995D;
+  --green-600: #00804C;
+  --green-700: #006B40;
+  --green-800: #005231;
+  --green-900: #003D25;
+
+  --red-0: #FCF3F3;
+  --red-50: #F7E3E3;
+  --red-100: #F1CDCD;
+  --red-200: #F0A8A8;
+  --red-300: #E46767;
+  --red-400: #DD4040;
+  --red-500: #C12929;
+  --red-600: #A01C1C;
+  --red-700: #760909;
+  --red-800: #5C0A0A;
+  --red-900: #450808;
+
+  --orange-0: #FFF3EB;
+  --orange-50: #FFEADB;
+  --orange-100: #FFD8BD;
+  --orange-200: #FFBB8A;
+  --orange-300: #FF974C;
+  --orange-400: #F47920;
+  --orange-500: #DB610C;
+  --orange-600: #AE4D09;
+  --orange-700: #833A07;
+  --orange-800: #612B05;
+  --orange-900: #492004;
+
+  --purple-0: #F2EBFF;
+  --purple-50: #E1D6F5;
+  --purple-100: #D0BDEF;
+  --purple-200: #B89DE6;
+  --purple-300: #A481DF;
+  --purple-400: #956CDA;
+  --purple-500: #7D4BD2;
+  --purple-600: #5E2DB3;
+  --purple-700: #4D2593;
+  --purple-800: #351A66;
+  --purple-900: #200D3F;
+
+  /* ---------- aliases semânticos (tema light) ---------- */
+  --surface-01: var(--grey-0);
+  --surface-02: var(--blue-0);
+  --surface-03: var(--blue-800);
+
+  --text-heading: var(--blue-800);
+  --text-paragraph: var(--grey-700);
+  --text-description: var(--grey-500);
+  --text-label: var(--grey-900);
+  --text-placeholder-01: var(--grey-900);
+  --text-placeholder-02: var(--grey-500);
+
+  --on-text-heading: var(--blue-800);
+
+  --action-bg-primary: var(--blue-800);
+  --action-bg-secondary: var(--blue-0);
+  --action-bg-highlight: var(--green-50);
+  --action-border-primary: var(--blue-800);
+  --action-border-secondary: var(--grey-100);
+  --action-label-primary: var(--blue-800);
+  --action-label-secondary: var(--blue-800);
+  --action-icon-primary: var(--blue-800);
+
+  --on-action-label-primary: var(--grey-0);
+  --on-action-label-secondary: var(--blue-800);
+  --on-action-icon-primary: var(--grey-0);
+
+  --border-default-radius: var(--radius-sm);
+  --border-default-width: var(--border-width-xs);
+
+  /* ---------- shape ---------- */
+  --radius-none: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-circular: 500px;
+
+  --border-width-none: 0px;
+  --border-width-xs: 1px;
+  --border-width-sm: 2px;
+  --border-width-md: 3px;
+  --border-width-lg: 4px;
+
+  --opacity-super-low: .16;
+  --opacity-low: .32;
+  --opacity-high: .50;
+  --opacity-super-high: .80;
+
+  --shadow-level-1: 0px 4px 16px -2px rgb(24 25 26 / var(--opacity-super-low));
+  --shadow-level-2: 0px 12px 24px -6px rgb(24 25 26 / var(--opacity-super-low));
+  --shadow-level-3: 0px 16px 32px 0px rgb(24 25 26 / var(--opacity-super-low));
+
+  --space-half: 4px;
+  --space-1x: 8px;
+  --space-1_5x: 12px;
+  --space-2x: 16px;
+  --space-2_5x: 20px;
+  --space-3x: 24px;
+  --space-4x: 32px;
+  --space-5x: 40px;
+  --space-6x: 48px;
+  --space-7x: 56px;
+  --space-8x: 64px;
+  --space-9x: 72px;
+  --space-10x: 80px;
+
+  /* ---------- tipografia ---------- */
+  --font-family-base: 'Unimed Sans', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-size-3xs: 12px;
+  --font-size-2xs: 14px;
+  --font-size-xs: 16px;
+  --font-size-sm: 20px;
+  --font-size-md: 24px;
+  --font-size-lg: 40px;
+  --font-size-xl: 48px;
+  --font-size-2xl: 64px;
+  --font-size-3xl: 80px;
+
+  --line-height-default: 100%;
+  --line-height-sm: 124%;
+  --line-height-md: 132%;
+  --line-height-lg: 160%;
+
+  --letter-spacing-default: 0;
+  --letter-spacing-negative: -0.01em;
+  --letter-spacing-positive: 0.01em;
+}

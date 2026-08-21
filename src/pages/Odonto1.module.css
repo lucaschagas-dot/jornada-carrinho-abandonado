@@ -1,0 +1,652 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* utilitário: cancela o padding horizontal do <main> do PageShell para permitir
+   fundo colorido "de ponta a ponta" dentro do limite de 1440px da página */
+.bleed {
+  margin-left: calc(-1 * var(--space-4x));
+  margin-right: calc(-1 * var(--space-4x));
+  padding-left: var(--space-4x);
+  padding-right: var(--space-4x);
+}
+
+@media (max-width: 640px) {
+  .bleed {
+    margin-left: calc(-1 * var(--space-2x));
+    margin-right: calc(-1 * var(--space-2x));
+    padding-left: var(--space-2x);
+    padding-right: var(--space-2x);
+  }
+}
+
+.eyebrow {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-1x);
+}
+
+/* botões */
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1x);
+  height: 48px;
+  padding: 0 var(--space-3x);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  border: none;
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 var(--space-3x);
+  background: transparent;
+  color: #586880;
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  background: var(--grey-50);
+}
+
+.heroInner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4x);
+}
+
+.heroText {
+  flex: 1 1 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2x);
+  padding: var(--space-6x) 0;
+  min-width: 0;
+}
+
+.heroTitle {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+  max-width: 20ch;
+}
+
+.heroSubtitle {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-lg);
+  color: #586880;
+  max-width: 42ch;
+}
+
+.priceCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4x);
+  background: var(--grey-0);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-2x);
+  margin-top: var(--space-2x);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.priceInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.priceLabel {
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-half);
+  white-space: nowrap;
+}
+
+.priceValue {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  line-height: var(--line-height-sm);
+}
+
+.pricePeriod {
+  font-size: var(--font-size-3xs);
+  color: var(--text-heading);
+}
+
+.heroImageWrap {
+  flex: 1 1 500px;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .heroInner {
+    flex-direction: column;
+  }
+
+  .heroText {
+    padding: var(--space-4x) 0;
+  }
+
+  .heroImageWrap {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 640px) {
+  .priceCard {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .btnPrimary {
+    width: 100%;
+  }
+}
+
+/* ---------- vantagens ---------- */
+.vantagens {
+  padding: var(--space-8x) 0 var(--space-6x);
+}
+
+.vantagensInner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--space-6x);
+}
+
+.vantagensTitle {
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+}
+
+.vantagensGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--space-6x);
+  row-gap: var(--space-5x);
+}
+
+.vantagemIconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  border-radius: var(--radius-xs);
+  background: rgba(104, 192, 232, 0.1);
+  margin-bottom: var(--space-2x);
+}
+
+.vantagemIcon {
+  max-width: 42px;
+  max-height: 36px;
+  width: auto;
+  height: auto;
+}
+
+.vantagemTitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-heading);
+  margin: 0 0 var(--space-1x);
+}
+
+.vantagemDescription {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+@media (max-width: 900px) {
+  .vantagensInner {
+    grid-template-columns: 1fr;
+    gap: var(--space-4x);
+  }
+}
+
+@media (max-width: 560px) {
+  .vantagensGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- banner de desconto ---------- */
+.banner {
+  background: linear-gradient(0deg, #50cb8b, #60df9d);
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6x) var(--space-4x);
+}
+
+.bannerCard {
+  background: var(--grey-0);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-1);
+  max-width: 1100px;
+  width: 100%;
+  padding: var(--space-4x) var(--space-6x);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+}
+
+.bannerTitle {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  color: #00401a;
+}
+
+.bannerHighlight {
+  color: var(--green-500);
+}
+
+.bannerText {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #666666;
+}
+
+@media (max-width: 640px) {
+  .bannerCard {
+    padding: var(--space-4x) var(--space-2x);
+  }
+}
+
+/* ---------- nossos planos ---------- */
+.plans {
+  padding: var(--space-8x) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plansTitle {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+  text-align: center;
+  margin-bottom: var(--space-5x);
+}
+
+.plansGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-3x);
+}
+
+.planCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  background: var(--grey-0);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-4x) var(--space-3x);
+}
+
+.planName {
+  font-size: var(--font-size-sm);
+  color: var(--text-heading);
+  text-align: center;
+}
+
+.planPriceRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-half);
+  margin-top: var(--space-2x);
+}
+
+.planPrice {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+  line-height: var(--line-height-default);
+}
+
+.planPeriod {
+  font-size: var(--font-size-xs);
+  color: #586880;
+}
+
+.planSubtitle {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+  text-align: center;
+  margin-top: var(--space-1x);
+}
+
+.planFeatures {
+  list-style: none;
+  margin: var(--space-4x) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+}
+
+.planFeatureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2x);
+  color: var(--cyan-500);
+}
+
+.planFeatureItem span {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.planFeatureItem svg {
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.planButtons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+  margin-top: var(--space-4x);
+}
+
+.plansDisclaimer {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  color: #586880;
+  text-align: center;
+  margin-top: var(--space-3x);
+}
+
+@media (max-width: 1100px) {
+  .plansGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .plansGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- por que ter um plano odontológico ---------- */
+.why {
+  padding: var(--space-8x) var(--space-2x);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5x);
+}
+
+.whyTitle {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+  text-align: center;
+  max-width: 26ch;
+}
+
+.whyGrid {
+  width: 100%;
+  max-width: 1028px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5x);
+}
+
+.whyItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.whyIcon {
+  width: 120px;
+  height: auto;
+  margin-bottom: var(--space-1x);
+}
+
+.whyItemTitle {
+  font-size: var(--font-size-sm);
+  color: var(--cyan-500);
+  margin-bottom: var(--space-1x);
+}
+
+.whyItemDescription {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.whyDots {
+  display: none;
+  gap: var(--space-1x);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circular);
+  background: #dce0e8;
+}
+
+.dotActive {
+  background: var(--text-heading);
+}
+
+@media (max-width: 900px) {
+  .whyGrid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+
+  .whyDots {
+    display: flex;
+  }
+}
+
+/* ---------- FAQ ---------- */
+.faq {
+  padding: var(--space-8x) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faqTitle {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+  text-align: center;
+  margin-bottom: var(--space-5x);
+}
+
+.faqList {
+  width: 100%;
+  max-width: 1376px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3x);
+}
+
+.faqItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  width: 100%;
+  background: var(--grey-50);
+  border: none;
+  border-bottom: 2px solid #dce0e8;
+  padding: var(--space-2x) var(--space-2x) var(--space-3x);
+  text-align: left;
+  color: var(--text-heading);
+}
+
+.faqQuestion {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.faqItem svg {
+  flex-shrink: 0;
+  color: var(--text-heading);
+}
+
+/* ---------- download do app ---------- */
+.appBanner {
+  position: relative;
+  margin-top: var(--space-6x);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  min-height: 236px;
+  display: flex;
+  align-items: center;
+  max-width: 1028px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.appBannerPhoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.appAccent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--cyan-500);
+  z-index: 1;
+}
+
+.appContent {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-4x) var(--space-3x);
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+}
+
+.appHeading {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--cyan-500);
+}
+
+.appFeatureList {
+  list-style: none;
+  margin: var(--space-1x) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+}
+
+.appFeatureItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+}
+
+.appFeatureItem img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.appFeatureItem span {
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.appStoreText {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+  margin-top: var(--space-1x);
+}
+
+.appStoreText strong {
+  text-decoration: underline;
+}
+
+.appPhoneImg {
+  position: relative;
+  z-index: 1;
+  margin-left: auto;
+  margin-right: var(--space-3x);
+  width: 134px;
+  display: none;
+}
+
+@media (min-width: 641px) {
+  .appPhoneImg {
+    display: block;
+  }
+}
+
+@media (max-width: 640px) {
+  .appBanner {
+    min-height: 0;
+  }
+
+  .appContent {
+    max-width: 100%;
+  }
+}

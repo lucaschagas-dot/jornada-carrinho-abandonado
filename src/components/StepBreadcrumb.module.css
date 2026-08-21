@@ -1,0 +1,20 @@
+.breadcrumb {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: var(--space-1x);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.category {
+  color: #929eb1;
+}
+
+.step {
+  color: var(--cyan-300);
+}
+
+.total {
+  color: #dce0e8;
+}
