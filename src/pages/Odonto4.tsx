@@ -7,9 +7,9 @@ import styles from './Odonto4.module.css';
 
 // Ícones inline específicos desta tela (o Figma usa glifos Font Awesome, que
 // não fazem parte do projeto — ver regra 8/4: não editar icons.tsx).
-function InfoCircleIcon({ size = 22 }: { size?: number }) {
+function InfoCircleIcon({ size = 22, className }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
       <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
       <path d="M12 7.5v6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       <circle cx="12" cy="16.5" r="1" fill="currentColor" />
@@ -59,7 +59,7 @@ export default function Odonto4() {
         <h1 className={styles.title}>Identificação</h1>
 
         <div className={styles.infoBox}>
-          <InfoCircleIcon size={32} />
+          <InfoCircleIcon size={32} className={styles.infoIcon} />
           <div className={styles.infoText}>
             <p>
               Você está comprando um plano para <strong className={styles.infoName}>{DEMO_USER.nomeCompleto}</strong>
@@ -128,9 +128,10 @@ export default function Odonto4() {
                 <option value="" disabled hidden></option>
                 <option value="solteiro">Solteiro(a)</option>
                 <option value="casado">Casado(a)</option>
-                <option value="divorciado">Divorciado(a)</option>
                 <option value="viuvo">Viúvo(a)</option>
-                <option value="uniao-estavel">União estável</option>
+                <option value="separado">Separado(a)</option>
+                <option value="divorciado">Divorciado(a)</option>
+                <option value="outros">Outros</option>
               </select>
               <ChevronDownIcon className={styles.selectIcon} />
             </div>
@@ -246,9 +247,7 @@ export default function Odonto4() {
       </div>
 
       <div className={styles.continueRow}>
-        {/* Esta é a última tela implementada do fluxo até o momento — ainda não
-            existe uma próxima tela, então "Continuar" não tem destino real. */}
-        <Link to="#" className={styles.continueButton}>
+        <Link to="/odonto-5" className={styles.continueButton}>
           Continuar
         </Link>
       </div>

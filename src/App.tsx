@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { PageShell } from './components/PageShell';
 import { PrototypeNav } from './components/PrototypeNav';
-import { ROUTES } from './routes';
+import { ROUTES, type RoutePath } from './routes';
 import { DEMO_USER } from './demoUser';
 
 import Start from './pages/Start';
@@ -15,8 +15,9 @@ import Odonto3_1 from './pages/Odonto3_1';
 import Odonto3_2 from './pages/Odonto3_2';
 import Odonto3_3 from './pages/Odonto3_3';
 import Odonto4 from './pages/Odonto4';
+import Odonto5 from './pages/Odonto5';
 
-const PAGES: Record<string, ComponentType> = {
+const PAGES: Record<RoutePath, ComponentType> = {
   '/': Start,
   '/odonto-1': Odonto1,
   '/odonto-2': Odonto2,
@@ -27,6 +28,7 @@ const PAGES: Record<string, ComponentType> = {
   '/odonto-3-2': Odonto3_2,
   '/odonto-3-3': Odonto3_3,
   '/odonto-4': Odonto4,
+  '/odonto-5': Odonto5,
 };
 
 function App() {
@@ -35,12 +37,14 @@ function App() {
       <Routes>
         {ROUTES.map((route) => {
           const Page = PAGES[route.path];
+          // ROUTES é `as const`, então `loggedIn` só existe nas entradas que o declaram.
+          const logado = 'loggedIn' in route && route.loggedIn;
           return (
             <Route
               key={route.path}
               path={route.path}
               element={
-                <PageShell user={route.loggedIn ? DEMO_USER.nomeCurto : undefined}>
+                <PageShell user={logado ? DEMO_USER.nomeCurto : undefined}>
                   <Page />
                 </PageShell>
               }

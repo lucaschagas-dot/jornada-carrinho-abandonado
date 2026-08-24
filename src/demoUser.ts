@@ -18,4 +18,10 @@ export const DEMO_USER = {
   email: 'carlos.souza@exemplo.com.br',
   cep: '01410-901',
   endereco: 'ALAMEDA MINISTRO ROCHA AZEVEDO - CERQUEIRA CESAR, SAO PAULO - SP',
+  /** Rótulo do estado civil como o resumo do pagamento o exibe. */
+  estadoCivilLabel: 'Solteiro',
+  sexo: 'Masculino',
+  nomeMae: 'Maria Aparecida Almeida Souza',
+  /** Nº de protocolo da cotação, exibido no resumo do pagamento. */
+  protocolo: '1000000',
 };

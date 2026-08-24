@@ -36,15 +36,31 @@ src/
     Header, Footer, WhatsAppWidget, PageShell, StepBreadcrumb  — layout comum a todas as telas
     PrototypeNav        — menu flutuante "Telas" (não existe no Figma; é só ferramenta de revisão)
     icons.tsx           — ícones SVG usados no projeto
+  demoUser.ts          # persona fictícia usada nas telas pré-preenchidas
   pages/
     Start.tsx, Odonto1.tsx, Odonto2.tsx, Odonto2_1.tsx, Odonto2_3.tsx,
-    Odonto3.tsx, Odonto3_1.tsx, Odonto3_2.tsx, Odonto3_3.tsx, Odonto4.tsx
+    Odonto3.tsx, Odonto3_1.tsx, Odonto3_2.tsx, Odonto3_3.tsx, Odonto4.tsx,
+    Odonto5.tsx
   assets/images/        # imagens extraídas do Figma
 ```
 
-Cada arquivo em `src/pages/` corresponde a exatamente um frame de nível
-principal da página "Page 1" do arquivo Figma, com o mesmo nome/numeração
-usado lá (ver `figmaFrame` em `routes.ts`).
+Cada arquivo em `src/pages/` corresponde a um frame de nível principal da
+página "Page 1" do arquivo Figma, com o mesmo nome/numeração usado lá (ver
+`figmaFrame` em `routes.ts`). A exceção é `Odonto5.tsx` (Pagamento), que foi
+levantada direto da loja em produção e por isso não tem `figmaFrame`.
+
+## Onde a jornada termina
+
+O fluxo clicável vai de `/` até `/odonto-5` (Pagamento 4/5) e **para no momento
+em que os dados de pagamento são solicitados**: a tela mostra a escolha entre
+Cartão de Crédito e Pix, mas não há formulário de cartão nem QR de Pix, e o
+botão "Pagar" não tem ação.
+
+As telas `3.1`, `3.2` e `3.3` são estados do modal "Características Gerais",
+não etapas do fluxo. No caminho clicável, "Escolher plano" vai direto de
+`/odonto-3` para `/odonto-4`, e é o link "Ver mais sobre coberturas e
+carências" que abre o modal. As três continuam acessíveis pelo menu "Telas"
+como referência dos frames do Figma.
 
 ## Como adicionar uma tela nova
 
@@ -55,7 +71,9 @@ Quando uma tela nova for desenhada no Figma:
 2. Crie `src/pages/NomeDaTela.tsx` (siga o padrão dos arquivos existentes:
    só o conteúdo único da tela, sem Header/Footer — isso já vem do
    `PageShell` em `App.tsx`).
-3. Registre o import em `App.tsx` no mapa `PAGES`.
+3. Registre o import em `App.tsx` no mapa `PAGES`. Se esquecer este passo,
+   `npm run build` falha apontando o path que ficou sem componente — o mapa
+   é tipado a partir de `ROUTES`, então a divergência não passa despercebida.
 
 Os botões "Continuar"/"Voltar" de cada tela usam paths fixos (não índices
 calculados), então ao inserir uma tela no meio do fluxo também é preciso

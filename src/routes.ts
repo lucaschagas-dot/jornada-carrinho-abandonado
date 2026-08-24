@@ -1,20 +1,25 @@
 export type RouteDef = {
   path: string;
   label: string;
-  figmaFrame: string;
-  figmaNodeId: string;
+  /** Frame de origem no Figma. Ausente em telas levantadas direto da loja em produção. */
+  figmaFrame?: string;
+  figmaNodeId?: string;
   /** Telas em que o cabeçalho aparece logado ("Olá, {nome}" em vez de "Entrar"). */
   loggedIn?: boolean;
 };
 
 /**
- * Fonte única de verdade para a ordem das telas da jornada.
+ * Fonte única de verdade das telas da jornada.
  * Espelha os frames de nível principal da página "Page 1" do arquivo
  * Figma "Jornada Carrinho Abandonado" (mesmos nomes/numeração usados lá).
- * Ao adicionar uma tela nova no Figma, adicione uma entrada aqui na posição
- * correta — os links "Continuar"/"Voltar" de cada página usam esta ordem.
+ *
+ * Esta lista alimenta o registro de rotas (`App.tsx`) e o menu "Telas"
+ * (`PrototypeNav`). Ela NÃO define a navegação: os links "Continuar"/"Voltar"
+ * de cada página usam paths fixos, porque a ordem daqui inclui as telas de
+ * modal (3.1/3.2/3.3), que não são etapas do fluxo. Ao inserir uma tela nova
+ * no meio da jornada, ajuste também o `<Link to="...">` da tela anterior.
  */
-export const ROUTES: RouteDef[] = [
+export const ROUTES = [
   { path: '/', label: 'Start', figmaFrame: 'start', figmaNodeId: '1:2' },
   { path: '/odonto-1', label: 'Odonto 1', figmaFrame: 'odonto 1', figmaNodeId: '1:1021' },
   { path: '/odonto-2', label: 'Odonto 2 - Faça uma cotação', figmaFrame: 'odonto 2 - faça uma cotação', figmaNodeId: '1:1497' },
@@ -25,20 +30,14 @@ export const ROUTES: RouteDef[] = [
   { path: '/odonto-3-2', label: 'Odonto 3.2 - Coberturas e carências', figmaFrame: 'Odonto 3.2 - Ver mais sobre coberturas e carencias', figmaNodeId: '2:4165' },
   { path: '/odonto-3-3', label: 'Odonto 3.3 - Coberturas e carências', figmaFrame: 'Odonto 3.3 - Ver mais sobre coberturas e carencias', figmaNodeId: '2:5789' },
   { path: '/odonto-4', label: 'Odonto 4 - Selecionou plano', figmaFrame: 'Odonto 4 - Selecionou plano', figmaNodeId: '2:6775', loggedIn: true },
-];
+  // Levantada da loja em produção (loja.segurosunimed.com.br), não do Figma.
+  // Última tela do protótipo: para no momento em que o pagamento é solicitado.
+  { path: '/odonto-5', label: 'Odonto 5 - Pagamento', loggedIn: true },
+] as const satisfies readonly RouteDef[];
 
-export function getRouteIndex(path: string): number {
-  return ROUTES.findIndex((r) => r.path === path);
-}
-
-export function getNextPath(path: string): string | null {
-  const i = getRouteIndex(path);
-  if (i === -1 || i === ROUTES.length - 1) return null;
-  return ROUTES[i + 1].path;
-}
-
-export function getPrevPath(path: string): string | null {
-  const i = getRouteIndex(path);
-  if (i <= 0) return null;
-  return ROUTES[i - 1].path;
-}
+/**
+ * Paths existentes, derivados de ROUTES. O mapa `PAGES` em `App.tsx` é tipado
+ * com isto, então esquecer o componente de uma tela nova quebra o `npm run
+ * build` em vez de virar tela branca em produção.
+ */
+export type RoutePath = (typeof ROUTES)[number]['path'];
