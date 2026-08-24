@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { StepBreadcrumb } from '../components/StepBreadcrumb';
+import { SeletorPessoas } from '../components/SeletorPessoas';
 import { ChevronRightIcon } from '../components/icons';
+import { formatarBRL, rotuloPessoas, useJornada } from '../jornada';
 import styles from './Odonto3.module.css';
 
 function CheckIcon() {
@@ -23,7 +25,8 @@ function BundleIcon() {
 type Plano = {
   nome: string;
   registro: string;
-  preco: string;
+  /** Mensalidade por pessoa. O card mostra o total (preço x nº de pessoas). */
+  preco: number;
   destaque?: string;
   recursos: string[];
 };
@@ -32,7 +35,7 @@ const PLANOS: Plano[] = [
   {
     nome: 'Odonto Essencial',
     registro: 'Reg. 471.145/14-9',
-    preco: '33,50',
+    preco: 33.5,
     recursos: [
       'Consulta de urgência',
       'Extrações simples, semi inclusos e inclusos',
@@ -49,14 +52,14 @@ const PLANOS: Plano[] = [
   {
     nome: 'Odonto Pleno',
     registro: 'Reg. 471.143/14-2',
-    preco: '58,20',
+    preco: 58.2,
     destaque: 'Todos do Essencial Plus + abaixo',
     recursos: ['Telerradiografia', 'Coroa total acrílica prensada', 'Coroa total metalo-plástica', 'Restauração em cerômero inlay/onlay'],
   },
   {
     nome: 'Odonto Pleno Ortodontia',
     registro: 'Reg. 475.493/16-0',
-    preco: '141,50',
+    preco: 141.5,
     destaque: 'Todos do Pleno + abaixo',
     recursos: [
       'Documentação ortodôntica',
@@ -67,12 +70,20 @@ const PLANOS: Plano[] = [
 ];
 
 export default function Odonto3() {
+  const { pessoas, escolherPlano } = useJornada();
+
   return (
     <section className={styles.wrapper}>
       <StepBreadcrumb category="Plano Odontológico" step="Produtos" current={2} total={5} />
 
       <h1 className={styles.title}>Produtos</h1>
       <p className={styles.subtitle}>Confira as opções de plano disponíveis para você</p>
+
+      {/* Proposta da pesquisa: manter o nº de pessoas visível e editável aqui,
+          com o preço já somando todo mundo. */}
+      <div className={styles.pessoasDestaque}>
+        <SeletorPessoas variante="destaque" descricao="Os valores abaixo já consideram todas as pessoas do plano." />
+      </div>
 
       <div className={styles.grid}>
         {PLANOS.map((plano) => (
@@ -86,10 +97,19 @@ export default function Odonto3() {
               <div className={styles.priceBlock}>
                 <p className={styles.priceRow}>
                   <span className={styles.currency}>R$</span>
-                  <span className={styles.priceValue}>{plano.preco}</span>
+                  <span className={styles.priceValue}>
+                    {(plano.preco * pessoas).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </span>
                 </p>
+                {pessoas > 1 && (
+                  <p className={styles.priceBreakdown}>
+                    {formatarBRL(plano.preco)} por pessoa · {rotuloPessoas(pessoas)}
+                  </p>
+                )}
                 <p className={styles.priceNote}>Vigência de 1 Ano</p>
-                <p className={styles.priceNote}>Mensais por pessoa sem coparticipação</p>
+                <p className={styles.priceNote}>
+                  {pessoas > 1 ? 'Mensais no total, sem coparticipação' : 'Mensais por pessoa sem coparticipação'}
+                </p>
               </div>
 
               <ul className={styles.features}>
@@ -113,7 +133,11 @@ export default function Odonto3() {
               </Link>
             </div>
 
-            <Link to="/odonto-4" className={styles.chooseButton}>
+            <Link
+              to="/odonto-login"
+              className={styles.chooseButton}
+              onClick={() => escolherPlano({ nome: plano.nome, precoPorPessoa: plano.preco, registro: plano.registro })}
+            >
               Escolher plano
             </Link>
           </div>

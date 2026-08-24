@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
 import { DEMO_USER } from '../demoUser';
+import { rotuloPessoas, useJornada } from '../jornada';
 import styles from './Odonto4.module.css';
 
 // Ícones inline específicos desta tela (o Figma usa glifos Font Awesome, que
@@ -50,6 +51,8 @@ export default function Odonto4() {
   // Chega-se aqui já logado e com os dados do cadastro carregados, então os
   // campos vêm preenchidos (mas continuam editáveis).
   const [sexo, setSexo] = useState<Sexo>('masculino');
+  const { pessoas } = useJornada();
+  const dependentes = pessoas - 1;
 
   return (
     <section className={styles.wrapper}>
@@ -238,6 +241,30 @@ export default function Odonto4() {
           </div>
         </div>
       </div>
+
+      {/* Proposta da pesquisa: como o nº de pessoas já foi informado no início,
+          os dependentes chegam previstos aqui em vez de virarem surpresa de preço. */}
+      {dependentes > 0 && (
+        <div className={styles.dependentesBloco}>
+          <p className={styles.dependentesTitulo}>
+            Dependentes ({dependentes} de {dependentes})
+          </p>
+          <p className={styles.dependentesNota}>
+            Você informou {rotuloPessoas(pessoas)} no início da cotação, então o valor já mostrado
+            inclui todo mundo.
+          </p>
+          <ul className={styles.dependentesLista}>
+            {Array.from({ length: dependentes }, (_, i) => (
+              <li className={styles.dependenteItem} key={i}>
+                <span className={styles.dependenteNome}>Dependente {i + 1}</span>
+                <button type="button" className={styles.dependentePreencher}>
+                  Preencher dados
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className={styles.actionsRow}>
         {/* Sem ação real neste protótipo (regra 10) */}

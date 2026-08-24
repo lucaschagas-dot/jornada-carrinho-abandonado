@@ -198,3 +198,12 @@
     min-width: 0;
   }
 }
+
+/* Bloco "Para quantas pessoas?" (proposta da pesquisa). */
+.pessoasRow {
+  width: 100%;
+  max-width: 720px;
+  margin-top: var(--space-3x);
+  padding-top: var(--space-3x);
+  border-top: var(--border-width-xs) solid #eceef2;
+}

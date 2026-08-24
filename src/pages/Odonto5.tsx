@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { ChevronDownIcon } from '../components/icons';
 import { DEMO_USER } from '../demoUser';
+import { formatarBRL, rotuloPessoas, useJornada } from '../jornada';
 import styles from './Odonto5.module.css';
 
 // Ícones inline desta tela (o site usa Font Awesome, que não faz parte do projeto).
@@ -76,6 +77,12 @@ type SecaoResumo = 'plano' | 'titular' | 'guias';
 
 export default function Odonto5() {
   const [forma, setForma] = useState<FormaPagamento>(null);
+  const { pessoas, planoEscolhido } = useJornada();
+
+  // Fallback para quem abre /odonto-5 direto pelo menu "Telas", sem ter
+  // passado pela escolha de plano.
+  const plano = planoEscolhido ?? { nome: 'Odonto Essencial', precoPorPessoa: 33.5, registro: 'Reg. 471.145/14-9' };
+  const total = plano.precoPorPessoa * pessoas;
   const [abertas, setAbertas] = useState<Record<SecaoResumo, boolean>>({
     plano: false,
     titular: false,
@@ -123,11 +130,19 @@ export default function Odonto5() {
         <aside className={styles.sidebar}>
           <div className={styles.summaryBox}>
             <div className={styles.summaryHead}>
-              <p className={styles.planQty}>1 x Essencial</p>
-              <p className={styles.planPrice}>
-                R$ 33,50<span className={styles.planPriceUnit}>/mês</span>
+              <p className={styles.planQty}>
+                {pessoas} x {plano.nome.replace('Odonto ', '')}
               </p>
-              <p className={styles.planReg}>Reg. 471.145/14-9</p>
+              <p className={styles.planPrice}>
+                {formatarBRL(total)}
+                <span className={styles.planPriceUnit}>/mês</span>
+              </p>
+              {pessoas > 1 && (
+                <p className={styles.planPorPessoa}>
+                  {formatarBRL(plano.precoPorPessoa)} por pessoa · {rotuloPessoas(pessoas)}
+                </p>
+              )}
+              <p className={styles.planReg}>{plano.registro}</p>
             </div>
 
             <div className={styles.summaryTitleRow}>
@@ -156,7 +171,7 @@ export default function Odonto5() {
 
               {abertas.plano && (
                 <div className={styles.accordionBody}>
-                  <p className={styles.bodyStrong}>Odonto Essencial</p>
+                  <p className={styles.bodyStrong}>{plano.nome}</p>
                   <button type="button" className={styles.coverageLink}>
                     Ver coberturas
                   </button>

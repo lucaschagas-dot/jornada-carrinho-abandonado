@@ -190,3 +190,15 @@
     padding-bottom: var(--space-4x);
   }
 }
+
+/* Bloco "Para quantas pessoas?" em destaque (proposta da pesquisa). */
+.pessoasDestaque {
+  margin-top: var(--space-3x);
+}
+
+.priceBreakdown {
+  margin-top: var(--space-half);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+}

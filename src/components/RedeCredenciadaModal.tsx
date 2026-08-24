@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDownIcon, ChevronRightIcon } from './icons';
 import { DENTISTAS, ESPECIALIDADES, UFS, listarPlanos, type Dentista } from '../redeCredenciada';
@@ -87,13 +87,40 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
   const [ordenacao, setOrdenacao] = useState<Ordenacao>('distancia');
   const [selecionado, setSelecionado] = useState<Dentista | null>(null);
 
+  const modalRef = useRef<HTMLDivElement>(null);
+  // O clique-fora só vale se o gesto COMEÇOU no overlay. Sem isso, arrastar
+  // para selecionar o texto de um campo e soltar fora fecharia o modal inteiro.
+  const pressionouNoOverlay = useRef(false);
+
+  // Volta uma etapa: detalhe -> tela anterior -> fecha o modal.
+  const voltarUmNivel = useCallback(() => {
+    if (selecionado) {
+      setSelecionado(null);
+      return;
+    }
+    if (vista === 'refinar') {
+      setVista('resultados');
+      return;
+    }
+    if (vista === 'avancada') {
+      setVista('busca');
+      return;
+    }
+    onClose();
+  }, [selecionado, vista, onClose]);
+
   useEffect(() => {
     const aoTeclar = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') voltarUmNivel();
     };
     document.addEventListener('keydown', aoTeclar);
     return () => document.removeEventListener('keydown', aoTeclar);
-  }, [onClose]);
+  }, [voltarUmNivel]);
+
+  // Leva o foco para dentro do diálogo ao abrir.
+  useEffect(() => {
+    modalRef.current?.focus();
+  }, []);
 
   // A loja só habilita "Buscar" com localização (com coordenadas) + especialidade.
   const podeBuscar = localizacao.trim().length > 0 && especialidade !== '';
@@ -112,9 +139,23 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
     );
   }, [especialidade, nome, cro, uf, ordenacao]);
 
-  const buscar = () => {
+  // Trocar de tela sempre fecha o detalhe: ele fica sobre o mapa e, se
+  // continuasse aberto, exibiria um dentista que já saiu da lista.
+  const irPara = (proxima: Vista) => {
     setSelecionado(null);
-    setVista('resultados');
+    setVista(proxima);
+  };
+
+  const buscar = () => irPara('resultados');
+
+  // Nome/CRO/UF só aparecem na busca avançada, mas continuam filtrando o
+  // resultado. Voltar para a busca simples precisa limpá-los, senão a busca
+  // volta vazia sem nada na tela explicando o porquê.
+  const voltarDaAvancada = () => {
+    setNome('');
+    setCro('');
+    setUf('');
+    irPara('busca');
   };
 
   const limparFiltros = () => {
@@ -163,13 +204,22 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
   );
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
+    <div
+      className={styles.overlay}
+      onMouseDown={(e) => {
+        pressionouNoOverlay.current = e.target === e.currentTarget;
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget && pressionouNoOverlay.current) onClose();
+      }}
+    >
       <div
+        ref={modalRef}
+        tabIndex={-1}
         className={styles.modal}
         role="dialog"
         aria-modal="true"
         aria-labelledby="rede-credenciada-titulo"
-        onClick={(e) => e.stopPropagation()}
       >
         <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Fechar busca de dentistas">
           <CloseIcon />
@@ -190,7 +240,7 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
                 <button type="button" className={styles.btnPrimario} disabled={!podeBuscar} onClick={buscar}>
                   Buscar
                 </button>
-                <button type="button" className={styles.btnSecundario} onClick={() => setVista('avancada')}>
+                <button type="button" className={styles.btnSecundario} onClick={() => irPara('avancada')}>
                   Busca avançada
                 </button>
               </div>
@@ -200,10 +250,10 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
           {vista === 'avancada' && (
             <>
               <div className={styles.painelCorpo}>
-                <button type="button" className={styles.voltar} onClick={() => setVista('busca')} aria-label="Voltar">
+                <button type="button" className={styles.voltar} onClick={voltarDaAvancada} aria-label="Voltar">
                   <ArrowLeftIcon />
                 </button>
-                <h2 className={styles.titulo}>Busca avançada</h2>
+                <h2 id="rede-credenciada-titulo" className={styles.titulo}>Busca avançada</h2>
 
                 <div className={styles.campo}>{campoLocalizacao('rc-localizacao-av')}</div>
 
@@ -254,15 +304,15 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
             <>
               <div className={styles.painelCorpo}>
                 <div className={styles.resultadosTopo}>
-                  <button type="button" className={styles.voltar} onClick={() => setVista('busca')} aria-label="Voltar">
+                  <button type="button" className={styles.voltar} onClick={() => irPara('busca')} aria-label="Voltar">
                     <ArrowLeftIcon />
                   </button>
-                  <button type="button" className={styles.refinarLink} onClick={() => setVista('refinar')}>
+                  <button type="button" className={styles.refinarLink} onClick={() => irPara('refinar')}>
                     <FiltroIcon /> Refinar busca
                   </button>
                 </div>
 
-                <h2 className={styles.titulo}>Resultados</h2>
+                <h2 id="rede-credenciada-titulo" className={styles.titulo}>Resultados</h2>
 
                 {especialidade && (
                   <p className={styles.chips}>
@@ -305,7 +355,7 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
             <>
               <div className={styles.painelCorpo}>
                 <div className={styles.resultadosTopo}>
-                  <button type="button" className={styles.voltar} onClick={() => setVista('resultados')} aria-label="Fechar refinamento">
+                  <button type="button" className={styles.voltar} onClick={() => irPara('resultados')} aria-label="Fechar refinamento">
                     <CloseIcon size={20} />
                   </button>
                   <button type="button" className={styles.limparLink} onClick={limparFiltros}>
@@ -313,7 +363,7 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
                   </button>
                 </div>
 
-                <h2 className={styles.titulo}>Refinar busca</h2>
+                <h2 id="rede-credenciada-titulo" className={styles.titulo}>Refinar busca</h2>
 
                 <div className={styles.campo}>{campoLocalizacao('rc-localizacao-refinar')}</div>
 
@@ -413,6 +463,14 @@ export function RedeCredenciadaModal({ onClose }: RedeCredenciadaModalProps) {
           {selecionado && (
             <aside className={styles.detalhe}>
               <div className={styles.detalheCorpo}>
+                <button
+                  type="button"
+                  className={styles.detalheFechar}
+                  onClick={() => setSelecionado(null)}
+                  aria-label="Fechar detalhe do dentista"
+                >
+                  <CloseIcon size={18} />
+                </button>
                 <span className={styles.detalheAvatar}>
                   <ToothIcon size={26} />
                 </span>

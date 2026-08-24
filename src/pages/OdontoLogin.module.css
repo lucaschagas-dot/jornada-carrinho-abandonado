@@ -1,0 +1,131 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-5x);
+  padding-bottom: var(--space-10x);
+}
+
+.title {
+  margin-top: var(--space-4x);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.subtitle {
+  margin-top: var(--space-1x);
+  max-width: 56ch;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 480px;
+  margin-top: var(--space-4x);
+  padding: var(--space-4x);
+  box-sizing: border-box;
+  background: var(--surface-01);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--space-3x);
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #586880;
+}
+
+.input {
+  width: 100%;
+  margin-top: var(--space-1x);
+  padding: 0 0 var(--space-1x);
+  border: none;
+  border-bottom: var(--border-width-xs) solid #dce0e8;
+  outline: none;
+  background: transparent;
+  box-sizing: border-box;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  color: var(--text-label);
+}
+
+.input::placeholder {
+  color: #929eb1;
+}
+
+.primaryButton,
+.primaryButtonLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1x);
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: var(--radius-xs);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+.hint,
+.enviadoTexto {
+  margin-top: var(--space-2x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.enviadoTexto {
+  margin: 0 0 var(--space-3x);
+}
+
+.enviadoTexto strong {
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.linkButton {
+  margin-top: var(--space-2x);
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+  text-decoration: underline;
+}
+
+.saidaRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  max-width: 480px;
+  margin-top: var(--space-3x);
+}
+
+.saidaLink {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+  text-decoration: underline;
+}
+
+.saidaNota {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+}

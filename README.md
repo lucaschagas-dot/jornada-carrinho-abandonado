@@ -37,13 +37,15 @@ src/
     PrototypeNav        — menu flutuante "Telas" (não existe no Figma; é só ferramenta de revisão)
     ComparePlanosModal  — comparativo "Compare nossos planos", aberto pela Odonto 1
     RedeCredenciadaModal — busca de dentistas, aberta pela Odonto 1
+    SeletorPessoas      — "Para quantas pessoas?" (proposta da pesquisa)
     icons.tsx           — ícones SVG usados no projeto
   demoUser.ts          # persona fictícia usada nas telas pré-preenchidas
+  jornada.tsx          # estado compartilhado (nº de pessoas, plano escolhido, carrinho)
   redeCredenciada.ts   # dentistas fictícios + especialidades da busca de rede
   pages/
     Start.tsx, Odonto1.tsx, Odonto2.tsx, Odonto2_1.tsx, Odonto2_3.tsx,
     Odonto3.tsx, Odonto3_1.tsx, Odonto3_2.tsx, Odonto3_3.tsx, Odonto4.tsx,
-    Odonto5.tsx
+    OdontoLogin.tsx, Odonto5.tsx
   assets/images/        # imagens extraídas do Figma
 ```
 
@@ -51,6 +53,27 @@ Cada arquivo em `src/pages/` corresponde a um frame de nível principal da
 página "Page 1" do arquivo Figma, com o mesmo nome/numeração usado lá (ver
 `figmaFrame` em `routes.ts`). A exceção é `Odonto5.tsx` (Pagamento), que foi
 levantada direto da loja em produção e por isso não tem `figmaFrame`.
+
+## Propostas da pesquisa de carrinho abandonado
+
+Além de replicar a loja, o protótipo materializa as recomendações da pesquisa
+apresentada em **07/08/2026** ("Resultado Pesquisa — Carrinho Abandonado"),
+para que possam ser defendidas com algo navegável em vez de slides. O que é
+proposta e o que é réplica da loja:
+
+| Proposta | Onde está | Origem na pesquisa |
+| --- | --- | --- |
+| Perguntar o **nº de pessoas no início**, com o preço já somando todo mundo | `SeletorPessoas` em Odonto 2.3 e Odonto 3; dependentes previstos em Odonto 4; total em Odonto 5 | "se eu já começasse perguntando quantas pessoas... ele nem viu os 33, ficaria menos frustrado" |
+| **Carrinho de cotações visível sem login** | `Header` (botão "Minhas cotações" + "Retomar cotação") | "essa coisa do carrinho é universal... e a gente não tem isso" |
+| **Selo de corretora parceira** mantendo a marca principal | `Header` | "manter a marca da Seguros... com um selo menor, em vez de substituir o logo" |
+| **Login como etapa com URL própria**, sem "x" e sem senha | `OdontoLogin` (`/odonto-login`) | "hoje o login é um popup... não consegui medir quem trava no login" |
+
+O estado que liga essas telas fica em `src/jornada.tsx`.
+
+Fora do escopo deste protótipo (a pesquisa também tratou de vida, residencial
+e de temas de back-office): assistências marcadas por padrão, coberturas
+default, DPS antes do pagamento, lista de profissões, resgate por WhatsApp e
+internalização de tecnologia.
 
 ## Onde a jornada termina
 
@@ -81,8 +104,9 @@ painel de detalhe do dentista. Duas diferenças conscientes em relação à loja
   especialidade) são as da loja.
 
 As telas `3.1`, `3.2` e `3.3` são estados do modal "Características Gerais",
-não etapas do fluxo. No caminho clicável, "Escolher plano" vai direto de
-`/odonto-3` para `/odonto-4`, e é o link "Ver mais sobre coberturas e
+não etapas do fluxo. No caminho clicável, "Escolher plano" leva de
+`/odonto-3` para `/odonto-login` (e de lá para `/odonto-4`), e é o link
+"Ver mais sobre coberturas e
 carências" que abre o modal. As três continuam acessíveis pelo menu "Telas"
 como referência dos frames do Figma.
 

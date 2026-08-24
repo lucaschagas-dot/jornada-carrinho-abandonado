@@ -4,6 +4,7 @@ import { PageShell } from './components/PageShell';
 import { PrototypeNav } from './components/PrototypeNav';
 import { ROUTES, type RoutePath } from './routes';
 import { DEMO_USER } from './demoUser';
+import { JornadaProvider } from './jornada';
 
 import Start from './pages/Start';
 import Odonto1 from './pages/Odonto1';
@@ -16,6 +17,7 @@ import Odonto3_2 from './pages/Odonto3_2';
 import Odonto3_3 from './pages/Odonto3_3';
 import Odonto4 from './pages/Odonto4';
 import Odonto5 from './pages/Odonto5';
+import OdontoLogin from './pages/OdontoLogin';
 
 const PAGES: Record<RoutePath, ComponentType> = {
   '/': Start,
@@ -28,12 +30,14 @@ const PAGES: Record<RoutePath, ComponentType> = {
   '/odonto-3-2': Odonto3_2,
   '/odonto-3-3': Odonto3_3,
   '/odonto-4': Odonto4,
+  '/odonto-login': OdontoLogin,
   '/odonto-5': Odonto5,
 };
 
 function App() {
   return (
-    <HashRouter>
+    <JornadaProvider>
+      <HashRouter>
       <Routes>
         {ROUTES.map((route) => {
           const Page = PAGES[route.path];
@@ -53,7 +57,8 @@ function App() {
         })}
       </Routes>
       <PrototypeNav />
-    </HashRouter>
+      </HashRouter>
+    </JornadaProvider>
   );
 }
 

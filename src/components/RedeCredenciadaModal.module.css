@@ -389,11 +389,31 @@
 }
 
 .detalheCorpo {
+  position: relative;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   padding: var(--space-4x) var(--space-3x) var(--space-3x);
   text-align: center;
+}
+
+/* Sem este botão, em telas <= 900px o detalhe cobre o modal inteiro e não
+   sobra caminho de volta para a lista. Fica à ESQUERDA de propósito: o X que
+   fecha o modal inteiro ocupa o canto direito e os dois se sobreporiam. */
+.detalheFechar {
+  position: absolute;
+  top: var(--space-1x);
+  left: var(--space-1x);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-circular);
+  background: none;
+  color: #586880;
 }
 
 .detalheAvatar {

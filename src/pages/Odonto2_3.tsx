@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { StepBreadcrumb } from '../components/StepBreadcrumb';
+import { SeletorPessoas } from '../components/SeletorPessoas';
 import styles from './Odonto2_3.module.css';
 
 export default function Odonto2_3() {
@@ -89,6 +90,13 @@ export default function Odonto2_3() {
               className={styles.inlineInput}
             />
           </div>
+        </div>
+
+        {/* Proposta da pesquisa: perguntar o número de pessoas AQUI, no início.
+            Antes, o usuário via "R$ 33,50", se ancorava nesse valor e só descobria
+            o aumento na última etapa, ao adicionar dependentes. */}
+        <div className={styles.pessoasRow}>
+          <SeletorPessoas descricao="Assim já mostramos o valor total, sem surpresa no fim." />
         </div>
 
         <label htmlFor="optIn" className={styles.checkboxRow}>

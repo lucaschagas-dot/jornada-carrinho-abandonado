@@ -127,6 +127,13 @@
   color: #929eb1;
 }
 
+.planPorPessoa {
+  margin-top: var(--space-half);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+}
+
 .planReg {
   margin-top: var(--space-half);
   font-size: var(--font-size-3xs);

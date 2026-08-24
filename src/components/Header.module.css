@@ -61,8 +61,113 @@
   font-weight: var(--font-weight-bold);
 }
 
+/* ---------- selo de corretora parceira ---------- */
+.seloParceria {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding-left: var(--space-2x);
+  margin-left: var(--space-1x);
+  border-left: var(--border-width-xs) solid #dce0e8;
+  line-height: var(--line-height-sm);
+}
+
+.seloRotulo {
+  font-size: var(--font-size-3xs);
+  color: #929eb1;
+}
+
+.seloNome {
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+/* ---------- carrinho de cotações ---------- */
+.carrinhoWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.carrinho {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+  padding: var(--space-1x) var(--space-2x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-circular);
+  background: var(--surface-01);
+  color: var(--text-heading);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.carrinhoBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-circular);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.carrinhoPainel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  width: 260px;
+  padding: var(--space-2x);
+  background: var(--surface-01);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-2);
+}
+
+.carrinhoTitulo {
+  font-size: var(--font-size-3xs);
+  color: #929eb1;
+}
+
+.carrinhoPlano {
+  margin-top: var(--space-half);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.carrinhoDetalhe {
+  margin-top: var(--space-half);
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.carrinhoRetomar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin-top: var(--space-2x);
+  border-radius: var(--radius-xs);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+}
+
 @media (max-width: 900px) {
   .nav {
+    display: none;
+  }
+
+  .seloParceria,
+  .carrinhoTexto {
     display: none;
   }
 }

@@ -30,6 +30,9 @@ export const ROUTES = [
   { path: '/odonto-3-2', label: 'Odonto 3.2 - Coberturas e carências', figmaFrame: 'Odonto 3.2 - Ver mais sobre coberturas e carencias', figmaNodeId: '2:4165' },
   { path: '/odonto-3-3', label: 'Odonto 3.3 - Coberturas e carências', figmaFrame: 'Odonto 3.3 - Ver mais sobre coberturas e carencias', figmaNodeId: '2:5789' },
   { path: '/odonto-4', label: 'Odonto 4 - Selecionou plano', figmaFrame: 'Odonto 4 - Selecionou plano', figmaNodeId: '2:6775', loggedIn: true },
+  // Proposta da pesquisa: login como etapa com URL própria (hoje é um popup
+  // com "x", o que gera atrito e impede medir o abandono só do login).
+  { path: '/odonto-login', label: 'Odonto 3.5 - Login (proposta)' },
   // Levantada da loja em produção (loja.segurosunimed.com.br), não do Figma.
   // Última tela do protótipo: para no momento em que o pagamento é solicitado.
   { path: '/odonto-5', label: 'Odonto 5 - Pagamento', loggedIn: true },
