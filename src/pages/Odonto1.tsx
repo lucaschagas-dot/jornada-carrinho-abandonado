@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './Odonto1.module.css';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
 import { ComparePlanosModal } from '../components/ComparePlanosModal';
+import { RedeCredenciadaModal } from '../components/RedeCredenciadaModal';
 
 import heroImage from '../assets/images/hero-mae-filha-sorrindo.png';
 import iconAtendimentoNacional from '../assets/images/icon-atendimento-nacional.svg';
@@ -129,6 +130,7 @@ export default function Odonto1() {
   // O comparativo é um modal aberto na própria página (na loja ele também não
   // muda de rota — o X só fecha o overlay).
   const [comparandoPlanos, setComparandoPlanos] = useState(false);
+  const [buscandoRede, setBuscandoRede] = useState(false);
 
   return (
     <section className={styles.page}>
@@ -251,7 +253,7 @@ export default function Odonto1() {
           <span className={styles.dot} />
         </div>
 
-        <button type="button" className={styles.btnPrimary}>
+        <button type="button" className={styles.btnPrimary} onClick={() => setBuscandoRede(true)}>
           <img src={iconBuscaRedeCredenciada} alt="" width={16} height={16} />
           Busque a rede credenciada
         </button>
@@ -294,6 +296,7 @@ export default function Odonto1() {
       </div>
 
       {comparandoPlanos && <ComparePlanosModal onClose={() => setComparandoPlanos(false)} />}
+      {buscandoRede && <RedeCredenciadaModal onClose={() => setBuscandoRede(false)} />}
     </section>
   );
 }

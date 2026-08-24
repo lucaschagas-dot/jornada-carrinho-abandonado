@@ -36,8 +36,10 @@ src/
     Header, Footer, WhatsAppWidget, PageShell, StepBreadcrumb  — layout comum a todas as telas
     PrototypeNav        — menu flutuante "Telas" (não existe no Figma; é só ferramenta de revisão)
     ComparePlanosModal  — comparativo "Compare nossos planos", aberto pela Odonto 1
+    RedeCredenciadaModal — busca de dentistas, aberta pela Odonto 1
     icons.tsx           — ícones SVG usados no projeto
   demoUser.ts          # persona fictícia usada nas telas pré-preenchidas
+  redeCredenciada.ts   # dentistas fictícios + especialidades da busca de rede
   pages/
     Start.tsx, Odonto1.tsx, Odonto2.tsx, Odonto2_1.tsx, Odonto2_3.tsx,
     Odonto3.tsx, Odonto3_1.tsx, Odonto3_2.tsx, Odonto3_3.tsx, Odonto4.tsx,
@@ -62,6 +64,21 @@ Na Odonto 1, o botão "Compare os planos" de cada card abre o comparativo
 assim na loja também). A tabela tem os 23 procedimentos com a cobertura de
 cada plano, cabeçalho fixo ao rolar, rótulos longos cortados em 25 caracteres
 com o texto completo num tooltip, e "Contratar" leva para a cotação.
+
+Ainda na Odonto 1, "Busque a rede credenciada" abre a busca de dentistas —
+outro modal na própria página, com quatro telas encadeadas: busca simples,
+busca avançada, resultados (lista + pins no mapa) e refinar busca, mais o
+painel de detalhe do dentista. Duas diferenças conscientes em relação à loja:
+
+- **O mapa é ilustrativo.** A loja usa Google Maps, que exige chave de API e
+  chamada externa — nada disso cabe num protótipo estático e público. Aqui o
+  mapa é um painel estilizado com os pins nas posições certas, rotulado como
+  "Mapa ilustrativo".
+- **Os dentistas são fictícios** (`src/redeCredenciada.ts`). A busca real
+  devolve profissionais de verdade, com nome, CRO e telefone — dados de
+  terceiros que não podem ir para um repositório público. As especialidades,
+  os campos e as regras (só habilita "Buscar" com localização **e**
+  especialidade) são as da loja.
 
 As telas `3.1`, `3.2` e `3.3` são estados do modal "Características Gerais",
 não etapas do fluxo. No caminho clicável, "Escolher plano" vai direto de
