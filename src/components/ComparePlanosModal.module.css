@@ -1,0 +1,234 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3x);
+  background: rgb(24 25 26 / var(--opacity-high));
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1376px;
+  max-height: 92vh;
+  box-sizing: border-box;
+  padding: var(--space-5x) var(--space-4x) var(--space-3x);
+  background: var(--surface-01);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-3);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-2x);
+  right: var(--space-2x);
+  display: inline-flex;
+  background: none;
+  border: none;
+  padding: var(--space-1x);
+  color: #006fa9;
+}
+
+.title {
+  flex-shrink: 0;
+  margin-bottom: var(--space-4x);
+  padding: 0 var(--space-6x);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+  text-align: center;
+}
+
+/* O corpo rola; o cabeçalho da tabela fica fixo (igual à loja). */
+.tableWrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.cornerCell,
+.planCell {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--surface-01);
+  vertical-align: bottom;
+  padding: var(--space-2x) var(--space-2x) var(--space-3x);
+}
+
+.cornerCell {
+  width: 24%;
+  min-width: 200px;
+  text-align: left;
+  background: #f5f6f8;
+}
+
+.cornerLabel {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+.planCell {
+  display: table-cell;
+  text-align: center;
+  border-left: var(--border-width-xs) solid #dce0e8;
+}
+
+.planName {
+  display: block;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+}
+
+.planPriceRow {
+  display: block;
+  margin-top: var(--space-1x);
+}
+
+.planPrice {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+}
+
+.planPeriod {
+  font-size: var(--font-size-2xs);
+  color: #929eb1;
+}
+
+.contratarButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  margin-top: var(--space-2x);
+  background: var(--cyan-500);
+  border-radius: var(--radius-xs);
+  color: var(--grey-0);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+.row {
+  border-top: var(--border-width-xs) solid #eceef2;
+}
+
+.procCell {
+  display: table-cell;
+  padding: var(--space-2x);
+  text-align: left;
+  font-weight: var(--font-weight-regular);
+  vertical-align: middle;
+}
+
+.procLabel {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.checkCell {
+  padding: var(--space-2x);
+  text-align: center;
+  vertical-align: middle;
+  color: var(--cyan-500);
+  border-left: var(--border-width-xs) solid #eceef2;
+}
+
+/* ---------- tooltip do "?" ---------- */
+.tooltipWrap {
+  position: relative;
+  display: inline-flex;
+  margin-left: var(--space-1x);
+  vertical-align: middle;
+}
+
+.tooltipButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-circular);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 3;
+  width: max-content;
+  max-width: 280px;
+  transform: translateX(-50%);
+  padding: var(--space-1_5x) var(--space-2x);
+  background: #192c50;
+  border-radius: var(--radius-xs);
+  color: var(--grey-0);
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-regular);
+  text-align: left;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border: 6px solid transparent;
+  border-top-color: #192c50;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .modal {
+    padding: var(--space-5x) var(--space-2x) var(--space-2x);
+  }
+
+  .title {
+    font-size: var(--font-size-lg);
+  }
+
+  /* A tabela passa a rolar na horizontal em vez de espremer as colunas. */
+  .table {
+    table-layout: auto;
+    min-width: 720px;
+  }
+
+  .cornerCell {
+    min-width: 180px;
+  }
+}

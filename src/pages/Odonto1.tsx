@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Odonto1.module.css';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
+import { ComparePlanosModal } from '../components/ComparePlanosModal';
 
 import heroImage from '../assets/images/hero-mae-filha-sorrindo.png';
 import iconAtendimentoNacional from '../assets/images/icon-atendimento-nacional.svg';
@@ -124,6 +126,10 @@ const APP_FEATURES = [
 ];
 
 export default function Odonto1() {
+  // O comparativo é um modal aberto na própria página (na loja ele também não
+  // muda de rota — o X só fecha o overlay).
+  const [comparandoPlanos, setComparandoPlanos] = useState(false);
+
   return (
     <section className={styles.page}>
       <div className={`${styles.hero} ${styles.bleed}`}>
@@ -216,7 +222,7 @@ export default function Odonto1() {
                 <Link to="/odonto-2" className={styles.btnPrimary}>
                   Contrate agora
                 </Link>
-                <button type="button" className={styles.btnSecondary}>
+                <button type="button" className={styles.btnSecondary} onClick={() => setComparandoPlanos(true)}>
                   Compare os planos
                 </button>
               </div>
@@ -286,6 +292,8 @@ export default function Odonto1() {
           <img src={appTelaSuperapp} alt="Tela principal do Super App Unimed" className={styles.appPhoneImg} />
         </div>
       </div>
+
+      {comparandoPlanos && <ComparePlanosModal onClose={() => setComparandoPlanos(false)} />}
     </section>
   );
 }

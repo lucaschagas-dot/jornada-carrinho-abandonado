@@ -35,6 +35,7 @@ src/
   components/
     Header, Footer, WhatsAppWidget, PageShell, StepBreadcrumb  — layout comum a todas as telas
     PrototypeNav        — menu flutuante "Telas" (não existe no Figma; é só ferramenta de revisão)
+    ComparePlanosModal  — comparativo "Compare nossos planos", aberto pela Odonto 1
     icons.tsx           — ícones SVG usados no projeto
   demoUser.ts          # persona fictícia usada nas telas pré-preenchidas
   pages/
@@ -55,6 +56,12 @@ O fluxo clicável vai de `/` até `/odonto-5` (Pagamento 4/5) e **para no moment
 em que os dados de pagamento são solicitados**: a tela mostra a escolha entre
 Cartão de Crédito e Pix, mas não há formulário de cartão nem QR de Pix, e o
 botão "Pagar" não tem ação.
+
+Na Odonto 1, o botão "Compare os planos" de cada card abre o comparativo
+"Compare nossos planos" — um modal na própria página, sem mudar de rota (é
+assim na loja também). A tabela tem os 23 procedimentos com a cobertura de
+cada plano, cabeçalho fixo ao rolar, rótulos longos cortados em 25 caracteres
+com o texto completo num tooltip, e "Contratar" leva para a cotação.
 
 As telas `3.1`, `3.2` e `3.3` são estados do modal "Características Gerais",
 não etapas do fluxo. No caminho clicável, "Escolher plano" vai direto de
