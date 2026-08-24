@@ -57,6 +57,10 @@
   font-weight: var(--font-weight-semibold);
 }
 
+.userName {
+  font-weight: var(--font-weight-bold);
+}
+
 @media (max-width: 900px) {
   .nav {
     display: none;

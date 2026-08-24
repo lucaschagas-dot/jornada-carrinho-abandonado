@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { PageShell } from './components/PageShell';
 import { PrototypeNav } from './components/PrototypeNav';
 import { ROUTES } from './routes';
+import { DEMO_USER } from './demoUser';
 
 import Start from './pages/Start';
 import Odonto1 from './pages/Odonto1';
@@ -39,7 +40,7 @@ function App() {
               key={route.path}
               path={route.path}
               element={
-                <PageShell>
+                <PageShell user={route.loggedIn ? DEMO_USER.nomeCurto : undefined}>
                   <Page />
                 </PageShell>
               }

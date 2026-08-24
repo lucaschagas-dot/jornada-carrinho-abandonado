@@ -3,6 +3,8 @@ export type RouteDef = {
   label: string;
   figmaFrame: string;
   figmaNodeId: string;
+  /** Telas em que o cabeçalho aparece logado ("Olá, {nome}" em vez de "Entrar"). */
+  loggedIn?: boolean;
 };
 
 /**
@@ -22,7 +24,7 @@ export const ROUTES: RouteDef[] = [
   { path: '/odonto-3-1', label: 'Odonto 3.1 - Coberturas e carências', figmaFrame: 'Odonto 3.1 - Ver mais sobre coberturas e carencias', figmaNodeId: '1:3417' },
   { path: '/odonto-3-2', label: 'Odonto 3.2 - Coberturas e carências', figmaFrame: 'Odonto 3.2 - Ver mais sobre coberturas e carencias', figmaNodeId: '2:4165' },
   { path: '/odonto-3-3', label: 'Odonto 3.3 - Coberturas e carências', figmaFrame: 'Odonto 3.3 - Ver mais sobre coberturas e carencias', figmaNodeId: '2:5789' },
-  { path: '/odonto-4', label: 'Odonto 4 - Selecionou plano', figmaFrame: 'Odonto 4 - Selecionou plano', figmaNodeId: '2:6775' },
+  { path: '/odonto-4', label: 'Odonto 4 - Selecionou plano', figmaFrame: 'Odonto 4 - Selecionou plano', figmaNodeId: '2:6775', loggedIn: true },
 ];
 
 export function getRouteIndex(path: string): number {

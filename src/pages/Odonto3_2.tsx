@@ -138,7 +138,7 @@ export default function Odonto3_2() {
               </button>
             </div>
 
-            <Link to="/odonto-3-3" className={styles.chooseButton}>
+            <Link to="/odonto-4" className={styles.chooseButton}>
               Escolher plano
             </Link>
           </div>
@@ -147,7 +147,7 @@ export default function Odonto3_2() {
 
       <div className={styles.overlay}>
         <div className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-          <Link to="/odonto-3-1" className={styles.closeButton} aria-label="Voltar">
+          <Link to="/odonto-3" className={styles.closeButton} aria-label="Fechar">
             <CloseIcon />
           </Link>
 

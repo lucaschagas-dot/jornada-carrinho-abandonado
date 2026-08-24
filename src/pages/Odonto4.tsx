@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
+import { DEMO_USER } from '../demoUser';
 import styles from './Odonto4.module.css';
 
 // Ícones inline específicos desta tela (o Figma usa glifos Font Awesome, que
@@ -46,7 +47,9 @@ function VenusIcon({ size = 14 }: { size?: number }) {
 type Sexo = 'masculino' | 'feminino' | null;
 
 export default function Odonto4() {
-  const [sexo, setSexo] = useState<Sexo>(null);
+  // Chega-se aqui já logado e com os dados do cadastro carregados, então os
+  // campos vêm preenchidos (mas continuam editáveis).
+  const [sexo, setSexo] = useState<Sexo>('masculino');
 
   return (
     <section className={styles.wrapper}>
@@ -58,7 +61,9 @@ export default function Odonto4() {
         <div className={styles.infoBox}>
           <InfoCircleIcon size={32} />
           <div className={styles.infoText}>
-            <p>Você está comprando um plano para</p>
+            <p>
+              Você está comprando um plano para <strong className={styles.infoName}>{DEMO_USER.nomeCompleto}</strong>
+            </p>
             <button type="button" className={styles.infoLink}>
               Comprar em nome de outra pessoa <ChevronRightIcon size={8} />
             </button>
@@ -78,6 +83,7 @@ export default function Odonto4() {
               type="text"
               inputMode="numeric"
               placeholder="000.000.000-00"
+              defaultValue={DEMO_USER.cpf}
               autoComplete="off"
               className={styles.input}
             />
@@ -87,7 +93,14 @@ export default function Odonto4() {
             <label htmlFor="nomeTitular" className={styles.label}>
               Nome completo do titular
             </label>
-            <input id="nomeTitular" name="nomeTitular" type="text" autoComplete="name" className={styles.input} />
+            <input
+              id="nomeTitular"
+              name="nomeTitular"
+              type="text"
+              defaultValue={DEMO_USER.nomeCompleto}
+              autoComplete="name"
+              className={styles.input}
+            />
           </div>
 
           <div className={styles.field}>
@@ -100,6 +113,7 @@ export default function Odonto4() {
               type="text"
               inputMode="numeric"
               placeholder="__/__/____"
+              defaultValue={DEMO_USER.dataNascimento}
               autoComplete="bday"
               className={styles.input}
             />
@@ -110,7 +124,7 @@ export default function Odonto4() {
               Estado civil
             </label>
             <div className={styles.selectWrap}>
-              <select id="estadoCivil" name="estadoCivil" defaultValue="" className={styles.select}>
+              <select id="estadoCivil" name="estadoCivil" defaultValue={DEMO_USER.estadoCivil} className={styles.select}>
                 <option value="" disabled hidden></option>
                 <option value="solteiro">Solteiro(a)</option>
                 <option value="casado">Casado(a)</option>
@@ -134,6 +148,7 @@ export default function Odonto4() {
               type="tel"
               inputMode="tel"
               placeholder="(00) 00000-0000"
+              defaultValue={DEMO_USER.celular}
               autoComplete="tel"
               className={styles.input}
             />
@@ -143,7 +158,14 @@ export default function Odonto4() {
             <label htmlFor="email" className={styles.label}>
               Email
             </label>
-            <input id="email" name="email" type="email" autoComplete="email" className={styles.input} />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              defaultValue={DEMO_USER.email}
+              autoComplete="email"
+              className={styles.input}
+            />
           </div>
 
           <div className={styles.field}>
@@ -187,10 +209,11 @@ export default function Odonto4() {
               type="text"
               inputMode="numeric"
               placeholder="00000-000"
+              defaultValue={DEMO_USER.cep}
               autoComplete="postal-code"
               className={styles.input}
             />
-            <p className={styles.addressPreview}>ALAMEDA MINISTRO ROCHA AZEVEDO - CERQUEIRA CESAR, SAO PAULO - SP</p>
+            <p className={styles.addressPreview}>{DEMO_USER.endereco}</p>
           </div>
 
           <div className={styles.field}>
@@ -230,7 +253,9 @@ export default function Odonto4() {
         </Link>
       </div>
 
-      <p className={styles.disclaimer}>*Ao clicar em continuar uma conta será criada com os dados informados.</p>
+      <p className={styles.disclaimer}>
+        *A alteração dos seus dados não garante a atualização do seu cadastro junto à sua singular.
+      </p>
     </section>
   );
 }

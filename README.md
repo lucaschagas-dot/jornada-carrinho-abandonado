@@ -93,6 +93,13 @@ quebrando em GitHub Pages (não depende de rewrite no servidor).
   ícones. Em vez disso, os ícones foram redesenhados como SVG simples
   (`src/components/icons.tsx` + alguns inline por tela) — visualmente
   equivalentes, sem depender de fonte licenciada.
+- **Dados pré-preenchidos**: a tela de Identificação (Odonto 4) chega em
+  estado logado, com os campos já preenchidos. Esses valores ficam em
+  `src/demoUser.ts` e são **fictícios de propósito** — o repositório é
+  público e o protótipo fica no ar, então CPF, celular e e-mail reais não
+  entram no código (uma vez commitados, permanecem no histórico do git mesmo
+  se removidos depois). Para demonstrar com outra persona, edite só esse
+  arquivo.
 - **Imagens**: baixadas do servidor local do Figma Desktop (disponível
   enquanto o app está aberto) e commitadas em `src/assets/images` — o
   protótipo funciona offline e após publicado, sem depender do Figma.

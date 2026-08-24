@@ -165,7 +165,7 @@ export default function Odonto3_3() {
 
       <div className={styles.overlay}>
         <div className={styles.modal} role="dialog" aria-modal="true" aria-label="Características Gerais">
-          <Link to="/odonto-3-2" className={styles.closeButton} aria-label="Fechar">
+          <Link to="/odonto-3" className={styles.closeButton} aria-label="Fechar">
             <CloseIcon />
           </Link>
 

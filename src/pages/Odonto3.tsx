@@ -113,7 +113,7 @@ export default function Odonto3() {
               </Link>
             </div>
 
-            <Link to="/odonto-3-1" className={styles.chooseButton}>
+            <Link to="/odonto-4" className={styles.chooseButton}>
               Escolher plano
             </Link>
           </div>

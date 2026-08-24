@@ -3,7 +3,12 @@ import styles from './Header.module.css';
 import { ChevronDownIcon, UserIcon } from './icons';
 import logoSegurosUnimed from '../assets/images/logo-seguros-unimed.png';
 
-export function Header() {
+type HeaderProps = {
+  /** Quando definido, o cabeçalho mostra "Olá, {user}" no lugar de "Entrar". */
+  user?: string;
+};
+
+export function Header({ user }: HeaderProps) {
   return (
     <header className={styles.bar}>
       <div className={styles.inner}>
@@ -24,8 +29,17 @@ export function Header() {
         </nav>
 
         <button type="button" className={styles.login}>
-          <UserIcon size={14} />
-          Entrar
+          <UserIcon size={user ? 18 : 14} />
+          {user ? (
+            <>
+              <span>
+                Olá, <strong className={styles.userName}>{user}</strong>
+              </span>
+              <ChevronDownIcon />
+            </>
+          ) : (
+            'Entrar'
+          )}
         </button>
       </div>
     </header>

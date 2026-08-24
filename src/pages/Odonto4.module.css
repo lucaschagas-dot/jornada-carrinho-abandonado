@@ -46,6 +46,11 @@
   color: #586880;
 }
 
+.infoName {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
 .infoLink {
   display: inline-flex;
   align-items: center;
@@ -192,16 +197,18 @@
   flex: 1 1 260px;
   max-width: 332px;
   height: 48px;
-  border: none;
+  border: var(--border-width-xs) solid #dce0e8;
   border-radius: var(--radius-xs);
-  background: #dce0e8;
-  color: var(--grey-0);
+  background: var(--surface-01);
+  color: #929eb1;
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
 }
 
 .sexoButtonActive {
-  background: var(--action-bg-primary);
+  border-color: var(--cyan-500);
+  background: #eef8fd;
+  color: var(--cyan-500);
 }
 
 /* ---------- ações ---------- */

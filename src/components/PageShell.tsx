@@ -6,12 +6,14 @@ import styles from './PageShell.module.css';
 
 type PageShellProps = {
   children: ReactNode;
+  /** Nome do usuário logado, repassado ao Header (ver `loggedIn` em routes.ts). */
+  user?: string;
 };
 
-export function PageShell({ children }: PageShellProps) {
+export function PageShell({ children, user }: PageShellProps) {
   return (
     <div className={styles.page}>
-      <Header />
+      <Header user={user} />
       <main className={styles.main}>{children}</main>
       <Footer />
       <WhatsAppWidget />

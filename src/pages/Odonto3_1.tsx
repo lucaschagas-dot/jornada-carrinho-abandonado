@@ -6,7 +6,6 @@ import styles from './Odonto3_1.module.css';
 
 type Plan = {
   id: string;
-  path: string;
   name: string;
   reg: string;
   price: string;
@@ -14,13 +13,10 @@ type Plan = {
   items: string[];
 };
 
-// Mesmos 3 planos exibidos na cotação (Odonto 3). Cada card linka seu
-// "Ver mais sobre coberturas e carências" para a tela de detalhe daquele
-// plano específico (3.1 = Essencial, 3.2 = Pleno, 3.3 = Pleno Ortodontia).
+// Mesmos 3 planos exibidos na cotação (Odonto 3), renderizados atrás do modal.
 const PLANS: Plan[] = [
   {
     id: 'essencial',
-    path: '/odonto-3-1',
     name: 'Odonto Essencial',
     reg: 'Reg. 471.145/14-9',
     price: '33,50',
@@ -39,7 +35,6 @@ const PLANS: Plan[] = [
   },
   {
     id: 'pleno',
-    path: '/odonto-3-2',
     name: 'Odonto Pleno',
     reg: 'Reg. 471.143/14-2',
     price: '58,20',
@@ -53,7 +48,6 @@ const PLANS: Plan[] = [
   },
   {
     id: 'pleno-ortodontia',
-    path: '/odonto-3-3',
     name: 'Odonto Pleno Ortodontia',
     reg: 'Reg. 475.493/16-0',
     price: '141,50',
@@ -184,12 +178,12 @@ export default function Odonto3_1() {
                 ))}
               </ul>
 
-              <Link to={plan.path} className={styles.moreLink}>
+              <Link to="/odonto-3-1" className={styles.moreLink}>
                 Ver mais sobre coberturas e carências <ChevronRightIcon />
               </Link>
             </div>
 
-            <Link to="/odonto-3-2" className={styles.chooseButton}>
+            <Link to="/odonto-4" className={styles.chooseButton}>
               Escolher plano
             </Link>
           </div>
