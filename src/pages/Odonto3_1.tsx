@@ -69,7 +69,33 @@ const PLANS: Plan[] = [
 // Plano cujo modal "Características Gerais" esta tela (3.1) exibe.
 const ACTIVE_PLAN = PLANS[0];
 
-const ACCORDION_SECTIONS = ['Carências', 'Termos e condições'];
+// Conteúdo de referência das telas Odonto 3.2 (Carências) e Odonto 3.3
+// (Termos e condições) — nesta tela os dois accordions abrem no lugar.
+const CARENCIAS = [
+  { label: 'Urgência e diagnóstico: ', valor: '24 horas' },
+  { label: 'Prevenção, radiologia, dentística e cirurgia: ', valor: '60 dias' },
+  { label: 'Periodontia e endodontia: ', valor: '90 dias' },
+  { label: 'Ortodontia, Próteses unitárias e demais procedimentos: ', valor: '180 dias' },
+];
+
+const OPERADORA_ITEM =
+  'A UNIMED SAÚDE E ODONTO, informa para os devidos fins que está registrada na Agência Nacional de Saúde Suplementar – ANS, sob o número 41.680-1, operando com produtos exclusivamente odontológicos.';
+
+const CONTRATANTE_ITEMS = [
+  'Declara que leu o Contrato e respectivos Anexos, de acordo com as características do(s) produto(s) contratado(s), conforme assinalados, não restando assim, dúvidas quanto ao conteúdo de suas cláusulas, especialmente aquelas relativas às coberturas contratadas.',
+  'Declara que todas as informações prestadas são verdadeiras e completas e que não foram omitidas circunstâncias que possam influir na aceitação da referida proposta ou no valor da contraprestação pecuniária (mensalidade).',
+  'Declara que leu e compreendeu o Manual de Orientação para Contratação dos Planos de Saúde (MPS).',
+  'Declara que está ciente e de acordo que o Guia de Leitura Contratual (GLC) está disponível no site www.unimedodonto.com.br',
+  'Declara ser responsável pela veracidade das informações e assume a responsabilidade pelas informações prestadas, ciente que a OPERADORA poderá exigir, a qualquer tempo documentos oficiais que comprovem a legitimidade da CONTRATANTE e de seus beneficiários e outros documentos que se fizerem necessários, por força da legislação vigente.',
+  'Está ciente e concorda que deverá quitar a mensalidade pontualmente e de forma integral para evitar quaisquer prejuízos à utilização dos benefícios e serviços previstos no Contrato de Assistência Odontológica.',
+  'Declara estar ciente que os prazos de carência estão previstos na cláusula VI – Períodos de carência conforme regras estabelecidas no Contrato/Condições Gerais.',
+  'Declara ter ciência de que o Rol de Procedimentos Odontológicos tem sua atualização sob responsabilidade da Agência Nacional de Saúde Suplementar (ANS) e está disponível no site www.ans.gov.br.',
+  'Declara que estar ciente que a renovação deste Contrato é automática e não implica em cobrança de qualquer taxa adicional.',
+  'Está ciente que os Beneficiários Dependentes, deste contrato estão cadastrados no mesmo plano do Beneficiário Titular.',
+  'Declara, ainda, ser responsável pela reparação de eventuais danos, prejuízos e/ou sanções administrativas/judiciais que por ventura seja causados à OPERADORA, em especial por àqueles impostos pela Agência Nacional de Saúde Suplementar (ANS), por qualquer órgão de defesa do consumidor ou mesmo Poder Judiciário, em virtude do não cumprimento das declarações firmadas no presente instrumento.',
+  'Declara estar de acordo e ciente de que os comunicados/notificações realizados pela OPERADORA, através dos e-mails e contatos indicados, são plenamente válidos, para todos os efeitos legais, e assume a obrigação de mantê-lo atualizado, ciente de que a atualização deverá ser comunicada à OPERADORA.',
+  'Declara ciência e concordância, por fim, que na hipótese do CONTRATANTE ser empresário individual que apresentará para a OPERADORA no ato da contratação e anualmente no mês de aniversário do contrato a documentação a seguir descrita: (i) comprovante de constituição como empresário individual extraído dos órgão oficiais (no ato da contratação deverá restar comprovada a constituição como empresário individual a, no mínimo, 06 (seis) meses antes da data da contratação); e (ii) comprovante de regularidade da situação cadastral do Cadastro Nacional da Pessoa Jurídica – CNPJ; (iii) sem prejuízo de outros que venham a substituí-los/complementá-los e que serão objeto de prévia solicitação pela OPERADORA, sob pena de cancelamento do contrato nos termos da regulamentação vigente, no caso de não apresentação da documentação ou a disponibilização da mesma de forma intempestiva, incompleta e/ou ilegível.',
+];
 
 function CheckIcon() {
   return (
@@ -197,25 +223,79 @@ export default function Odonto3_1() {
             </button>
           </div>
 
-          {ACCORDION_SECTIONS.map((label) => {
-            const isOpen = Boolean(openSections[label]);
-            return (
-              <div key={label} className={styles.accordion}>
-                <button
-                  type="button"
-                  className={styles.accordionHeader}
-                  aria-expanded={isOpen}
-                  onClick={() => toggleSection(label)}
-                >
-                  <span className={styles.accordionTitle}>{label}</span>
-                  <ChevronDownIcon
-                    size={24}
-                    className={isOpen ? `${styles.accordionIcon} ${styles.accordionIconOpen}` : styles.accordionIcon}
-                  />
-                </button>
+          <div className={styles.accordion}>
+            <button
+              type="button"
+              className={styles.accordionHeader}
+              aria-expanded={Boolean(openSections['Carências'])}
+              onClick={() => toggleSection('Carências')}
+            >
+              <span className={styles.accordionTitle}>Carências</span>
+              <ChevronDownIcon
+                size={24}
+                className={
+                  openSections['Carências'] ? `${styles.accordionIcon} ${styles.accordionIconOpen}` : styles.accordionIcon
+                }
+              />
+            </button>
+            {openSections['Carências'] && (
+              <div className={styles.accordionBody}>
+                {CARENCIAS.map((item) => (
+                  <p className={styles.accordionRow} key={item.label}>
+                    <span>{item.label}</span>
+                    <strong>{item.valor}</strong>
+                  </p>
+                ))}
               </div>
-            );
-          })}
+            )}
+          </div>
+
+          <div className={styles.accordion}>
+            <button
+              type="button"
+              className={styles.accordionHeader}
+              aria-expanded={Boolean(openSections['Termos e condições'])}
+              onClick={() => toggleSection('Termos e condições')}
+            >
+              <span className={styles.accordionTitle}>Termos e condições</span>
+              <ChevronDownIcon
+                size={24}
+                className={
+                  openSections['Termos e condições']
+                    ? `${styles.accordionIcon} ${styles.accordionIconOpen}`
+                    : styles.accordionIcon
+                }
+              />
+            </button>
+            {openSections['Termos e condições'] && (
+              <div className={styles.accordionBody}>
+                <p className={styles.legalPlanTag}>Plano vendido por Seguros_Unimed</p>
+                <p className={styles.legalDeclaration}>Declaração e termo de responsabilidade</p>
+
+                <div className={styles.legalSection}>
+                  <h3 className={styles.legalSectionTitle}>Operadora</h3>
+                  <ol className={styles.legalList}>
+                    <li className={styles.legalItem}>
+                      <span className={styles.legalNumber}>1.</span>
+                      <span className={styles.legalText}>{OPERADORA_ITEM}</span>
+                    </li>
+                  </ol>
+                </div>
+
+                <div className={styles.legalSection}>
+                  <h3 className={styles.legalSectionTitle}>Contratante</h3>
+                  <ol className={styles.legalList}>
+                    {CONTRATANTE_ITEMS.map((texto, index) => (
+                      <li className={styles.legalItem} key={index}>
+                        <span className={styles.legalNumber}>{index + 1}.</span>
+                        <span className={styles.legalText}>{texto}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

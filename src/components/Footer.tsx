@@ -36,14 +36,14 @@ export function Footer() {
 
           <div className={styles.col}>
             <p className={styles.eyebrow}>CONTATO</p>
-            <p className={styles.colTitle}>Seguros_Unimed</p>
+            <p className={styles.colTitle}>Seguros Unimed</p>
             <div className={styles.contactBlock}>
               <p className={styles.contactLabel}>WhatsApp</p>
-              <p className={styles.contactValue}>(11) 0000-0000</p>
+              <p className={styles.contactValue}>(11) 3265-9934</p>
             </div>
             <div className={styles.contactBlock}>
               <p className={styles.contactLabel}>E-mail</p>
-              <p className={styles.contactValue}>dbm@eou.io</p>
+              <p className={styles.contactValue}>atendimento@corretoraunimed.com.br</p>
             </div>
           </div>
 
