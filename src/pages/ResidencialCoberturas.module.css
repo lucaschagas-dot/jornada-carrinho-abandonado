@@ -1,0 +1,128 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3x);
+  margin-top: var(--space-4x);
+  align-items: stretch;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-3x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  background: var(--surface-01);
+  box-shadow: var(--shadow-level-1);
+}
+
+.cardEscolhido {
+  border-color: var(--cyan-500);
+  box-shadow: var(--shadow-level-2);
+}
+
+.comboNome {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+}
+
+.parcelas {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.mensal {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+}
+
+.anual {
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.anual strong {
+  color: var(--cyan-500);
+}
+
+.listaCoberturas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+  width: 100%;
+  margin-top: var(--space-3x);
+  padding-top: var(--space-3x);
+  border-top: var(--border-width-xs) solid #eceef2;
+  text-align: left;
+}
+
+.itemCobertura {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1x);
+  color: var(--cyan-500);
+}
+
+.itemCobertura svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.itemTitulo {
+  display: block;
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #192c50;
+}
+
+.itemCapital {
+  display: block;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+}
+
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3x);
+  margin-top: var(--space-3x);
+}
+
+/* O link de personalizar fica DEPOIS do Continuar e sem destaque (proposta). */
+.personalizarRodape {
+  margin-top: var(--space-3x);
+  padding-top: var(--space-2x);
+  border-top: var(--border-width-xs) solid #eceef2;
+}
+
+.listaPersonalizar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+  margin-top: var(--space-3x);
+}
+
+.estimativa {
+  margin-top: var(--space-3x);
+  font-size: var(--font-size-xs);
+  color: #586880;
+}
+
+.estimativa strong {
+  font-size: var(--font-size-sm);
+  color: var(--cyan-500);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -75,6 +75,35 @@ e de temas de back-office): assistências marcadas por padrão, coberturas
 default, DPS antes do pagamento, lista de profissões, resgate por WhatsApp e
 internalização de tecnologia.
 
+## Jornadas Residencial e Vida
+
+Levantadas da loja em produção em 24/08/2026, com a mesma estrutura de etapas.
+
+**Residencial (5 etapas)** — Cotação, Coberturas, Identificação, Pagamento, Confirmação.
+Os 3 combos têm a composição e os valores reais (`src/residencial.ts`).
+
+**Vida (10 etapas)** — cotacao, produto, assistencia, composicao, cadastro,
+endereco, beneficiario, dps, pagamento, confirmacao. O protótipo implementa as
+quatro em que a pesquisa mexe (Cotação, Assistências, DPS e Pagamento); as
+demais existem na loja mas não foram construídas aqui.
+
+### Ajustes da pesquisa nessas jornadas
+
+| Ajuste | Onde | Origem na pesquisa |
+| --- | --- | --- |
+| Coberturas essenciais **marcadas por padrão**, com selo "Recomendado" | `ResidencialCoberturas` (personalização) | "Por que que a gente já não deixa tudo marcado? [...] se a pessoa quiser, ela desmarca" |
+| Alerta contextual de tubulação para quem mora em **apartamento** | `ResidencialCoberturas` | "você que mora em apartamento [...] mas se quiser tirar, tá tudo bem" |
+| **Combos em evidência**: "personalizar" virou link discreto **depois** do Continuar | `ResidencialCoberturas` | "o botão de personalizar tá acima do de seguir [...] deixaria menos em evidência" |
+| Assistências de uso amplo **marcadas por padrão** | `VidaAssistencias` | "aquilo que tá marcado, elas vão ter menos vontade de deselecionar" |
+| Assistências de perfil (pet/auto) só aparecem se o **perfil bater**, coletado na cotação | `VidaCotacao` + `VidaAssistencias` | "ele me sugeria assistência para cachorro [...] mas em nenhum momento disse que eu tinha cachorro" |
+| **Saída para profissão não listada** (sugestão de similar ou "Outros") | `VidaCotacao` | "a plataforma não fala nada, fica em silêncio [...] não tem seguro de vida para essa pessoa" |
+| **"Responder depois"** na DPS, com a consequência explícita | `VidaDps` | "já paga aqui e depois você termina de preencher [...] se não preencher, não vai receber a apólice" |
+
+Um achado da navegação que reforça a pesquisa: **"Rompimento de tubulação" só
+existe no Combo 3**, o mais caro (R$ 92,00/mês). Nos combos de entrada ela não
+vem — exatamente o que o Bruno descreveu, porque incluí-la derrubaria a
+comunicação de "a partir de R$ 15".
+
 ## Onde a jornada termina
 
 O fluxo clicável vai de `/` até `/odonto-5` (Pagamento 4/5) e **para no momento

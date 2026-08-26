@@ -36,6 +36,18 @@ export const ROUTES = [
   // Levantada da loja em produção (loja.segurosunimed.com.br), não do Figma.
   // Última tela do protótipo: para no momento em que o pagamento é solicitado.
   { path: '/odonto-5', label: 'Odonto 5 - Pagamento', loggedIn: true },
+
+  // ---------- Seguro Residencial (levantado da loja em 24/08/2026) ----------
+  { path: '/residencial-cotacao', label: 'Residencial 1 - Cotação' },
+  { path: '/residencial-coberturas', label: 'Residencial 2 - Coberturas (combos)' },
+  { path: '/residencial-identificacao', label: 'Residencial 3 - Identificação' },
+  { path: '/residencial-pagamento', label: 'Residencial 4 - Pagamento' },
+
+  // ---------- Seguro de Vida (jornada de 10 etapas) ----------
+  { path: '/vida-cotacao', label: 'Vida 1 - Cotação' },
+  { path: '/vida-assistencias', label: 'Vida 3 - Assistências' },
+  { path: '/vida-dps', label: 'Vida 8 - Declaração de Saúde' },
+  { path: '/vida-pagamento', label: 'Vida 9 - Pagamento' },
 ] as const satisfies readonly RouteDef[];
 
 /**

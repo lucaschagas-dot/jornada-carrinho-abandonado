@@ -1,0 +1,354 @@
+/*
+ * Estilos compartilhados pelas telas das jornadas Residencial e Vida.
+ * Seguem os mesmos tokens e as mesmas medidas já usadas nas telas do Odonto —
+ * a ideia é que as três jornadas pareçam o mesmo produto.
+ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--space-5x);
+  padding-bottom: var(--space-10x);
+}
+
+.title {
+  margin-top: var(--space-4x);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.subtitle {
+  margin-top: var(--space-1x);
+  max-width: 62ch;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.pergunta {
+  margin-top: var(--space-4x);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+}
+
+/* ---------- card / campos ---------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3x);
+  width: 100%;
+  margin-top: var(--space-3x);
+  padding: var(--space-4x);
+  box-sizing: border-box;
+  background: var(--surface-01);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+}
+
+.linhaCampos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3x);
+  width: 100%;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-semibold);
+  color: #586880;
+}
+
+.input,
+.select {
+  width: 100%;
+  margin-top: var(--space-1x);
+  padding: 0 0 var(--space-1x);
+  border: none;
+  border-bottom: var(--border-width-xs) solid #dce0e8;
+  outline: none;
+  background: transparent;
+  box-sizing: border-box;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  color: var(--text-label);
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: var(--space-3x);
+}
+
+.input::placeholder {
+  color: #929eb1;
+}
+
+.selectWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.selectIcon {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  color: #586880;
+  pointer-events: none;
+}
+
+.enderecoPreview {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #006fa9;
+}
+
+/* ---------- par de botões tipo toggle (Casa/Apartamento, Sim/Não…) ---------- */
+.toggleGrupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2x);
+  margin-top: var(--space-2x);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1x);
+  flex: 0 1 220px;
+  min-width: 140px;
+  height: 48px;
+  padding: 0 var(--space-3x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  background: var(--surface-01);
+  color: var(--text-description);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.toggleAtivo {
+  border-color: var(--cyan-500);
+  background: #eef8fd;
+  color: #006fa9;
+}
+
+/* ---------- checkbox ---------- */
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2x);
+  padding: var(--space-2x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  text-align: left;
+}
+
+.checkRowMarcada {
+  border-color: var(--cyan-500);
+  background: #f7fcfe;
+}
+
+.checkbox {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--cyan-500);
+}
+
+.checkTexto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  min-width: 0;
+}
+
+.checkTitulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.checkDescricao {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.selo {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 1px var(--space-1x);
+  border-radius: var(--radius-circular);
+  background: #eef8fd;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+}
+
+.alerta {
+  display: flex;
+  gap: var(--space-1x);
+  margin-top: var(--space-1x);
+  padding: var(--space-1x) var(--space-2x);
+  border-left: 3px solid var(--cyan-500);
+  background: #f2f9fd;
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+/* ---------- ações ---------- */
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2x);
+  margin-top: var(--space-4x);
+}
+
+.botaoPrimario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  height: 48px;
+  padding: 0 var(--space-4x);
+  border: none;
+  border-radius: var(--radius-xs);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+}
+
+.botaoPrimario:disabled {
+  background: #dce0e8;
+  color: #5c6880;
+  cursor: default;
+}
+
+.botaoSecundario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 var(--space-3x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  background: var(--surface-01);
+  color: var(--text-heading);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.linkDiscreto {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-size-2xs);
+  color: var(--text-description);
+  text-decoration: underline;
+}
+
+.legal {
+  margin-top: var(--space-2x);
+  max-width: 72ch;
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.avisoAtencao {
+  display: flex;
+  gap: var(--space-1x);
+  margin-top: var(--space-2x);
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+/* ---------- coluna com resumo (Vida) ---------- */
+.colunas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--space-6x);
+  margin-top: var(--space-4x);
+}
+
+.principal {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.resumo {
+  align-self: start;
+  padding: var(--space-3x);
+  background: var(--surface-01);
+  border-top: 4px solid var(--cyan-500);
+  border-radius: 0 0 var(--radius-xs) var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+}
+
+.resumoTitulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.resumoLinha {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.resumoTotal {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  margin-top: var(--space-2x);
+  padding-top: var(--space-2x);
+  border-top: var(--border-width-xs) solid #dce0e8;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.resumoVazio {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+}
+
+@media (max-width: 900px) {
+  .colunas {
+    grid-template-columns: 1fr;
+  }
+
+  .botaoPrimario {
+    width: 100%;
+    min-width: 0;
+  }
+}

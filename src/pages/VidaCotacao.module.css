@@ -1,0 +1,81 @@
+.buscaProfissao {
+  position: relative;
+  max-width: 520px;
+  margin-top: var(--space-2x);
+}
+
+.opcoes {
+  list-style: none;
+  margin: var(--space-1x) 0 0;
+  padding: var(--space-1x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  background: var(--surface-01);
+  box-shadow: var(--shadow-level-1);
+}
+
+.opcao {
+  display: block;
+  width: 100%;
+  padding: var(--space-1x);
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: var(--font-size-xs);
+  color: var(--text-label);
+}
+
+/* Saída para profissão não listada (proposta da pesquisa). */
+.semResultado {
+  margin-top: var(--space-2x);
+  padding: var(--space-2x);
+  border-left: 3px solid var(--cyan-500);
+  background: #f2f9fd;
+}
+
+.semResultadoTitulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.semResultadoTexto {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.sugestoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1x);
+  margin-top: var(--space-1x);
+}
+
+.sugestao {
+  padding: var(--space-half) var(--space-2x);
+  border: var(--border-width-xs) solid var(--cyan-500);
+  border-radius: var(--radius-circular);
+  background: var(--surface-01);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+}
+
+.linkInline {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+  text-decoration: underline;
+}
+
+.perguntaMenor {
+  margin-top: var(--space-3x);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}

@@ -52,6 +52,7 @@ const PRODUTOS: Produto[] = [
       'Um seguro residencial completo que preserva o seu patrimônio contra os imprevistos do dia a dia.',
     preco: 'R$ 15,00',
     periodo: '/mês',
+    to: '/residencial-cotacao',
   },
   {
     id: 'vida',
@@ -62,6 +63,7 @@ const PRODUTOS: Produto[] = [
       'Um seguro completo para garantir a sua segurança e tranquilidade e também de quem você ama sem se preocupar.',
     preco: 'R$ 35,00',
     periodo: '/mês',
+    to: '/vida-cotacao',
   },
   {
     id: 'acidentes-pessoais',

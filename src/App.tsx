@@ -19,6 +19,16 @@ import Odonto4 from './pages/Odonto4';
 import Odonto5 from './pages/Odonto5';
 import OdontoLogin from './pages/OdontoLogin';
 
+import ResidencialCotacao from './pages/ResidencialCotacao';
+import ResidencialCoberturas from './pages/ResidencialCoberturas';
+import ResidencialIdentificacao from './pages/ResidencialIdentificacao';
+import ResidencialPagamento from './pages/ResidencialPagamento';
+
+import VidaCotacao from './pages/VidaCotacao';
+import VidaAssistencias from './pages/VidaAssistencias';
+import VidaDps from './pages/VidaDps';
+import VidaPagamento from './pages/VidaPagamento';
+
 const PAGES: Record<RoutePath, ComponentType> = {
   '/': Start,
   '/odonto-1': Odonto1,
@@ -32,6 +42,16 @@ const PAGES: Record<RoutePath, ComponentType> = {
   '/odonto-4': Odonto4,
   '/odonto-login': OdontoLogin,
   '/odonto-5': Odonto5,
+
+  '/residencial-cotacao': ResidencialCotacao,
+  '/residencial-coberturas': ResidencialCoberturas,
+  '/residencial-identificacao': ResidencialIdentificacao,
+  '/residencial-pagamento': ResidencialPagamento,
+
+  '/vida-cotacao': VidaCotacao,
+  '/vida-assistencias': VidaAssistencias,
+  '/vida-dps': VidaDps,
+  '/vida-pagamento': VidaPagamento,
 };
 
 function App() {
