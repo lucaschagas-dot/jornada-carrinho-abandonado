@@ -250,8 +250,8 @@ export default function Odonto4() {
             Dependentes ({dependentes} de {dependentes})
           </p>
           <p className={styles.dependentesNota}>
-            Você informou {rotuloPessoas(pessoas)} no início da cotação, então o valor já mostrado
-            inclui todo mundo.
+            Você informou {rotuloPessoas(pessoas)} no início da cotação, então o total mostrado
+            na cotação já contava com todo mundo.
           </p>
           <ul className={styles.dependentesLista}>
             {Array.from({ length: dependentes }, (_, i) => (

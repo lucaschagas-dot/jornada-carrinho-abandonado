@@ -25,7 +25,8 @@ function BundleIcon() {
 type Plano = {
   nome: string;
   registro: string;
-  /** Mensalidade por pessoa. O card mostra o total (preço x nº de pessoas). */
+  /** Mensalidade por pessoa — é o valor em destaque no card. O total (preço x
+   *  nº de pessoas) aparece logo abaixo, em segundo plano. */
   preco: number;
   destaque?: string;
   recursos: string[];
@@ -82,7 +83,7 @@ export default function Odonto3() {
       {/* Proposta da pesquisa: manter o nº de pessoas visível e editável aqui,
           com o preço já somando todo mundo. */}
       <div className={styles.pessoasDestaque}>
-        <SeletorPessoas variante="destaque" descricao="Os valores abaixo já consideram todas as pessoas do plano." />
+        <SeletorPessoas variante="destaque" descricao="Cada card mostra o valor por pessoa e, abaixo, o total do plano." />
       </div>
 
       <div className={styles.grid}>
@@ -94,22 +95,23 @@ export default function Odonto3() {
                 <p className={styles.planReg}>{plano.registro}</p>
               </div>
 
+              {/* O número grande é sempre o valor por pessoa: é ele que a pessoa
+                  compara entre os planos. O total do plano vem logo abaixo, para
+                  não haver surpresa no fim — mas sem roubar o destaque. */}
               <div className={styles.priceBlock}>
                 <p className={styles.priceRow}>
                   <span className={styles.currency}>R$</span>
                   <span className={styles.priceValue}>
-                    {(plano.preco * pessoas).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    {plano.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </span>
                 </p>
                 {pessoas > 1 && (
                   <p className={styles.priceBreakdown}>
-                    {formatarBRL(plano.preco)} por pessoa · {rotuloPessoas(pessoas)}
+                    {formatarBRL(plano.preco * pessoas)} no total · {rotuloPessoas(pessoas)}
                   </p>
                 )}
                 <p className={styles.priceNote}>Vigência de 1 Ano</p>
-                <p className={styles.priceNote}>
-                  {pessoas > 1 ? 'Mensais no total, sem coparticipação' : 'Mensais por pessoa sem coparticipação'}
-                </p>
+                <p className={styles.priceNote}>Mensais por pessoa sem coparticipação</p>
               </div>
 
               <ul className={styles.features}>

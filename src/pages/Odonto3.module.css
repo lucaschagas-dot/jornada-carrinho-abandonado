@@ -196,9 +196,12 @@
   margin-top: var(--space-3x);
 }
 
+/* Total do plano: informação de apoio ao número grande (valor por pessoa).
+   Fica legível, mas um degrau abaixo na hierarquia — 16px contra 40px. */
 .priceBreakdown {
   margin-top: var(--space-half);
-  font-size: var(--font-size-2xs);
+  margin-bottom: var(--space-half);
+  font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   color: #006fa9;
 }

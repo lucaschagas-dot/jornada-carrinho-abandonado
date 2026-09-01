@@ -63,7 +63,7 @@ proposta e o que é réplica da loja:
 
 | Proposta | Onde está | Origem na pesquisa |
 | --- | --- | --- |
-| Perguntar o **nº de pessoas no início**, com o preço já somando todo mundo | `SeletorPessoas` em Odonto 2.3 e Odonto 3; dependentes previstos em Odonto 4; total em Odonto 5 | "se eu já começasse perguntando quantas pessoas... ele nem viu os 33, ficaria menos frustrado" |
+| Perguntar o **nº de pessoas no início**, com o total do plano já visível na cotação (o destaque do card segue sendo o valor por pessoa, que é o que se compara entre planos) | `SeletorPessoas` em Odonto 2.3 e Odonto 3; dependentes previstos em Odonto 4; total em Odonto 5 | "se eu já começasse perguntando quantas pessoas... ele nem viu os 33, ficaria menos frustrado" |
 | **Carrinho de cotações visível sem login** | `Header` (botão "Minhas cotações" + "Retomar cotação") | "essa coisa do carrinho é universal... e a gente não tem isso" |
 | **Selo de corretora parceira** mantendo a marca principal | `Header` | "manter a marca da Seguros... com um selo menor, em vez de substituir o logo" |
 | **Login como etapa com URL própria**, sem "x" e sem senha | `OdontoLogin` (`/odonto-login`) | "hoje o login é um popup... não consegui medir quem trava no login" |

@@ -25,7 +25,9 @@ type SeletorPessoasProps = {
 
 /**
  * "Para quantas pessoas?" — proposta da pesquisa de carrinho abandonado:
- * perguntar isso no começo, para o preço mostrado já ser o total real.
+ * perguntar isso no começo, para o total do plano já aparecer na cotação em vez
+ * de virar surpresa no fim. Nos cards, o destaque continua sendo o valor por
+ * pessoa (é o que se compara entre planos); o total vem logo abaixo.
  */
 export function SeletorPessoas({ variante = 'campo', descricao }: SeletorPessoasProps) {
   const { pessoas, setPessoas } = useJornada();
