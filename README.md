@@ -30,10 +30,15 @@ npm run preview  # serve o build de produção localmente
 ```
 src/
   tokens.css          # design tokens do DSU (Design System Unimed) — cores, espaçamento, tipografia
-  routes.ts            # ordem das telas da jornada — fonte única de verdade para navegação
+  routes.ts            # telas da jornada + etapa e tela anterior de cada uma — fonte única de verdade
+  jornadas.ts          # etapas de cada jornada (Odonto 5, Residencial 5, Vida 10)
   App.tsx              # <HashRouter> + rotas, cada uma envolvida em <PageShell>
   components/
-    Header, Footer, WhatsAppWidget, PageShell, StepBreadcrumb  — layout comum a todas as telas
+    Header, Footer, WhatsAppWidget, PageShell  — layout comum a todas as telas
+    TopoEtapa           — faixa de topo: botão "Voltar" + indicador de etapas
+    StepBreadcrumb      — trilha de bolinhas numeradas da jornada
+    FormasPagamento     — seleção de forma de pagamento, comum às três jornadas
+    CarrosselBeneficios — benefícios do plano girando no hero da Odonto 1
     PrototypeNav        — menu flutuante "Telas" (não existe no Figma; é só ferramenta de revisão)
     ComparePlanosModal  — comparativo "Compare nossos planos", aberto pela Odonto 1
     RedeCredenciadaModal — busca de dentistas, aberta pela Odonto 1
@@ -67,6 +72,8 @@ proposta e o que é réplica da loja:
 | **Carrinho de cotações visível sem login** | `Header` (botão "Minhas cotações" + "Retomar cotação") | "essa coisa do carrinho é universal... e a gente não tem isso" |
 | **Selo de corretora parceira** mantendo a marca principal | `Header` | "manter a marca da Seguros... com um selo menor, em vez de substituir o logo" |
 | **Login como etapa com URL própria**, sem "x" e sem senha | `OdontoLogin` (`/odonto-login`) | "hoje o login é um popup... não consegui medir quem trava no login" |
+| **Indicador de etapas e botão "Voltar"** em toda a jornada | `TopoEtapa` + `StepBreadcrumb`, montados pelo `PageShell` | quem não sabe quanto falta desiste no meio, e sem saída visível a única alternativa é fechar a aba |
+| **Cartão de crédito primeiro e já aberto** no pagamento | `FormasPagamento`, usado pelas três jornadas | forma de pagamento que o negócio quer priorizar |
 
 O estado que liga essas telas fica em `src/jornada.tsx`.
 
@@ -104,12 +111,84 @@ existe no Combo 3**, o mais caro (R$ 92,00/mês). Nos combos de entrada ela não
 vem — exatamente o que o Bruno descreveu, porque incluí-la derrubaria a
 comunicação de "a partir de R$ 15".
 
+## Hero da Odonto 1
+
+O topo da página foi refeito a partir de uma referência de layout trazida pelo
+time: título grande, preço e CTA à esquerda, e um **card flutuante à direita**
+sobre um fundo com faixas diagonais suaves.
+
+No lugar da foto (e do mockup de cartão de crédito que a referência traz), o
+card é um **carrossel dos quatro principais benefícios** — Atendimento
+Nacional, Rede credenciada, Teleorientação Médica 24h e Desconto em farmácias.
+Eles estavam numa grade no meio da página, onde só chegava quem rolava; essa
+grade **deixou de existir**. No hero eles ficam ao lado do preço, que é o par
+de informações que pesa na decisão.
+
+Detalhes:
+
+- O avanço é automático a cada 6s, mas **pausa no hover e no foco** e não
+  acontece para quem pediu menos movimento no sistema
+  (`prefers-reduced-motion`). Setas e bolinhas continuam funcionando sempre.
+- O texto da **Teleorientação foi condensado**: o da loja tem ~400 caracteres
+  (um parágrafo inteiro) e deixaria os outros três cards com um vazio embaixo.
+  O texto integral está preservado em `TELEORIENTACAO_TEXTO_LOJA`, em
+  `Odonto1.tsx`, caso o time queira o card longo de volta.
+- A foto `hero-mae-filha-sorrindo.png` continua em `src/assets/images`, sem uso,
+  se for preciso reverter.
+- O **balão do WhatsApp desceu para o rodapé da janela**. Na loja ele fica
+  colado no topo da lateral direita; ali ele cobria a trilha de etapas e depois
+  o card do carrossel — qualquer conteúdo nos 250 px da direita ficava atrás
+  dele. No rodapé nunca disputa espaço, e é onde a versão mobile já o punha.
+
+## Faixa de topo: "Voltar" + indicador de etapas
+
+Toda tela de jornada abre com a mesma faixa: **"Voltar"** à esquerda e a
+**trilha de bolinhas numeradas** ao centro (`TopoEtapa`). Ela é montada pelo
+`PageShell` a partir de `jornada`, `etapa` e `anterior` em `routes.ts` — não é
+repetida em cada página, então nenhuma tela nova nasce sem saída e sem
+progresso.
+
+Detalhes que valem saber:
+
+- **Etapa vencida** aparece com check, a **atual** com o número num anel ciano,
+  as **futuras** em cinza.
+- A trilha mostra a jornada **inteira**, inclusive etapas que existem na loja
+  mas não foram construídas aqui (Vida tem 10 etapas e 4 telas). Encurtar a
+  trilha esconderia justamente o que a pesquisa apontou.
+- Em jornadas com mais de 6 etapas, só a etapa atual mantém o rótulo visível —
+  10 nomes lado a lado ficam ilegíveis. Abaixo de 640px nenhum rótulo aparece:
+  quem informa a posição é a linha "· etapa 4 de 5" e o título da tela. Os
+  nomes continuam no HTML para leitor de tela.
+- O `Voltar` usa paths fixos (`anterior` em `routes.ts`), não o histórico do
+  navegador — assim funciona igual para quem pulou direto pelo menu "Telas".
+  Na Vida, o `Voltar` da DPS cai em Assistências, porque as etapas 4 a 7 não
+  existem no protótipo.
+
+## Pagamento
+
+As três jornadas usam o mesmo bloco (`FormasPagamento`), inspirado numa
+referência de checkout trazida pelo time:
+
+- **Cartão de crédito é a primeira opção e já vem aberta**, com os campos à
+  vista — é a forma que o negócio quer priorizar, e deixá-la selecionada poupa
+  um clique e mostra de cara o que vai ser pedido.
+- O botão traz o **valor final dentro dele** ("Pagar R$ 33,50/mês").
+- **O aceite dos termos não vem marcado.** A referência de design traz o
+  checkbox pré-marcado; consentimento pré-marcado não é consentimento, então
+  aqui o "Pagar" só habilita depois do aceite explícito.
+- O botão usa `--cyan-700` e não o ciano da marca: branco sobre `#009EDB` dá
+  2,4:1, e a ação principal da etapa de pagamento não pode ser o texto menos
+  legível da tela. Assim fica 6,6:1 (e 5,3:1 desabilitado).
+- As bandeiras são **chips de texto**, não a arte oficial — são marcas de
+  terceiros.
+
 ## Onde a jornada termina
 
 O fluxo clicável vai de `/` até `/odonto-5` (Pagamento 4/5) e **para no momento
-em que os dados de pagamento são solicitados**: a tela mostra a escolha entre
-Cartão de Crédito e Pix, mas não há formulário de cartão nem QR de Pix, e o
-botão "Pagar" não tem ação.
+da confirmação do pagamento**: os campos de cartão existem visualmente, mas são
+inertes — não há back-end, nada é validado nem enviado, o `autoComplete="off"`
+evita que o navegador despeje um cartão real num protótipo público, e o botão
+"Pagar" não tem ação.
 
 Na Odonto 1, o botão "Compare os planos" de cada card abre o comparativo
 "Compare nossos planos" — um modal na própria página, sem mudar de rota (é
@@ -144,7 +223,9 @@ como referência dos frames do Figma.
 Quando uma tela nova for desenhada no Figma:
 
 1. Adicione uma entrada em `src/routes.ts` (`ROUTES`) na posição correta da
-   jornada — path, label, nome do frame no Figma e nodeId.
+   jornada — path, label, nome do frame no Figma e nodeId, mais `jornada`,
+   `etapa` e `anterior` (é o que faz a tela nascer já com indicador de etapas
+   e botão "Voltar").
 2. Crie `src/pages/NomeDaTela.tsx` (siga o padrão dos arquivos existentes:
    só o conteúdo único da tela, sem Header/Footer — isso já vem do
    `PageShell` em `App.tsx`).

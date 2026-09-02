@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { DEMO_USER } from '../demoUser';
 import s from './jornadaComum.module.css';
 
@@ -10,8 +9,6 @@ export default function ResidencialIdentificacao() {
 
   return (
     <section className={s.wrapper}>
-      <StepBreadcrumb category="Seguro Residencial" step="Identificação" current={3} total={5} />
-
       <h1 className={s.title}>Identificação</h1>
 
       <div className={s.card}>

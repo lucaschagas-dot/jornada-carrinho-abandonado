@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { SeletorPessoas } from '../components/SeletorPessoas';
 import styles from './Odonto2_3.module.css';
 
 export default function Odonto2_3() {
   return (
     <section className={styles.wrapper}>
-      <StepBreadcrumb category="Plano Odontológico" step="Cotação" current={1} total={5} />
-
       <h1 className={styles.title}>Cotação</h1>
 
       <div className={styles.form}>

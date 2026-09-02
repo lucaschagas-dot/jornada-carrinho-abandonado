@@ -1,0 +1,64 @@
+.topo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2x);
+  width: 100%;
+  padding-top: var(--space-4x);
+}
+
+.ladoEsquerdo,
+.ladoDireito {
+  flex: 0 0 auto;
+  min-width: 96px;
+}
+
+.centro {
+  flex: 1;
+  min-width: 0;
+}
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1x);
+  padding: var(--space-1x) var(--space-2x) var(--space-1x) var(--space-1_5x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-circular);
+  background: var(--surface-01);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.voltar:hover {
+  border-color: var(--cyan-500);
+  background: var(--cyan-0);
+}
+
+.voltar:focus-visible {
+  outline: 2px solid var(--cyan-500);
+  outline-offset: 2px;
+}
+
+/* No celular o "Voltar" sai da mesma linha da trilha e fica acima dela: lado a
+   lado, ou empurrava as bolinhas para fora da tela, ou ficava pendurado entre
+   as duas linhas do indicador. */
+@media (max-width: 640px) {
+  .topo {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2x);
+  }
+
+  .ladoEsquerdo,
+  .ladoDireito {
+    min-width: 0;
+  }
+
+  .ladoDireito {
+    display: none;
+  }
+}

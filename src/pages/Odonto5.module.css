@@ -33,58 +33,6 @@
 }
 
 /* ---------- formas de pagamento ---------- */
-.methodCard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-2x);
-  margin-top: var(--space-3x);
-  padding: var(--space-3x);
-  background: var(--surface-01);
-  border-radius: var(--radius-xs);
-  box-shadow: var(--shadow-level-1);
-}
-
-.methodButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1x);
-  flex: 0 1 254px;
-  height: 53px;
-  border: var(--border-width-xs) solid #dce0e8;
-  border-radius: var(--radius-xs);
-  background: var(--surface-01);
-  color: #929eb1;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-}
-
-.methodButtonActive {
-  border-color: var(--cyan-500);
-  background: #eef8fd;
-  color: var(--cyan-500);
-}
-
-.payButton {
-  align-self: flex-start;
-  min-width: 310px;
-  height: 48px;
-  margin-top: var(--space-4x);
-  padding: 0 var(--space-6x);
-  border: none;
-  border-radius: var(--radius-xs);
-  background: var(--cyan-500);
-  color: var(--grey-0);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-}
-
-.payButton:disabled {
-  background: #dce0e8;
-  color: var(--grey-0);
-}
-
 /* ---------- resumo (coluna direita) ---------- */
 .sidebar {
   border-left: var(--border-width-xs) solid #dce0e8;
@@ -278,16 +226,5 @@
 
   .summaryBox {
     max-height: none;
-  }
-}
-
-@media (max-width: 640px) {
-  .methodButton {
-    flex: 1 1 100%;
-  }
-
-  .payButton {
-    width: 100%;
-    min-width: 0;
   }
 }

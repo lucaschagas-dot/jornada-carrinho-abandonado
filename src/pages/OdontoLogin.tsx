@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { DEMO_USER } from '../demoUser';
 import styles from './OdontoLogin.module.css';
 
@@ -20,7 +19,10 @@ function MailIcon() {
  * Hoje o login é um popup com "x": gera atrito (quem esquece a senha cai numa
  * recuperação que costuma falhar e desiste) e, por não ter URL, impede separar
  * no funil quem abandonou no login de quem abandonou na identificação.
- * Aqui não há "x" — sair é uma escolha explícita, e a rota é mensurável.
+ *
+ * Aqui não há "x" nem atalho para pular: identificar-se é obrigatório para
+ * comprar (é assim na loja também), então a etapa vira uma rota mensurável em
+ * vez de um popup invisível no funil. O atrito atacado é a senha, não o login.
  */
 export default function OdontoLogin() {
   const [email, setEmail] = useState(DEMO_USER.email);
@@ -28,8 +30,6 @@ export default function OdontoLogin() {
 
   return (
     <section className={styles.wrapper}>
-      <StepBreadcrumb category="Plano Odontológico" step="Identificação" current={3} total={5} />
-
       <h1 className={styles.title}>Identifique-se para continuar</h1>
       <p className={styles.subtitle}>
         Sua cotação já está salva. Entrar agora evita começar do zero se você voltar depois.
@@ -89,15 +89,6 @@ export default function OdontoLogin() {
             </button>
           </>
         )}
-      </div>
-
-      <div className={styles.saidaRow}>
-        <Link to="/odonto-4" className={styles.saidaLink}>
-          Continuar sem entrar
-        </Link>
-        <p className={styles.saidaNota}>
-          Você pode seguir sem entrar, mas a cotação não fica salva na sua conta.
-        </p>
       </div>
     </section>
   );

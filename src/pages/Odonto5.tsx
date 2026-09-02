@@ -1,34 +1,11 @@
 import { useState } from 'react';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
+import { CartaoIcon, FormasPagamento, PixIcon, type OpcaoPagamento } from '../components/FormasPagamento';
 import { ChevronDownIcon } from '../components/icons';
 import { DEMO_USER } from '../demoUser';
 import { formatarBRL, rotuloPessoas, useJornada } from '../jornada';
 import styles from './Odonto5.module.css';
 
 // Ícones inline desta tela (o site usa Font Awesome, que não faz parte do projeto).
-function CreditCardIcon() {
-  return (
-    <svg width="20" height="16" viewBox="0 0 20 16" fill="none" aria-hidden="true">
-      <rect x="1" y="1" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M1 5.5h18" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M4 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function PixIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d="M8 1.2 14.8 8 8 14.8 1.2 8 8 1.2Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function EditIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -51,7 +28,17 @@ function DocumentIcon() {
   );
 }
 
-type FormaPagamento = 'cartao' | 'pix' | null;
+// Cartão de crédito em primeiro lugar e já aberto: é a forma que o negócio
+// quer priorizar (ver FormasPagamento).
+const OPCOES: OpcaoPagamento[] = [
+  {
+    id: 'cartao',
+    rotulo: 'Cartão de Crédito',
+    descricao: 'Pague com segurança usando seu cartão Visa, Mastercard, Elo ou Amex.',
+    icone: <CartaoIcon />,
+  },
+  { id: 'pix', rotulo: 'Pix', descricao: 'Pagamento à vista, confirmado na hora.', icone: <PixIcon /> },
+];
 
 const CARENCIAS = [
   'Urgência e diagnóstico - 24 horas',
@@ -76,7 +63,6 @@ const GUIAS = ['Baixar Contrato', 'Baixar Manual de Contratação', 'Baixar Guia
 type SecaoResumo = 'plano' | 'titular' | 'guias';
 
 export default function Odonto5() {
-  const [forma, setForma] = useState<FormaPagamento>(null);
   const { pessoas, planoEscolhido } = useJornada();
 
   // Fallback para quem abre /odonto-5 direto pelo menu "Telas", sem ter
@@ -93,38 +79,12 @@ export default function Odonto5() {
 
   return (
     <section className={styles.wrapper}>
-      <StepBreadcrumb category="Plano Odontológico" step="Pagamento" current={4} total={5} />
-
       <div className={styles.columns}>
         <div className={styles.main}>
           <h1 className={styles.title}>Pagamento</h1>
           <p className={styles.subtitle}>Escolha a forma de pagamento e adicione os dados financeiros.</p>
 
-          <div className={styles.methodCard}>
-            <button
-              type="button"
-              aria-pressed={forma === 'cartao'}
-              className={`${styles.methodButton} ${forma === 'cartao' ? styles.methodButtonActive : ''}`}
-              onClick={() => setForma('cartao')}
-            >
-              <CreditCardIcon /> Cartão de Crédito
-            </button>
-            <button
-              type="button"
-              aria-pressed={forma === 'pix'}
-              className={`${styles.methodButton} ${forma === 'pix' ? styles.methodButtonActive : ''}`}
-              onClick={() => setForma('pix')}
-            >
-              <PixIcon /> Pix
-            </button>
-          </div>
-
-          {/* O protótipo termina aqui de propósito: reproduzimos a jornada até o
-              momento em que os dados de pagamento são solicitados, sem os campos
-              de cartão/Pix. "Pagar" não tem ação. */}
-          <button type="button" className={styles.payButton} disabled={forma === null}>
-            Pagar
-          </button>
+          <FormasPagamento opcoes={OPCOES} total={total} periodicidade="/mês" />
         </div>
 
         <aside className={styles.sidebar}>

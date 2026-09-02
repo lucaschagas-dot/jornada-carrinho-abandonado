@@ -1,20 +1,145 @@
-.breadcrumb {
+.barra {
   display: flex;
-  justify-content: flex-end;
-  align-items: baseline;
-  gap: var(--space-1x);
-  font-size: var(--font-size-3xs);
-  font-weight: var(--font-weight-semibold);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1_5x);
+  width: 100%;
 }
 
-.category {
+.jornada {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: #929eb1;
 }
 
-.step {
-  color: var(--cyan-300);
+.contador {
+  font-weight: var(--font-weight-regular);
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-.total {
-  color: #dce0e8;
+.trilha {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 880px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.etapa {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+  min-width: 0;
+}
+
+/* Só as etapas depois da primeira crescem: é dentro delas que mora a linha
+   que liga uma bolinha à anterior. */
+.etapa:not(:first-child) {
+  flex: 1;
+}
+
+.conector {
+  flex: 1;
+  min-width: var(--space-2x);
+  height: 2px;
+  /* respiro dos dois lados: sem isto a linha encosta no rótulo da etapa
+     anterior e parece um texto riscado. */
+  margin-left: var(--space-1_5x);
+  border-radius: 1px;
+  background: #dce0e8;
+}
+
+/* A linha que chega numa etapa já vencida (ou na atual) fica azul. */
+.concluida .conector,
+.atual .conector {
+  background: #006fa9;
+}
+
+.marcador {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background: var(--surface-01);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: #929eb1;
+}
+
+.concluida .marcador {
+  border-color: #006fa9;
+  background: #006fa9;
+  color: #ffffff;
+}
+
+.atual .marcador {
+  border-width: 2px;
+  border-color: var(--cyan-500);
+  color: #006fa9;
+}
+
+.rotulo {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-sm);
+  white-space: nowrap;
+  color: #929eb1;
+}
+
+.concluida .rotulo {
+  color: #586880;
+}
+
+.atual .rotulo {
+  color: #006fa9;
+}
+
+/* Jornadas longas (Vida tem 10 etapas): manter 10 rótulos lado a lado deixa
+   tudo ilegível, então só a etapa atual mostra o nome. Os demais continuam no
+   HTML para quem navega por leitor de tela. */
+.trilhaCompacta .etapa:not(.atual) .rotulo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .etapa:not(.atual) .rotulo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* No celular nem o rótulo da etapa atual cabe — em 375px ele passava por cima
+   da bolinha seguinte. Quem informa onde a pessoa está é a linha
+   "· etapa 4 de 5" acima da trilha, mais o título da própria tela. */
+@media (max-width: 640px) {
+  .rotulo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }

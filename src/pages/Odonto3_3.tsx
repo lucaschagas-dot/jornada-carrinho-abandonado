@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { ChevronDownIcon, ChevronUpIcon, ChevronRightIcon } from '../components/icons';
 import styles from './Odonto3_3.module.css';
 
@@ -113,8 +112,6 @@ const CONTRATANTE_ITEMS = [
 export default function Odonto3_3() {
   return (
     <section className={styles.page}>
-      <StepBreadcrumb category="Plano Odontológico" step="Produtos" current={2} total={5} />
-
       <h1 className={styles.title}>Produtos</h1>
       <p className={styles.subtitle}>Confira as opções de plano disponíveis para você</p>
 

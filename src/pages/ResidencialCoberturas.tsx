@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { formatarBRL } from '../jornada';
 import {
   ALERTA_APARTAMENTO,
@@ -54,8 +53,6 @@ export default function ResidencialCoberturas() {
 
   return (
     <section className={s.wrapper}>
-      <StepBreadcrumb category="Seguro Residencial" step="Coberturas" current={2} total={5} />
-
       <h1 className={s.title}>Escolha o combo que mais atenda as necessidades da sua residência</h1>
 
       {!personalizando ? (

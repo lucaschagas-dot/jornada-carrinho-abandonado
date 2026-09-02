@@ -1,6 +1,11 @@
 .widget {
   position: fixed;
-  top: 120px;
+  /* Na loja o balão fica preso na lateral, na altura do topo da página. Aqui
+     ele desceu para o rodapé da janela: colado em cima, ele cobria a trilha de
+     etapas e depois o card do carrossel de benefícios — qualquer conteúdo nos
+     250px da direita ficava atrás dele. No rodapé nunca disputa espaço, e é
+     onde a versão mobile já o colocava. */
+  bottom: 24px;
   right: 24px;
   z-index: 40;
   display: flex;
@@ -52,7 +57,6 @@
 
 @media (max-width: 640px) {
   .widget {
-    top: auto;
     bottom: 16px;
     right: 16px;
     border-radius: var(--radius-circular);

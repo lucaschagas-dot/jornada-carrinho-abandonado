@@ -19,6 +19,14 @@ export function ChevronRightIcon({ size = 10, className }: IconProps) {
   );
 }
 
+export function ChevronLeftIcon({ size = 10, className }: IconProps) {
+  return (
+    <svg width={size * 0.6} height={size} viewBox="0 0 6 10" fill="none" className={className} aria-hidden="true">
+      <path d="M5 1 1 5l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export function UserIcon({ size = 16, className }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" fill="none" className={className} aria-hidden="true">

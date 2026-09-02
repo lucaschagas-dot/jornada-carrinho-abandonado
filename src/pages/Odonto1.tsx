@@ -4,8 +4,8 @@ import styles from './Odonto1.module.css';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
 import { ComparePlanosModal } from '../components/ComparePlanosModal';
 import { RedeCredenciadaModal } from '../components/RedeCredenciadaModal';
+import { CarrosselBeneficios, type Beneficio } from '../components/CarrosselBeneficios';
 
-import heroImage from '../assets/images/hero-mae-filha-sorrindo.png';
 import iconAtendimentoNacional from '../assets/images/icon-atendimento-nacional.svg';
 import iconRedeCredenciada from '../assets/images/icon-rede-credenciada.svg';
 import iconTeleorientacaoMedica from '../assets/images/icon-teleorientacao-medica.svg';
@@ -28,7 +28,16 @@ function CheckIcon() {
   );
 }
 
-const VANTAGENS = [
+/**
+ * Principais benefícios do plano. Saíram da grade no meio da página e passaram
+ * a girar no carrossel do hero.
+ *
+ * Os textos são os da loja, com uma exceção: o de Teleorientação tinha ~400
+ * caracteres (um parágrafo inteiro) e foi condensado para caber num card de
+ * hero sem deixar os outros três com um vazio embaixo. O texto integral está
+ * preservado logo abaixo, em TELEORIENTACAO_TEXTO_LOJA.
+ */
+const VANTAGENS: Beneficio[] = [
   {
     icon: iconAtendimentoNacional,
     title: 'Atendimento Nacional',
@@ -43,15 +52,19 @@ const VANTAGENS = [
     icon: iconTeleorientacaoMedica,
     title: 'Teleorientação Médica 24h',
     description:
-      'Pronto atendimento médico a qualquer hora, nas especialidades de Clínica Geral e Pediatria, disponível pelo aplicativo. Permite esclarecer dúvidas, receber orientação e obter o direcionamento adequado com rapidez e praticidade, sem deslocamento, ampliando o cuidado além da saúde bucal com mais comodidade, segurança e valor ao plano odontológico.',
+      'Pronto atendimento médico a qualquer hora nas especialidades de Clínica Geral e Pediatria, pelo aplicativo. Tire dúvidas e receba o direcionamento certo sem sair de casa.',
   },
   {
     icon: iconDescontoFarmacias,
     title: 'Desconto em farmácias',
     description:
-      'Descontos a partir de 20% em medicamentos de marca tarjados e a partir de 30% em medicamentos genéricos tarjados.',
+      'A partir de 20% em medicamentos de marca tarjados e a partir de 30% em medicamentos genéricos tarjados.',
   },
 ];
+
+/** Texto integral da loja, caso o time queira o card longo de volta. */
+export const TELEORIENTACAO_TEXTO_LOJA =
+  'Pronto atendimento médico a qualquer hora, nas especialidades de Clínica Geral e Pediatria, disponível pelo aplicativo. Permite esclarecer dúvidas, receber orientação e obter o direcionamento adequado com rapidez e praticidade, sem deslocamento, ampliando o cuidado além da saúde bucal com mais comodidade, segurança e valor ao plano odontológico.';
 
 const PLANOS_SUBTITLE = 'Valor mensal por pessoa, fixo e sem coparticipação';
 
@@ -157,29 +170,8 @@ export default function Odonto1() {
             </div>
           </div>
 
-          <div className={styles.heroImageWrap}>
-            <img src={heroImage} alt="Mãe e filha sorrindo" className={styles.heroImage} />
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.vantagens}>
-        <div className={styles.vantagensInner}>
-          <div>
-            <p className={styles.eyebrow}>VANTAGENS</p>
-            <h2 className={styles.vantagensTitle}>Principais benefícios do Plano Odontológico</h2>
-          </div>
-
-          <div className={styles.vantagensGrid}>
-            {VANTAGENS.map((item) => (
-              <div key={item.title}>
-                <div className={styles.vantagemIconWrap}>
-                  <img src={item.icon} alt="" className={styles.vantagemIcon} />
-                </div>
-                <h3 className={styles.vantagemTitle}>{item.title}</h3>
-                <p className={styles.vantagemDescription}>{item.description}</p>
-              </div>
-            ))}
+          <div className={styles.heroAside}>
+            <CarrosselBeneficios beneficios={VANTAGENS} />
           </div>
         </div>
       </div>

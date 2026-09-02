@@ -1,0 +1,184 @@
+.palco {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-4x) var(--space-3x) var(--space-5x);
+}
+
+/* Cartas empilhadas atrás do card ativo: dão a mesma profundidade do mockup
+   de referência, sem inventar conteúdo que não existe. */
+.fantasma1,
+.fantasma2 {
+  position: absolute;
+  left: 50%;
+  width: min(100%, 420px);
+  height: 78%;
+  border-radius: var(--radius-md);
+  background: var(--grey-0);
+  pointer-events: none;
+}
+
+.fantasma1 {
+  bottom: var(--space-2x);
+  transform: translateX(-50%) translateY(var(--space-2x));
+  opacity: 0.7;
+  box-shadow: var(--shadow-level-1);
+}
+
+.fantasma2 {
+  bottom: 0;
+  transform: translateX(-50%) translateY(var(--space-4x));
+  opacity: 0.4;
+  box-shadow: var(--shadow-level-1);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3x);
+  width: min(100%, 440px);
+  min-height: 340px;
+  padding: var(--space-3x) var(--space-4x) var(--space-3x);
+  box-sizing: border-box;
+  border-radius: var(--radius-md);
+  background: var(--grey-0);
+  box-shadow: var(--shadow-level-2);
+}
+
+.selo {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #929eb1;
+}
+
+.corpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.iconeCaixa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-xs);
+  background: rgba(104, 192, 232, 0.12);
+}
+
+.icone {
+  max-width: 38px;
+  max-height: 32px;
+  width: auto;
+  height: auto;
+}
+
+.titulo {
+  margin-top: var(--space-2_5x);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.descricao {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+/* ---------- controles ---------- */
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  padding-top: var(--space-2x);
+  border-top: var(--border-width-xs) solid #eef1f5;
+}
+
+.pontos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+}
+
+.ponto {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #dce0e8;
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.pontoAtivo {
+  width: 24px;
+  border-radius: var(--radius-circular);
+  background: var(--cyan-600);
+}
+
+.ponto:focus-visible,
+.seta:focus-visible {
+  outline: 2px solid var(--cyan-600);
+  outline-offset: 2px;
+}
+
+.setas {
+  display: flex;
+  gap: var(--space-1x);
+}
+
+.seta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: 50%;
+  background: var(--grey-0);
+  color: #006fa9;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.seta:hover {
+  border-color: var(--cyan-500);
+  background: var(--cyan-0);
+}
+
+@media (max-width: 640px) {
+  /* O balão do WhatsApp é fixo no canto inferior direito da janela; rolando a
+     página ele passa por cima do que estiver ali. Invertendo a linha, as setas
+     ficam à esquerda e nunca somem embaixo dele. */
+  .controles {
+    flex-direction: row-reverse;
+  }
+}
+
+@media (max-width: 900px) {
+  .palco {
+    padding: 0 0 var(--space-4x);
+  }
+
+  .card {
+    width: 100%;
+    min-height: 0;
+  }
+
+  .fantasma1,
+  .fantasma2 {
+    display: none;
+  }
+}

@@ -65,10 +65,27 @@
 
 /* ---------- hero ---------- */
 .hero {
+  position: relative;
+  overflow: hidden;
   background: var(--grey-50);
 }
 
+/* Faixas diagonais suaves atrás do carrossel, como no layout de referência.
+   Decorativas: ficam abaixo do conteúdo e não recebem clique. */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 58%;
+  background:
+    radial-gradient(60% 70% at 75% 40%, rgba(0, 158, 219, 0.08), transparent 70%),
+    repeating-linear-gradient(115deg, rgba(0, 111, 169, 0.05) 0 2px, transparent 2px 96px);
+  pointer-events: none;
+}
+
 .heroInner {
+  position: relative;
+  z-index: 1;
   max-width: 1440px;
   margin: 0 auto;
   display: flex;
@@ -87,10 +104,13 @@
 }
 
 .heroTitle {
-  font-size: var(--font-size-lg);
+  /* Título maior que o da loja, seguindo a referência de layout: é o elemento
+     que ancora o hero. Cresce de 40px a 56px conforme a largura. */
+  font-size: clamp(var(--font-size-lg), 4vw, 56px);
   line-height: var(--line-height-sm);
+  letter-spacing: -0.01em;
   color: var(--text-heading);
-  max-width: 20ch;
+  max-width: 16ch;
 }
 
 .heroSubtitle {
@@ -142,16 +162,13 @@
   color: var(--text-heading);
 }
 
-.heroImageWrap {
+.heroAside {
+  display: flex;
   flex: 1 1 500px;
-  min-height: 280px;
-  overflow: hidden;
-}
-
-.heroImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: var(--space-4x) 0;
 }
 
 @media (max-width: 900px) {
@@ -160,11 +177,16 @@
   }
 
   .heroText {
-    padding: var(--space-4x) 0;
+    padding: var(--space-4x) 0 0;
   }
 
-  .heroImageWrap {
-    min-height: 220px;
+  .heroAside {
+    padding: var(--space-3x) 0 var(--space-4x);
+  }
+
+  /* Empilhado, o degradê diagonal atrás do card atrapalha a leitura. */
+  .hero::after {
+    display: none;
   }
 }
 
@@ -177,75 +199,6 @@
 
   .btnPrimary {
     width: 100%;
-  }
-}
-
-/* ---------- vantagens ---------- */
-.vantagens {
-  padding: var(--space-8x) 0 var(--space-6x);
-}
-
-.vantagensInner {
-  max-width: 1440px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  gap: var(--space-6x);
-}
-
-.vantagensTitle {
-  font-size: var(--font-size-xl);
-  line-height: var(--line-height-sm);
-  color: var(--text-heading);
-}
-
-.vantagensGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: var(--space-6x);
-  row-gap: var(--space-5x);
-}
-
-.vantagemIconWrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 84px;
-  height: 84px;
-  border-radius: var(--radius-xs);
-  background: rgba(104, 192, 232, 0.1);
-  margin-bottom: var(--space-2x);
-}
-
-.vantagemIcon {
-  max-width: 42px;
-  max-height: 36px;
-  width: auto;
-  height: auto;
-}
-
-.vantagemTitle {
-  font-size: var(--font-size-sm);
-  color: var(--text-heading);
-  margin: 0 0 var(--space-1x);
-}
-
-.vantagemDescription {
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-lg);
-  color: #586880;
-}
-
-@media (max-width: 900px) {
-  .vantagensInner {
-    grid-template-columns: 1fr;
-    gap: var(--space-4x);
-  }
-}
-
-@media (max-width: 560px) {
-  .vantagensGrid {
-    grid-template-columns: 1fr;
   }
 }
 

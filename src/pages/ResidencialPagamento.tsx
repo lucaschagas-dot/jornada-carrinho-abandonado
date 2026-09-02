@@ -1,54 +1,36 @@
-import { useState } from 'react';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
+import { BoletoIcon, CartaoIcon, FormasPagamento, PixIcon, type OpcaoPagamento } from '../components/FormasPagamento';
 import { formatarBRL } from '../jornada';
 import { COMBOS } from '../residencial';
 import s from './jornadaComum.module.css';
 
-type Forma = 'cartao' | 'boleto' | 'pix' | null;
-
-const FORMAS: Array<{ id: Exclude<Forma, null>; rotulo: string }> = [
-  { id: 'cartao', rotulo: 'Cartão de Crédito' },
-  { id: 'boleto', rotulo: 'Boleto' },
-  { id: 'pix', rotulo: 'Pix' },
+// Cartão de crédito em primeiro lugar e já aberto (ver FormasPagamento).
+const OPCOES: OpcaoPagamento[] = [
+  {
+    id: 'cartao',
+    rotulo: 'Cartão de Crédito',
+    descricao: 'Pague com segurança usando seu cartão Visa, Mastercard, Elo ou Amex.',
+    icone: <CartaoIcon />,
+  },
+  { id: 'pix', rotulo: 'Pix', descricao: 'Pagamento à vista, confirmado na hora.', icone: <PixIcon /> },
+  { id: 'boleto', rotulo: 'Boleto bancário', descricao: 'Vence em 3 dias úteis.', icone: <BoletoIcon /> },
 ];
 
 /**
  * Residencial — Pagamento 4/5.
- * Como no Odonto, o protótipo para no momento em que os dados de pagamento são
- * solicitados: não há formulário de cartão nem QR de Pix.
+ * Usa o mesmo bloco de pagamento das outras jornadas: cartão primeiro e aberto.
+ * Nada é enviado nem cobrado — o botão "Pagar" não tem ação.
  */
 export default function ResidencialPagamento() {
-  const [forma, setForma] = useState<Forma>(null);
   const combo = COMBOS[0];
 
   return (
     <section className={s.wrapper}>
-      <StepBreadcrumb category="Seguro Residencial" step="Pagamento" current={4} total={5} />
-
       <div className={s.colunas}>
         <div className={s.principal}>
           <h1 className={s.title}>Pagamento</h1>
           <p className={s.subtitle}>Escolha a forma de pagamento e adicione os dados financeiros.</p>
 
-          <div className={s.toggleGrupo}>
-            {FORMAS.map((f) => (
-              <button
-                type="button"
-                key={f.id}
-                aria-pressed={forma === f.id}
-                className={`${s.toggle} ${forma === f.id ? s.toggleAtivo : ''}`}
-                onClick={() => setForma(f.id)}
-              >
-                {f.rotulo}
-              </button>
-            ))}
-          </div>
-
-          <div className={s.acoes}>
-            <button type="button" className={s.botaoPrimario} disabled={forma === null}>
-              Pagar
-            </button>
-          </div>
+          <FormasPagamento opcoes={OPCOES} total={combo.mensal} periodicidade={`/mês em até ${combo.parcelas}x`} />
         </div>
 
         <aside className={s.resumo}>

@@ -78,6 +78,8 @@
 .priceRow {
   display: flex;
   align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: var(--space-half);
 }
 
@@ -92,6 +94,15 @@
   line-height: var(--line-height-default);
   font-weight: var(--font-weight-bold);
   color: var(--cyan-500);
+}
+
+/* "por pessoa" faz parte do mesmo bloco de preço (mesma cor do R$), mas na
+   metade do tamanho do número — quem tem que saltar aos olhos é o valor. */
+.priceUnit {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+  margin-left: var(--space-half);
 }
 
 .priceNote {
@@ -199,7 +210,7 @@
 /* Total do plano: informação de apoio ao número grande (valor por pessoa).
    Fica legível, mas um degrau abaixo na hierarquia — 16px contra 40px. */
 .priceBreakdown {
-  margin-top: var(--space-half);
+  margin-top: var(--space-1_5x);
   margin-bottom: var(--space-half);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);

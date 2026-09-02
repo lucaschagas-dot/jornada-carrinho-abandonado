@@ -1,0 +1,266 @@
+.bloco {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: var(--space-3x);
+  padding: var(--space-4x);
+  box-sizing: border-box;
+  background: var(--surface-01);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-1);
+}
+
+.titulo {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.subtitulo {
+  margin-top: var(--space-half);
+  font-size: var(--font-size-2xs);
+  color: #929eb1;
+}
+
+/* ---------- opções ---------- */
+.opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2x);
+  margin-top: var(--space-3x);
+}
+
+.opcao {
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.opcao:hover {
+  border-color: var(--cyan-300);
+}
+
+.opcaoAtiva {
+  border-color: var(--cyan-500);
+  box-shadow: 0 0 0 1px var(--cyan-500);
+}
+
+.opcaoTopo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2x);
+  padding: var(--space-2x);
+  cursor: pointer;
+}
+
+.radio {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--cyan-600);
+  cursor: pointer;
+}
+
+.opcaoTextos {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.opcaoRotulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.opcaoDescricao {
+  margin-top: var(--space-half);
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.opcaoIcone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: #586880;
+}
+
+.avisoInterno {
+  padding: 0 var(--space-2x) var(--space-2x) calc(var(--space-2x) + 18px + var(--space-2x));
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+/* ---------- formulário do cartão ---------- */
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2_5x);
+  margin: 0 var(--space-2x) var(--space-2x);
+  padding-top: var(--space-2_5x);
+  border-top: var(--border-width-xs) solid #eef1f5;
+}
+
+.bandeiras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1x);
+}
+
+.bandeira {
+  padding: 2px var(--space-1x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  background: #f7f9fb;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: #586880;
+}
+
+.linhaCampos {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-2x);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.label {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: #586880;
+}
+
+.inputComIcone {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputComIcone .input {
+  padding-right: calc(var(--space-2x) + 22px);
+}
+
+.inputIcone {
+  position: absolute;
+  right: var(--space-1_5x);
+  display: flex;
+  align-items: center;
+  color: #929eb1;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  margin-top: var(--space-1x);
+  padding: var(--space-1_5x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  box-sizing: border-box;
+  outline: none;
+  background: var(--surface-01);
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  color: var(--text-heading);
+}
+
+.input::placeholder {
+  color: #b5bfcd;
+}
+
+.input:focus {
+  border-color: var(--cyan-500);
+  box-shadow: 0 0 0 1px var(--cyan-500);
+}
+
+/* ---------- aceite e pagar ---------- */
+.aceite {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1_5x);
+  margin-top: var(--space-3x);
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+  cursor: pointer;
+}
+
+.checkbox {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--cyan-600);
+  cursor: pointer;
+}
+
+.aceite a {
+  color: #006fa9;
+  text-decoration: underline;
+}
+
+.pagar {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-1x);
+  width: 100%;
+  margin-top: var(--space-2_5x);
+  padding: var(--space-2x);
+  border: none;
+  border-radius: var(--radius-xs);
+  /* cyan-700 e nao o 500 da marca: branco sobre #009EDB da 2,4:1 e o botao
+     principal da etapa de pagamento nao pode ser o texto menos legivel da
+     tela. Aqui fica 6,6:1, e o desabilitado 5,3:1. */
+  background: var(--cyan-700);
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pagar:hover:not(:disabled) {
+  background: var(--cyan-800);
+}
+
+.pagar:disabled {
+  background: #dce0e8;
+  color: #4a5568;
+  cursor: not-allowed;
+}
+
+.pagarValor {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.pagarPeriodo {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-regular);
+}
+
+@media (max-width: 640px) {
+  .bloco {
+    padding: var(--space-2_5x);
+  }
+
+  .linhaCampos {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .linhaCampos .campo:first-child {
+    grid-column: 1 / -1;
+  }
+}

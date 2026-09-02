@@ -61,14 +61,20 @@ function App() {
       <Routes>
         {ROUTES.map((route) => {
           const Page = PAGES[route.path];
-          // ROUTES é `as const`, então `loggedIn` só existe nas entradas que o declaram.
+          // ROUTES é `as const`, então cada campo opcional só existe nas
+          // entradas que o declaram — daí o `in` antes de ler.
           const logado = 'loggedIn' in route && route.loggedIn;
           return (
             <Route
               key={route.path}
               path={route.path}
               element={
-                <PageShell user={logado ? DEMO_USER.nomeCurto : undefined}>
+                <PageShell
+                  user={logado ? DEMO_USER.nomeCurto : undefined}
+                  anterior={'anterior' in route ? route.anterior : undefined}
+                  jornada={'jornada' in route ? route.jornada : undefined}
+                  etapa={'etapa' in route ? route.etapa : undefined}
+                >
                   <Page />
                 </PageShell>
               }

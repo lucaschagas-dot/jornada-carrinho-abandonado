@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { ChevronDownIcon } from '../components/icons';
 import { DEMO_USER } from '../demoUser';
 import s from './jornadaComum.module.css';
@@ -18,8 +17,6 @@ export default function ResidencialCotacao() {
 
   return (
     <section className={s.wrapper}>
-      <StepBreadcrumb category="Seguro Residencial" step="Cotação" current={1} total={5} />
-
       <h1 className={s.title}>Cotação</h1>
       <p className={s.pergunta}>Qual o CEP da residência a ser segurada?</p>
 

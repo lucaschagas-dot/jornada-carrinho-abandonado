@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { DPS_PERGUNTAS } from '../vida';
 import s from './jornadaComum.module.css';
 import p from './VidaDps.module.css';
@@ -30,8 +29,6 @@ export default function VidaDps() {
 
   return (
     <section className={s.wrapper}>
-      <StepBreadcrumb category="Seguro de vida" step="Declaração de Saúde" current={8} total={10} />
-
       <h1 className={s.title}>Declaração Pessoal de Saúde</h1>
       <p className={s.subtitle}>
         São {DPS_PERGUNTAS.length} perguntas. As respostas definem a aceitação do seguro, então vale responder com calma.

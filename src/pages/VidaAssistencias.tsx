@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { formatarBRL } from '../jornada';
 import { ASSISTENCIAS_VIDA, BENEFICIOS_VIDA, COBERTURAS_VIDA } from '../vida';
 import s from './jornadaComum.module.css';
@@ -57,8 +56,6 @@ export default function VidaAssistencias() {
 
   return (
     <section className={s.wrapper}>
-      <StepBreadcrumb category="Seguro de vida" step="Assistências" current={3} total={10} />
-
       <div className={s.colunas}>
         <div className={s.principal}>
           <h1 className={s.title}>Assistências</h1>

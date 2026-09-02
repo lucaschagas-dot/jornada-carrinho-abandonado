@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { SeletorPessoas } from '../components/SeletorPessoas';
 import { ChevronRightIcon } from '../components/icons';
 import { formatarBRL, rotuloPessoas, useJornada } from '../jornada';
@@ -75,8 +74,6 @@ export default function Odonto3() {
 
   return (
     <section className={styles.wrapper}>
-      <StepBreadcrumb category="Plano Odontológico" step="Produtos" current={2} total={5} />
-
       <h1 className={styles.title}>Produtos</h1>
       <p className={styles.subtitle}>Confira as opções de plano disponíveis para você</p>
 
@@ -104,6 +101,7 @@ export default function Odonto3() {
                   <span className={styles.priceValue}>
                     {plano.preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                   </span>
+                  <span className={styles.priceUnit}>por pessoa</span>
                 </p>
                 {pessoas > 1 && (
                   <p className={styles.priceBreakdown}>

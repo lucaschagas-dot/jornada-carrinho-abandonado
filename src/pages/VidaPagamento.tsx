@@ -1,53 +1,35 @@
-import { useState } from 'react';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
+import { BoletoIcon, CartaoIcon, FormasPagamento, PixIcon, type OpcaoPagamento } from '../components/FormasPagamento';
 import { formatarBRL } from '../jornada';
 import { COBERTURAS_VIDA } from '../vida';
 import s from './jornadaComum.module.css';
 
-type Forma = 'cartao' | 'boleto' | 'pix' | null;
-
-const FORMAS: Array<{ id: Exclude<Forma, null>; rotulo: string }> = [
-  { id: 'cartao', rotulo: 'Cartão de Crédito' },
-  { id: 'boleto', rotulo: 'Boleto' },
-  { id: 'pix', rotulo: 'Pix' },
+// Cartão de crédito em primeiro lugar e já aberto (ver FormasPagamento).
+const OPCOES: OpcaoPagamento[] = [
+  {
+    id: 'cartao',
+    rotulo: 'Cartão de Crédito',
+    descricao: 'Pague com segurança usando seu cartão Visa, Mastercard, Elo ou Amex.',
+    icone: <CartaoIcon />,
+  },
+  { id: 'pix', rotulo: 'Pix', descricao: 'Pagamento à vista, confirmado na hora.', icone: <PixIcon /> },
+  { id: 'boleto', rotulo: 'Boleto bancário', descricao: 'Vence em 3 dias úteis.', icone: <BoletoIcon /> },
 ];
 
 /**
  * Vida — Pagamento 9/10.
- * Como nas outras jornadas, o protótipo para no momento em que os dados de
- * pagamento são solicitados.
+ * Usa o mesmo bloco de pagamento das outras jornadas: cartão primeiro e aberto.
+ * Nada é enviado nem cobrado — o botão "Pagar" não tem ação.
  */
 export default function VidaPagamento() {
-  const [forma, setForma] = useState<Forma>(null);
 
   return (
     <section className={s.wrapper}>
-      <StepBreadcrumb category="Seguro de vida" step="Pagamento" current={9} total={10} />
-
       <div className={s.colunas}>
         <div className={s.principal}>
           <h1 className={s.title}>Pagamento</h1>
           <p className={s.subtitle}>Escolha a forma de pagamento e adicione os dados financeiros.</p>
 
-          <div className={s.toggleGrupo}>
-            {FORMAS.map((f) => (
-              <button
-                type="button"
-                key={f.id}
-                aria-pressed={forma === f.id}
-                className={`${s.toggle} ${forma === f.id ? s.toggleAtivo : ''}`}
-                onClick={() => setForma(f.id)}
-              >
-                {f.rotulo}
-              </button>
-            ))}
-          </div>
-
-          <div className={s.acoes}>
-            <button type="button" className={s.botaoPrimario} disabled={forma === null}>
-              Pagar
-            </button>
-          </div>
+          <FormasPagamento opcoes={OPCOES} total={35} periodicidade="/mês" />
         </div>
 
         <aside className={s.resumo}>

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { StepBreadcrumb } from '../components/StepBreadcrumb';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
 import { DEMO_USER } from '../demoUser';
 import { rotuloPessoas, useJornada } from '../jornada';
@@ -56,8 +55,6 @@ export default function Odonto4() {
 
   return (
     <section className={styles.wrapper}>
-      <StepBreadcrumb category="Plano Odontológico" step="Identificação" current={3} total={5} />
-
       <div className={styles.headingRow}>
         <h1 className={styles.title}>Identificação</h1>
 

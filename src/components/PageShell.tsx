@@ -3,7 +3,9 @@ import { useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { WhatsAppWidget } from './WhatsAppWidget';
+import { TopoEtapa } from './TopoEtapa';
 import { useJornada } from '../jornada';
+import type { JornadaId } from '../jornadas';
 import styles from './PageShell.module.css';
 
 /** Etapas da cotação que o "Retomar" do carrinho pode restaurar. */
@@ -13,9 +15,13 @@ type PageShellProps = {
   children: ReactNode;
   /** Nome do usuário logado, repassado ao Header (ver `loggedIn` em routes.ts). */
   user?: string;
+  /** Metadados da rota atual (ver routes.ts), usados pela faixa de topo. */
+  anterior?: string;
+  jornada?: JornadaId;
+  etapa?: number;
 };
 
-export function PageShell({ children, user }: PageShellProps) {
+export function PageShell({ children, user, anterior, jornada, etapa }: PageShellProps) {
   const { registrarEtapa } = useJornada();
   const { pathname } = useLocation();
 
@@ -26,7 +32,10 @@ export function PageShell({ children, user }: PageShellProps) {
   return (
     <div className={styles.page}>
       <Header user={user} />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        <TopoEtapa anterior={anterior} jornada={jornada} etapa={etapa} />
+        {children}
+      </main>
       <Footer />
       <WhatsAppWidget />
     </div>
