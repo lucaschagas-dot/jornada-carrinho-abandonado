@@ -161,6 +161,12 @@
   font-weight: var(--font-weight-bold);
 }
 
+.saudacao {
+  display: flex;
+  min-width: 0;
+  white-space: nowrap;
+}
+
 @media (max-width: 900px) {
   .nav {
     display: none;
@@ -169,5 +175,31 @@
   .seloParceria,
   .carrinhoTexto {
     display: none;
+  }
+}
+
+/* Nas telas logadas o "Olá, Carlos Souza" tem 184px e o cabeçalho estourava a
+   largura da tela (395px de conteúdo em 373 de viewport). No celular o "Olá,"
+   sai, o nome ganha reticências e o logo encolhe. */
+@media (max-width: 640px) {
+  .logo {
+    height: 44px;
+  }
+
+  .login {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .saudacaoPrefixo {
+    display: none;
+  }
+
+  .userName {
+    display: block;
+    max-width: 22vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

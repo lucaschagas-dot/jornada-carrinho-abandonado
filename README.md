@@ -154,6 +154,29 @@ Detalhes:
   o card do carrossel — qualquer conteúdo nos 250 px da direita ficava atrás
   dele. No rodapé nunca disputa espaço, e é onde a versão mobile já o punha.
 
+## Celular
+
+O protótipo foi revisado em **320px, 360px e 375px** — as 20 rotas, sem scroll
+horizontal e sem nenhum elemento passando da borda. O que mudou nessa revisão:
+
+| Problema | Onde | Correção |
+| --- | --- | --- |
+| Trilha de 10 etapas precisava de 356px em 328 disponíveis | `StepBreadcrumb` (Vida) | Acima de 6 etapas, no celular as bolinhas dão lugar a uma **barra de progresso**. Jornadas de 5 etapas mantêm as bolinhas — cabem até em 320px |
+| Cabeçalho estourava 22px nas telas logadas ("Olá, Carlos Souza" tem 184px) | `Header` | No celular o "Olá," sai, o nome ganha reticências (`max-width: 22vw`) e o logo cai de 60px para 44px |
+| Bolinhas do carrossel eram alvo de 8×8px | `CarrosselBeneficios` | O ponto virou um `::after` dentro de um botão de **28×34px**; o visual continua com 8px |
+| Títulos de 48px ocupavam 3 linhas na tela | `tokens.css` | `--font-size-lg` e `--font-size-xl` reescalados para 30px/34px abaixo de 640px — as ~30 telas que usam esses tokens acompanham de uma vez, em vez de um `clamp` repetido em cada arquivo |
+| `min-width: 280px` estourava 8px em telas de 320px | `Start` | `min(280px, 100%)`: o piso segue valendo para decidir a quebra das colunas, mas nunca passa do container |
+| Ícone de 72px deixava o título do benefício com 187px | `CarrosselBeneficios` | Ícone cai para 56px no celular; o título mantém os 24px e ganha 207px |
+
+Duas coisas que **não** foram mexidas, de propósito:
+
+- Os campos de formulário são baixos (25–30px) porque replicam o estilo de
+  campo sublinhado da loja. O alvo real de toque é maior do que parece, porque
+  o `<label>` envolve o campo.
+- Links de texto miúdo ("Não sei meu CEP", "Baixar Contrato", "Termos e
+  Condições") seguem com a altura da loja. São candidatos legítimos a achado
+  num teste de usabilidade — consertar aqui esconderia o problema real.
+
 ## Faixa de topo: "Voltar" + indicador de etapas
 
 Toda tela de jornada abre com a mesma faixa: **"Voltar"** à esquerda e a

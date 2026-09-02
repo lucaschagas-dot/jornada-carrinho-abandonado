@@ -29,6 +29,7 @@ type StepBreadcrumbProps = {
 export function StepBreadcrumb({ jornada, atual }: StepBreadcrumbProps) {
   const { nome, etapas } = JORNADAS[jornada];
   const compacto = etapas.length > LIMITE_ROTULOS;
+  const progresso = Math.round((atual / etapas.length) * 100);
 
   return (
     <nav className={styles.barra} aria-label={`Etapas: ${nome}`}>
@@ -55,6 +56,15 @@ export function StepBreadcrumb({ jornada, atual }: StepBreadcrumbProps) {
           );
         })}
       </ol>
+
+      {/* No celular as 10 bolinhas da jornada de Vida não caberiam (precisam de
+          356px em 328 disponíveis), então viram uma barra. Jornadas de 5 etapas
+          continuam com as bolinhas, que cabem até em 320px. */}
+      {compacto && (
+        <div className={styles.progresso} aria-hidden="true">
+          <span className={styles.progressoFeito} style={{ width: `${progresso}%` }} />
+        </div>
+      )}
     </nav>
   );
 }

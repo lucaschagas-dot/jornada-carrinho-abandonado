@@ -95,8 +95,9 @@ export function Header({ user }: HeaderProps) {
           <UserIcon size={user ? 18 : 14} />
           {user ? (
             <>
-              <span>
-                Olá, <strong className={styles.userName}>{user}</strong>
+              <span className={styles.saudacao}>
+                <span className={styles.saudacaoPrefixo}>Olá, </span>
+                <strong className={styles.userName}>{user}</strong>
               </span>
               <ChevronDownIcon />
             </>

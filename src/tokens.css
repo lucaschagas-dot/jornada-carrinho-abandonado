@@ -188,3 +188,20 @@
   --letter-spacing-negative: -0.01em;
   --letter-spacing-positive: 0.01em;
 }
+
+/*
+ * Tipografia grande no celular.
+ *
+ * Os tokens do DSU são pensados para desktop: um título de 48px numa tela de
+ * 375px ocupa três linhas e empurra o conteúdo todo para baixo da dobra
+ * ("Declaração Pessoal de Saúde" era o pior caso). Reescalando os dois tokens
+ * de título aqui, as ~30 telas que os usam acompanham de uma vez — em vez de
+ * um `clamp` repetido em cada arquivo, que sairia do lugar na primeira
+ * manutenção. A hierarquia (xl > lg) é preservada.
+ */
+@media (max-width: 640px) {
+  :root {
+    --font-size-lg: 30px;
+    --font-size-xl: 34px;
+  }
+}

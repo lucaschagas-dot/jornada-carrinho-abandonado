@@ -347,14 +347,17 @@
   flex-wrap: wrap;
 }
 
+/* `min(Npx, 100%)` em vez de Npx puro: o piso de 280px vale para decidir
+   quando as colunas quebram, mas em telas de 320px ele estourava a largura da
+   página em 8px. */
 .colunaTexto {
   flex: 1 1 420px;
-  min-width: 280px;
+  min-width: min(280px, 100%);
 }
 
 .colunaImagem {
   flex: 1 1 380px;
-  min-width: 240px;
+  min-width: min(240px, 100%);
   display: flex;
   justify-content: center;
 }
