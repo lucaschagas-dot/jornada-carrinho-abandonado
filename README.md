@@ -124,17 +124,31 @@ Eles estavam numa grade no meio da página, onde só chegava quem rolava; essa
 grade **deixou de existir**. No hero eles ficam ao lado do preço, que é o par
 de informações que pesa na decisão.
 
+Cada card traz o **ícone e o título lado a lado** (título em 24px), com a
+descrição abaixo. Não há contador "benefício N de 4": quem informa a posição
+são as bolinhas do rodapé do card.
+
 Detalhes:
 
 - O avanço é automático a cada 6s, mas **pausa no hover e no foco** e não
   acontece para quem pediu menos movimento no sistema
   (`prefers-reduced-motion`). Setas e bolinhas continuam funcionando sempre.
+- A troca é um **fade** (0,5s em opacidade e um leve deslocamento), não um
+  corte seco. Os quatro slides ficam sempre no DOM, empilhados na mesma célula
+  de grid: assim a altura do card é a do slide mais alto e **não pula** a cada
+  troca (medido: 333px nos quatro). Só o slide ativo fica exposto ao leitor de
+  tela, e o `visibility` serve de rede de segurança para o inativo não aparecer
+  por cima caso a transição não rode.
 - O texto da **Teleorientação foi condensado**: o da loja tem ~400 caracteres
   (um parágrafo inteiro) e deixaria os outros três cards com um vazio embaixo.
   O texto integral está preservado em `TELEORIENTACAO_TEXTO_LOJA`, em
   `Odonto1.tsx`, caso o time queira o card longo de volta.
 - A foto `hero-mae-filha-sorrindo.png` continua em `src/assets/images`, sem uso,
   se for preciso reverter.
+- O título **"Por que ter um Plano Odontológico?"** passou a caber numa linha
+  só: tinha um `max-width: 26ch` que quebrava um texto de 34 caracteres em
+  duas. Sem o limite, ele ocupa 686px e continua quebrando no celular, onde
+  quebrar é o certo.
 - O **balão do WhatsApp desceu para o rodapé da janela**. Na loja ele fica
   colado no topo da lateral direita; ali ele cobria a trilha de etapas e depois
   o card do carrossel — qualquer conteúdo nos 250 px da direita ficava atrás

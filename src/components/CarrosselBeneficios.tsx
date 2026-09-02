@@ -24,6 +24,11 @@ type CarrosselBeneficiosProps = {
  * a atenção junto com o preço, que é o par de informações que a pesquisa
  * mostrou pesar na decisão.
  *
+ * Os quatro slides ficam sempre no DOM, empilhados na mesma célula de grid, e
+ * a troca é uma transição de opacidade — não um corte seco. Isso também deixa
+ * a altura do card estável: ela é a do slide mais alto, então o card não pula
+ * de tamanho a cada 6 segundos.
+ *
  * O avanço automático pausa no hover e no foco, e não acontece para quem pediu
  * menos movimento no sistema (`prefers-reduced-motion`) — carrossel que anda
  * sozinho embaixo do cursor tira o controle de quem está lendo.
@@ -43,8 +48,6 @@ export function CarrosselBeneficios({ beneficios }: CarrosselBeneficiosProps) {
     return () => window.clearInterval(timer);
   }, [pausado, total]);
 
-  const beneficio = beneficios[atual];
-
   return (
     <div
       className={styles.palco}
@@ -61,14 +64,24 @@ export function CarrosselBeneficios({ beneficios }: CarrosselBeneficiosProps) {
       <span className={styles.fantasma1} aria-hidden="true" />
 
       <div className={styles.card}>
-        <p className={styles.selo}>Benefício {atual + 1} de {total}</p>
-
-        <div className={styles.corpo} aria-live="polite">
-          <div className={styles.iconeCaixa}>
-            <img src={beneficio.icon} alt="" className={styles.icone} />
-          </div>
-          <h3 className={styles.titulo}>{beneficio.title}</h3>
-          <p className={styles.descricao}>{beneficio.description}</p>
+        {/* Só o slide visível fica exposto para leitor de tela, então a região
+            "polite" anuncia apenas o benefício que acabou de entrar. */}
+        <div className={styles.slides} aria-live="polite">
+          {beneficios.map((beneficio, i) => (
+            <div
+              className={`${styles.slide} ${i === atual ? styles.slideAtivo : ''}`}
+              key={beneficio.title}
+              aria-hidden={i !== atual}
+            >
+              <div className={styles.cabeca}>
+                <div className={styles.iconeCaixa}>
+                  <img src={beneficio.icon} alt="" className={styles.icone} />
+                </div>
+                <h3 className={styles.titulo}>{beneficio.title}</h3>
+              </div>
+              <p className={styles.descricao}>{beneficio.description}</p>
+            </div>
+          ))}
         </div>
 
         <div className={styles.controles}>

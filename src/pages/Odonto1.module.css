@@ -381,7 +381,9 @@
   line-height: var(--line-height-sm);
   color: var(--text-heading);
   text-align: center;
-  max-width: 26ch;
+  /* Sem max-width: em 26ch o título quebrava em duas linhas. Com o texto
+     inteiro (34 caracteres) ele cabe numa linha só em qualquer tela acima de
+     ~740px, e continua quebrando no celular, onde quebrar é o certo. */
 }
 
 .whyGrid {

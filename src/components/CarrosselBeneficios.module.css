@@ -40,30 +40,49 @@
   flex-direction: column;
   gap: var(--space-3x);
   width: min(100%, 440px);
-  min-height: 340px;
-  padding: var(--space-3x) var(--space-4x) var(--space-3x);
+  padding: var(--space-4x);
   box-sizing: border-box;
   border-radius: var(--radius-md);
   background: var(--grey-0);
   box-shadow: var(--shadow-level-2);
 }
 
-.selo {
-  font-size: var(--font-size-3xs);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #929eb1;
+/* Os quatro slides ocupam a MESMA célula de grid: a altura do bloco é a do
+   slide mais alto, então o card não muda de tamanho a cada troca. */
+.slides {
+  display: grid;
+  flex: 1;
 }
 
-.corpo {
+.slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  /* `visibility` não interpola: entra na hora e só sai no fim do fade. Serve de
+     rede de segurança — se a transição de opacidade não rodar, o slide inativo
+     mesmo assim não fica visível por cima do ativo. */
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s;
+  pointer-events: none;
+}
+
+.slideAtivo {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Cabeça do slide: ícone e título lado a lado. */
+.cabeca {
   display: flex;
-  flex: 1;
-  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2_5x);
 }
 
 .iconeCaixa {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 72px;
@@ -80,15 +99,15 @@
 }
 
 .titulo {
-  margin-top: var(--space-2_5x);
-  font-size: var(--font-size-sm);
+  min-width: 0;
+  font-size: var(--font-size-md);
   line-height: var(--line-height-sm);
   font-weight: var(--font-weight-semibold);
   color: var(--text-heading);
 }
 
 .descricao {
-  margin-top: var(--space-1x);
+  margin-top: var(--space-2_5x);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-lg);
   color: #586880;
@@ -158,6 +177,18 @@
   background: var(--cyan-0);
 }
 
+/* Sem transição para quem pediu menos movimento: o slide troca direto. */
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transform: none;
+    transition: none;
+  }
+
+  .slideAtivo {
+    transition: none;
+  }
+}
+
 @media (max-width: 640px) {
   /* O balão do WhatsApp é fixo no canto inferior direito da janela; rolando a
      página ele passa por cima do que estiver ali. Invertendo a linha, as setas
@@ -174,7 +205,6 @@
 
   .card {
     width: 100%;
-    min-height: 0;
   }
 
   .fantasma1,
