@@ -171,7 +171,7 @@ export default function Odonto1() {
           </div>
 
           <div className={styles.heroAside}>
-            <CarrosselBeneficios beneficios={VANTAGENS} />
+            <CarrosselBeneficios beneficios={VANTAGENS} rotulo="Principais benefícios do Plano Odontológico" />
           </div>
         </div>
       </div>

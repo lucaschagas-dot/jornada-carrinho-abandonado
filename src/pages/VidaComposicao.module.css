@@ -1,0 +1,94 @@
+.cardPreco {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-half);
+  margin-top: var(--space-3x);
+  padding: var(--space-4x) var(--space-3x);
+  background: var(--surface-01);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+  text-align: center;
+}
+
+.preco {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+}
+
+.precoLegenda {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+}
+
+.secao {
+  margin-top: var(--space-4x);
+}
+
+.secaoTitulo {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.tabela {
+  width: 100%;
+  margin-top: var(--space-2x);
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.tabela th {
+  padding: 0 0 var(--space-1x);
+  border-bottom: var(--border-width-xs) solid #dce0e8;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: left;
+  color: #929eb1;
+}
+
+.tabela td {
+  padding: var(--space-1_5x) 0;
+  border-bottom: var(--border-width-xs) solid #eef1f5;
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  vertical-align: top;
+}
+
+.tabela th.valor,
+.tabela td.valor {
+  width: 42%;
+  padding-left: var(--space-2x);
+  text-align: right;
+}
+
+.tabela td.item {
+  color: #192c50;
+}
+
+.tabela td.valor {
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+}
+
+.tabela td.vazio {
+  color: #929eb1;
+}
+
+@media (max-width: 640px) {
+  .cardPreco {
+    padding: var(--space-3x) var(--space-2x);
+  }
+
+  .tabela th.valor,
+  .tabela td.valor {
+    width: 38%;
+    padding-left: var(--space-1x);
+  }
+}

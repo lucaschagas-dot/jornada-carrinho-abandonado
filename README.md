@@ -32,13 +32,16 @@ src/
   tokens.css          # design tokens do DSU (Design System Unimed) — cores, espaçamento, tipografia
   routes.ts            # telas da jornada + etapa e tela anterior de cada uma — fonte única de verdade
   jornadas.ts          # etapas de cada jornada (Odonto 5, Residencial 5, Vida 10)
+  vida.ts              # dados reais do Seguro de Vida, extraídos do Angular da loja
+  vidaEstado.tsx       # estado da jornada de Vida (espelha o objeto `simulacao` da loja)
   App.tsx              # <HashRouter> + rotas, cada uma envolvida em <PageShell>
   components/
     Header, Footer, WhatsAppWidget, PageShell  — layout comum a todas as telas
     TopoEtapa           — faixa de topo: botão "Voltar" + indicador de etapas
     StepBreadcrumb      — trilha de bolinhas numeradas da jornada
     FormasPagamento     — seleção de forma de pagamento, comum às três jornadas
-    CarrosselBeneficios — benefícios do plano girando no hero da Odonto 1
+    CarrosselBeneficios — benefícios do plano girando no hero (Odonto 1 e Vida 1)
+    ResumoVida          — resumo lateral das 10 etapas da jornada de Vida
     PrototypeNav        — menu flutuante "Telas" (não existe no Figma; é só ferramenta de revisão)
     ComparePlanosModal  — comparativo "Compare nossos planos", aberto pela Odonto 1
     RedeCredenciadaModal — busca de dentistas, aberta pela Odonto 1
@@ -77,10 +80,10 @@ proposta e o que é réplica da loja:
 
 O estado que liga essas telas fica em `src/jornada.tsx`.
 
-Fora do escopo deste protótipo (a pesquisa também tratou de vida, residencial
-e de temas de back-office): assistências marcadas por padrão, coberturas
-default, DPS antes do pagamento, lista de profissões, resgate por WhatsApp e
-internalização de tecnologia.
+A pesquisa também tratou de Vida e Residencial, e essas duas jornadas entraram
+depois — as recomendações delas estão na seção seguinte. Continuam fora do
+protótipo os temas que não são de tela: resgate por WhatsApp e internalização
+de tecnologia.
 
 ## Jornadas Residencial e Vida
 
@@ -89,10 +92,49 @@ Levantadas da loja em produção em 24/08/2026, com a mesma estrutura de etapas.
 **Residencial (5 etapas)** — Cotação, Coberturas, Identificação, Pagamento, Confirmação.
 Os 3 combos têm a composição e os valores reais (`src/residencial.ts`).
 
-**Vida (10 etapas)** — cotacao, produto, assistencia, composicao, cadastro,
-endereco, beneficiario, dps, pagamento, confirmacao. O protótipo implementa as
-quatro em que a pesquisa mexe (Cotação, Assistências, DPS e Pagamento); as
-demais existem na loja mas não foram construídas aqui.
+**Vida (10 etapas)** — jornada **completa**, mapeada da loja em 08/09/2026 e
+construída inteira: Cotação, Coberturas, Assistências, Composição, Identificação,
+Endereço, Beneficiário, Declaração de Saúde, Pagamento e Conclusão, mais a página
+de produto (`/vida-1`) e a etapa de login proposta (`/vida-login`).
+
+Os dados vieram do modelo AngularJS da própria simulação (`controller.simulacao`,
+`produtoConfiguracao`, `sugestaoAssistencias`), não de transcrição de tela — é
+por isso que coberturas, assistências, DPS, graus de parentesco e o teto de
+capital por profissão batem com a loja. Está tudo em `src/vida.ts`, com o
+cabeçalho registrando o que foi observado e o que foi reconstruído.
+
+**Onde o mapeamento parou.** Da etapa 6 em diante a loja exige criar conta — na
+Identificação, em letra miúda: *"Ao clicar em continuar uma conta será criada com
+os dados informados"*. Não criamos conta em produção, então Endereço,
+Beneficiário, DPS, Pagamento e Conclusão foram reconstruídos a partir do modelo
+de dados que a própria loja carrega (`enderecoPrincipal`, `beneficiarios` com
+`percentualRestante`, `dpsPerguntas`, `produtoConfiguracao`) — que é de onde ela
+monta esses formulários. As cinco primeiras etapas são réplica do que foi visto.
+
+#### Três achados da jornada de Vida
+
+| Achado | O que é |
+| --- | --- |
+| **A loja passou a recomendar assistências por IA** | As 10 assistências agora vêm ordenadas por um score de relevância, com justificativa escrita para o perfil da pessoa: *"Tecnologia de recomendação por IA. Powered by Google Gemini"*. Só a primeira colocada vem marcada. Isso responde **em parte** à pesquisa — mas Pet e Kids continuam na lista dizendo "caso você tenha um animal de estimação" e "se você tem crianças em casa": a loja recomenda melhor e **continua não perguntando** |
+| **Só existe cartão de crédito** | No `produtoConfiguracao`: cartão "Ativo", Pix "Desativado", boleto e débito automático "Administrativo" (só o corretor aciona). Mesmo assim a loja apresenta o pagamento como uma escolha entre formas |
+| **A conta é criada em silêncio** | Não há etapa de login na jornada. A pessoa vira titular de uma conta ao clicar em Continuar na Identificação, avisada só por uma nota em letra miúda |
+
+#### Ajustes aplicados na jornada de Vida
+
+| Ajuste | Onde | Por quê |
+| --- | --- | --- |
+| **Perfil declarado vence palpite da IA** | `VidaAssistencias` + as duas perguntas no fim da `VidaCotacao` | Quem respondeu que tem pet vê a Pet Premium no topo com o selo "Você informou ter pet", a justificativa vira "Você nos disse que tem um animal de estimação" e o score da IA **some** — exibir "20% recomendado" ao lado do selo seria o palpite desmentindo o fato. Quem respondeu que não tem, não vê a assistência na lista principal |
+| **Login como etapa com URL própria** | `VidaLogin` (`/vida-login`) | Além de tornar o abandono no login mensurável, resolve a criação silenciosa de conta: na Identificação o aviso em letra miúda dá lugar a "Você já está identificado como Carlos Souza. Nenhuma conta nova será criada" |
+| **Só cartão no pagamento** | `VidaPagamento` | Correção de fidelidade: a tela oferecia cartão, Pix e boleto. A lista agora é derivada de `PAGAMENTO_VIDA`, então não tem como divergir do dado. Uma nota explica que boleto e débito existem mas são de corretor |
+| **Distribuição de beneficiários** | `VidaBeneficiario` | A loja exige que os percentuais fechem exatamente 100%. Ganhou barra de saldo e um "Dividir igualmente entre todos" — fechar 100% na mão é conta chata no meio da compra, e é onde a pessoa trava |
+| **DPS com "responder depois"** | `VidaDps` | Mantido da versão anterior, agora com as 5 perguntas no texto integral (a primeira lista 16 condições) e a pendência reaparecendo na tela de Conclusão, para a proposta se sustentar |
+| **Teto de capital visível na cotação** | `VidaCotacao` | Cada profissão tem um `limiteVida` que limita o slider da etapa seguinte. A loja só revela isso no slider; aqui a pessoa já sabe ao escolher a profissão |
+| **Indicador de etapas, Voltar e resumo lateral** | `TopoEtapa` + `ResumoVida` | Valem para as 10 etapas, como no Odonto |
+
+O preço é calibrado a partir dos dois únicos totais reais observados na loja
+(R$ 52,51 só com as coberturas base e R$ 69,39 com Câncer, Morte Acidental e
+Farma Assist, para capital de R$ 288.000). As mensalidades por item são
+ilustrativas e estão marcadas como tal em `PRECOS_OBSERVADOS`.
 
 ### Ajustes da pesquisa nessas jornadas
 

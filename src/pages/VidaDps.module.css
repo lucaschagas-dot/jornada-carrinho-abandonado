@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2x);
-  margin-top: var(--space-4x);
+  margin-top: var(--space-3x);
 }
 
 .item {
@@ -18,6 +18,65 @@
   color: #192c50;
 }
 
+/* Lista de doenças da pergunta 1: 16 itens, longa demais para uma coluna só. */
+.itens {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-half) var(--space-3x);
+  margin: var(--space-1_5x) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.itens li {
+  position: relative;
+  padding-left: var(--space-1_5x);
+}
+
+.itens li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 3px;
+  height: 3px;
+  border-radius: var(--radius-circular);
+  background: #929eb1;
+}
+
+.detalhe {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-2x);
+}
+
+.textarea {
+  width: 100%;
+  margin-top: var(--space-1x);
+  padding: var(--space-1_5x);
+  box-sizing: border-box;
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  outline: none;
+  background: var(--surface-01);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: var(--text-label);
+  resize: vertical;
+}
+
+.textarea::placeholder {
+  color: #929eb1;
+}
+
+.textarea:focus {
+  border-color: var(--cyan-500);
+}
+
 .progresso {
   margin-top: var(--space-2x);
   font-size: var(--font-size-2xs);
@@ -25,7 +84,6 @@
 }
 
 .adiar {
-  max-width: 620px;
   margin-top: var(--space-4x);
   padding: var(--space-3x);
   border-left: 3px solid var(--cyan-500);
@@ -40,6 +98,7 @@
 
 .adiarTexto {
   margin-top: var(--space-1x);
+  max-width: 62ch;
   font-size: var(--font-size-xs);
   line-height: var(--line-height-lg);
   color: #586880;
@@ -48,4 +107,14 @@
 .adiarTexto strong {
   font-weight: var(--font-weight-bold);
   color: #192c50;
+}
+
+@media (max-width: 640px) {
+  .itens {
+    grid-template-columns: 1fr;
+  }
+
+  .item {
+    padding: var(--space-2x);
+  }
 }

@@ -18,12 +18,13 @@ export const JORNADAS = {
   },
   vida: {
     nome: 'Seguro de vida',
+    // Rótulos como a loja nomeia cada etapa no indicador ("Coberturas 2 / 10").
     etapas: [
       'Cotação',
-      'Produto',
+      'Coberturas',
       'Assistências',
       'Composição',
-      'Cadastro',
+      'Identificação',
       'Endereço',
       'Beneficiário',
       'Declaração de Saúde',

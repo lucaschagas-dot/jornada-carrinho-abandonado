@@ -1,164 +1,207 @@
-import { useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { ResumoVida } from '../components/ResumoVida';
+import { ChevronDownIcon, ChevronUpIcon } from '../components/icons';
 import { formatarBRL } from '../jornada';
-import { ASSISTENCIAS_VIDA, BENEFICIOS_VIDA, COBERTURAS_VIDA } from '../vida';
+import { ASSISTENCIAS_VIDA, BENEFICIOS_VIDA, RECOMENDACAO_IA, type Assistencia } from '../vida';
+import { useVida } from '../vidaEstado';
 import s from './jornadaComum.module.css';
+import p from './VidaAssistencias.module.css';
 
 /**
- * Vida — Assistências 3/10.
+ * Vida — Benefícios e assistências 3/10.
  *
- * Dois ajustes da pesquisa de carrinho abandonado (07/08/2026):
+ * Réplica da etapa da loja, inclusive da recomendação por IA (lista ordenada
+ * por score, com justificativa e o crédito ao Gemini) e da primeira da lista
+ * já marcada.
  *
- * 1. As assistências de uso amplo chegam MARCADAS. Hoje todas vêm desmarcadas,
- *    e a inércia joga contra a contratação: "aquilo que tá marcado, as pessoas
- *    vão ter menos vontade de deselecionar".
- * 2. As de perfil específico (pet, automotiva) só são sugeridas se o perfil
- *    informado na cotação bater. Hoje a recomendação por IA sugere assistência
- *    para cachorro a quem nunca disse ter cachorro.
+ * Ajuste da pesquisa de carrinho abandonado: quando a cotação perguntou sobre
+ * pet e veículo, o que a pessoa declarou substitui o palpite da IA — as
+ * assistências correspondentes sobem com selo, e as que não batem com o perfil
+ * saem da lista principal.
  */
+
+const scoreDe = (codigo: string) => RECOMENDACAO_IA[codigo]?.score ?? 0;
+
+const SELO_PERFIL: Record<string, string> = {
+  pet: 'Você informou ter pet',
+  auto: 'Você informou ter veículo',
+};
+
+const JUSTIFICATIVA_PERFIL: Record<string, string> = {
+  pet: 'Você nos disse que tem um animal de estimação.',
+  auto: 'Você nos disse que tem um veículo.',
+};
+
 export default function VidaAssistencias() {
-  const { state } = useLocation() as { state: { temPet?: boolean; temVeiculo?: boolean } | null };
-  const temPet = state?.temPet ?? false;
-  const temVeiculo = state?.temVeiculo ?? false;
+  const { sim, atualizar, alternarAssistencia } = useVida();
+  const [abertos, setAbertos] = useState<Record<string, boolean>>({});
+  const [verOutras, setVerOutras] = useState(false);
 
-  const perfilAtende = (dependeDePerfil?: 'pet' | 'auto') => {
-    if (dependeDePerfil === 'pet') return temPet;
-    if (dependeDePerfil === 'auto') return temVeiculo;
-    return true;
+  const alternarDetalhe = (codigo: string) => setAbertos((atual) => ({ ...atual, [codigo]: !atual[codigo] }));
+
+  // Na loja, a assistência mais recomendada já chega marcada. Só vale para quem
+  // ainda não mexeu na lista, para não remarcar o que a pessoa desmarcou.
+  useEffect(() => {
+    if (Object.keys(sim.assistencias).length > 0) return;
+    const maisRecomendada = [...ASSISTENCIAS_VIDA].sort((a, b) => scoreDe(b.codigo) - scoreDe(a.codigo))[0];
+    if (maisRecomendada) atualizar({ assistencias: { [maisRecomendada.codigo]: true } });
+  }, []);
+
+  const { principais, foraDoPerfil, confirmadasPorPerfil } = useMemo(() => {
+    const respostaDoPerfil = (dependeDePerfil?: Assistencia['dependeDePerfil']) => {
+      if (dependeDePerfil === 'pet') return sim.temPet;
+      if (dependeDePerfil === 'auto') return sim.temVeiculo;
+      return null;
+    };
+
+    // Perfil declarado vence palpite da IA: quem disse "sim" sobe com selo, quem
+    // disse "não" sai da lista principal — a loja hoje só chuta ("caso você tenha").
+    const confirmadas = ASSISTENCIAS_VIDA.filter((a) => respostaDoPerfil(a.dependeDePerfil) === true);
+    const negadas = ASSISTENCIAS_VIDA.filter((a) => respostaDoPerfil(a.dependeDePerfil) === false);
+    const neutras = ASSISTENCIAS_VIDA.filter((a) => respostaDoPerfil(a.dependeDePerfil) === null);
+
+    const porScore = (a: Assistencia, b: Assistencia) => scoreDe(b.codigo) - scoreDe(a.codigo);
+
+    return {
+      principais: [...confirmadas.sort(porScore), ...neutras.sort(porScore)],
+      foraDoPerfil: negadas.sort(porScore),
+      confirmadasPorPerfil: new Set(confirmadas.map((a) => a.codigo)),
+    };
+  }, [sim.temPet, sim.temVeiculo]);
+
+  const linhaAssistencia = (assistencia: Assistencia, comRelevancia: boolean) => {
+    const { codigo, titulo, descricao, precoMensal, dependeDePerfil } = assistencia;
+    const marcada = Boolean(sim.assistencias[codigo]);
+    const aberta = Boolean(abertos[codigo]);
+    const score = scoreDe(codigo);
+
+    const perfilConfirmado = dependeDePerfil !== undefined && confirmadasPorPerfil.has(codigo);
+    const justificativa =
+      perfilConfirmado && dependeDePerfil
+        ? JUSTIFICATIVA_PERFIL[dependeDePerfil]
+        : RECOMENDACAO_IA[codigo]?.justificativa;
+
+    return (
+      <div className={`${s.checkRow} ${marcada ? s.checkRowMarcada : ''}`} key={codigo}>
+        <input
+          id={`assistencia-${codigo}`}
+          type="checkbox"
+          className={s.checkbox}
+          checked={marcada}
+          onChange={() => alternarAssistencia(codigo)}
+        />
+        <div className={p.conteudo}>
+          <div className={p.linhaTitulo}>
+            <label htmlFor={`assistencia-${codigo}`} className={s.checkTitulo}>
+              {titulo}
+            </label>
+            {/* Quando o perfil foi declarado, o score da IA sai de cena: exibir
+                "20% recomendado" ao lado de "Você informou ter pet" e o palpite
+                desmentindo o fato que a pessoa acabou de contar. */}
+            {comRelevancia && !perfilConfirmado && (
+              <>
+                <span className={p.barra} aria-hidden="true">
+                  <span className={p.barraPreenchida} style={{ width: `${score}%` }} />
+                </span>
+                <span className={p.score}>{score}% recomendado</span>
+              </>
+            )}
+            <span className={p.preco}>{formatarBRL(precoMensal)}/mês</span>
+          </div>
+
+          {perfilConfirmado && dependeDePerfil && <span className={s.selo}>{SELO_PERFIL[dependeDePerfil]}</span>}
+
+          {comRelevancia && justificativa && <p className={p.justificativa}>{justificativa}</p>}
+
+          <button
+            type="button"
+            className={p.maisDetalhes}
+            aria-expanded={aberta}
+            onClick={() => alternarDetalhe(codigo)}
+          >
+            mais detalhes
+            {aberta ? <ChevronUpIcon size={10} /> : <ChevronDownIcon size={10} />}
+          </button>
+
+          {aberta && <p className={s.checkDescricao}>{descricao}</p>}
+        </div>
+      </div>
+    );
   };
-
-  const [marcadas, setMarcadas] = useState<Set<string>>(
-    () =>
-      new Set(
-        ASSISTENCIAS_VIDA.filter((a) => a.marcadaPorPadrao && perfilAtende(a.dependeDePerfil)).map((a) => a.codigo),
-      ),
-  );
-
-  const alternar = (codigo: string) =>
-    setMarcadas((atual) => {
-      const proximo = new Set(atual);
-      if (proximo.has(codigo)) proximo.delete(codigo);
-      else proximo.add(codigo);
-      return proximo;
-    });
-
-  // Assistências de perfil só entram na lista se o perfil bater — o resto fica
-  // num bloco separado, para quem quiser buscar.
-  const sugeridas = ASSISTENCIAS_VIDA.filter((a) => perfilAtende(a.dependeDePerfil));
-  const foraDoPerfil = ASSISTENCIAS_VIDA.filter((a) => !perfilAtende(a.dependeDePerfil));
-
-  const totalAssistencias = useMemo(
-    () => ASSISTENCIAS_VIDA.filter((a) => marcadas.has(a.codigo)).reduce((soma, a) => soma + a.precoMensal, 0),
-    [marcadas],
-  );
-
-  const [mostrarOutras, setMostrarOutras] = useState(false);
 
   return (
     <section className={s.wrapper}>
       <div className={s.colunas}>
         <div className={s.principal}>
-          <h1 className={s.title}>Assistências</h1>
+          <h1 className={s.title}>Benefícios e assistências</h1>
           <p className={s.subtitle}>
-            Selecionamos as que costumam fazer sentido para o seu perfil — já vêm marcadas. Desmarque o que não quiser.
+            A Seguros Unimed oferece benefícios e assistências pra cada momento da sua vida.
           </p>
 
+          <p className={s.pergunta}>Benefícios inclusos</p>
+          <p className={p.avisoInclusos}>Já fazem parte do seu seguro, sem custo adicional.</p>
           <div className={s.card}>
-            {sugeridas.map((assistencia) => {
-              const marcada = marcadas.has(assistencia.codigo);
+            {BENEFICIOS_VIDA.map((beneficio) => {
+              const aberto = Boolean(abertos[beneficio.codigo]);
               return (
-                <label className={`${s.checkRow} ${marcada ? s.checkRowMarcada : ''}`} key={assistencia.codigo}>
-                  <input
-                    type="checkbox"
-                    className={s.checkbox}
-                    checked={marcada}
-                    onChange={() => alternar(assistencia.codigo)}
-                  />
-                  <span className={s.checkTexto}>
-                    <span className={s.checkTitulo}>
-                      {assistencia.titulo} · {formatarBRL(assistencia.precoMensal)}/mês
-                    </span>
-                    <span className={s.checkDescricao}>{assistencia.descricao}</span>
-                    {assistencia.dependeDePerfil === 'pet' && <span className={s.selo}>Você informou ter pet</span>}
-                    {assistencia.dependeDePerfil === 'auto' && <span className={s.selo}>Você informou ter veículo</span>}
-                  </span>
-                </label>
+                <div className={s.checkRow} key={beneficio.codigo}>
+                  <span className={p.marcaInclusa} aria-hidden="true" />
+                  <div className={p.conteudo}>
+                    <div className={p.linhaTitulo}>
+                      <span className={s.checkTitulo}>{beneficio.titulo}</span>
+                      <span className={p.precoIncluso}>Incluso</span>
+                    </div>
+                    <button
+                      type="button"
+                      className={p.maisDetalhes}
+                      aria-expanded={aberto}
+                      onClick={() => alternarDetalhe(beneficio.codigo)}
+                    >
+                      mais detalhes
+                      {aberto ? <ChevronUpIcon size={10} /> : <ChevronDownIcon size={10} />}
+                    </button>
+                    {aberto && <p className={s.checkDescricao}>{beneficio.descricao}</p>}
+                  </div>
+                </div>
               );
             })}
           </div>
 
+          <p className={s.pergunta}>Assistências opcionais</p>
+          <p className={p.avisoIa}>Esta lista foi organizada por relevância com base no seu perfil.</p>
+          <p className={p.creditoIa}>Tecnologia de recomendação por IA. Powered by Google Gemini</p>
+
+          <div className={s.card}>{principais.map((assistencia) => linhaAssistencia(assistencia, true))}</div>
+
           {foraDoPerfil.length > 0 && (
-            <>
-              {!mostrarOutras ? (
-                <button type="button" className={s.linkDiscreto} onClick={() => setMostrarOutras(true)}>
-                  Ver outras {foraDoPerfil.length} assistências disponíveis
-                </button>
-              ) : (
+            <div className={p.outras}>
+              <button
+                type="button"
+                className={p.outrasBotao}
+                aria-expanded={verOutras}
+                onClick={() => setVerOutras((v) => !v)}
+              >
+                Ver outras assistências ({foraDoPerfil.length})
+                {verOutras ? <ChevronUpIcon size={12} /> : <ChevronDownIcon size={12} />}
+              </button>
+
+              {verOutras && (
                 <div className={s.card}>
                   <p className={s.checkDescricao}>
-                    Estas não entraram na sugestão porque não combinam com o perfil que você informou, mas você pode
-                    incluir.
+                    Não recomendamos estas porque não combinam com o perfil que você informou, mas você pode incluir.
                   </p>
-                  {foraDoPerfil.map((assistencia) => {
-                    const marcada = marcadas.has(assistencia.codigo);
-                    return (
-                      <label className={`${s.checkRow} ${marcada ? s.checkRowMarcada : ''}`} key={assistencia.codigo}>
-                        <input
-                          type="checkbox"
-                          className={s.checkbox}
-                          checked={marcada}
-                          onChange={() => alternar(assistencia.codigo)}
-                        />
-                        <span className={s.checkTexto}>
-                          <span className={s.checkTitulo}>
-                            {assistencia.titulo} · {formatarBRL(assistencia.precoMensal)}/mês
-                          </span>
-                          <span className={s.checkDescricao}>{assistencia.descricao}</span>
-                        </span>
-                      </label>
-                    );
-                  })}
+                  {foraDoPerfil.map((assistencia) => linhaAssistencia(assistencia, false))}
                 </div>
               )}
-            </>
+            </div>
           )}
 
-          <p className={s.pergunta}>Já incluídos no seu plano, sem custo</p>
-          <div className={s.card}>
-            {BENEFICIOS_VIDA.map((beneficio) => (
-              <p className={s.checkTitulo} key={beneficio.codigo}>
-                {beneficio.titulo}
-              </p>
-            ))}
-          </div>
+          <p className={s.legal}>
+            As assistências são serviços prestados por empresas parceiras e podem ser canceladas a qualquer momento.
+          </p>
         </div>
 
-        <aside className={s.resumo}>
-          <p className={s.resumoTitulo}>Sua compra</p>
-
-          {COBERTURAS_VIDA.filter((c) => !c.opcional).map((c) => (
-            <p className={s.resumoLinha} key={c.codigo}>
-              <span>{c.titulo}</span>
-              <span>Incluída</span>
-            </p>
-          ))}
-
-          <p className={s.resumoLinha}>
-            <span>Assistências</span>
-            <span>{marcadas.size} selecionadas</span>
-          </p>
-
-          <p className={s.resumoTotal}>
-            <span>Assistências/mês</span>
-            <span>{formatarBRL(totalAssistencias)}</span>
-          </p>
-
-          <div className={s.acoes}>
-            <Link to="/vida-dps" className={s.botaoPrimario}>
-              Continuar
-            </Link>
-          </div>
-        </aside>
+        <ResumoVida continuarPara="/vida-composicao" />
       </div>
     </section>
   );

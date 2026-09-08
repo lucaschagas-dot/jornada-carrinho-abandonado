@@ -1,0 +1,107 @@
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: var(--space-4x);
+}
+
+.icone {
+  margin-bottom: var(--space-1x);
+}
+
+.circulo {
+  fill: var(--green-500);
+}
+
+/* ---------- resumo do que foi contratado ---------- */
+.linhas {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3x);
+  padding: var(--space-2x) 0;
+  border-top: var(--border-width-xs) solid #eef1f5;
+}
+
+.linha:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.linha:last-child {
+  padding-bottom: 0;
+}
+
+.rotulo {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.valor {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+  text-align: right;
+}
+
+/* ---------- pendência da DPS adiada ---------- */
+.pendencia {
+  margin-top: var(--space-3x);
+  padding: var(--space-2x) var(--space-3x);
+  border-left: 3px solid var(--orange-400);
+  background: var(--orange-0);
+}
+
+.pendenciaTitulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.pendenciaLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+  text-decoration: underline;
+}
+
+.acoes {
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .linha {
+    flex-direction: column;
+    gap: var(--space-half);
+  }
+
+  .valor {
+    text-align: left;
+  }
+
+  .acoes > * {
+    width: 100%;
+  }
+}

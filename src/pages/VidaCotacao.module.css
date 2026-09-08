@@ -1,7 +1,18 @@
+/*
+ * Cotação de Vida. Só o que não cabe em jornadaComum: a busca de profissão com
+ * a saída para "não encontrada", os campos com sufixo (cms./kgs.) e o bloco das
+ * duas perguntas de perfil.
+ */
+
+.campoSolto {
+  max-width: 360px;
+  margin-top: var(--space-1x);
+}
+
 .buscaProfissao {
   position: relative;
   max-width: 520px;
-  margin-top: var(--space-2x);
+  margin-top: var(--space-1x);
 }
 
 .opcoes {
@@ -17,12 +28,28 @@
 .opcao {
   display: block;
   width: 100%;
+  min-height: 32px;
   padding: var(--space-1x);
   border: none;
+  border-radius: var(--radius-xs);
   background: none;
   text-align: left;
   font-size: var(--font-size-xs);
   color: var(--text-label);
+  cursor: pointer;
+}
+
+.opcao:hover,
+.opcao:focus-visible {
+  background: #f2f9fd;
+  color: #006fa9;
+}
+
+.limiteProfissao {
+  margin-top: var(--space-1_5x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
 }
 
 /* Saída para profissão não listada (proposta da pesquisa). */
@@ -54,6 +81,7 @@
 }
 
 .sugestao {
+  min-height: 32px;
   padding: var(--space-half) var(--space-2x);
   border: var(--border-width-xs) solid var(--cyan-500);
   border-radius: var(--radius-circular);
@@ -61,16 +89,68 @@
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-bold);
   color: #006fa9;
+  cursor: pointer;
 }
 
 .linkInline {
   background: none;
   border: none;
-  padding: 0;
+  /* Embutido no meio do texto, então a área clicável cresce por padding com
+     margem negativa: o alvo passa de 19px para ~35px sem quebrar a linha.
+     É a saída para profissão não listada, uma das propostas centrais aqui. */
+  padding: var(--space-1x) var(--space-half);
+  margin: calc(-1 * var(--space-1x)) calc(-1 * var(--space-half));
   font-size: var(--font-size-2xs);
   font-weight: var(--font-weight-bold);
   color: #006fa9;
   text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Altura e peso: o sufixo acompanha a linha de base do campo. */
+.comSufixo {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-1x);
+  max-width: 220px;
+  margin-top: var(--space-1x);
+}
+
+.entradaNumero {
+  flex: 1;
+  min-width: 0;
+}
+
+.sufixo {
+  padding-bottom: var(--space-1x);
+  font-size: var(--font-size-xs);
+  color: #929eb1;
+  white-space: nowrap;
+}
+
+/* Duas perguntas de perfil (proposta da pesquisa). */
+.blocoExtra {
+  max-width: 620px;
+  margin-top: var(--space-5x);
+  padding: var(--space-3x);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  background: var(--surface-01);
+}
+
+.blocoExtraTitulo {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+}
+
+.blocoExtraTexto {
+  margin-top: var(--space-1x);
+  max-width: 62ch;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
 }
 
 .perguntaMenor {
@@ -78,4 +158,12 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   color: #192c50;
+}
+
+@media (max-width: 640px) {
+  .campoSolto,
+  .buscaProfissao,
+  .blocoExtra {
+    max-width: none;
+  }
 }

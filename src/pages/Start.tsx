@@ -63,7 +63,7 @@ const PRODUTOS: Produto[] = [
       'Um seguro completo para garantir a sua segurança e tranquilidade e também de quem você ama sem se preocupar.',
     preco: 'R$ 35,00',
     periodo: '/mês',
-    to: '/vida-cotacao',
+    to: '/vida-1',
   },
   {
     id: 'acidentes-pessoais',

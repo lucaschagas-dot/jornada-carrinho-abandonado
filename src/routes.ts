@@ -54,13 +54,25 @@ export const ROUTES = [
   { path: '/residencial-identificacao', label: 'Residencial 3 - Identificação', jornada: 'residencial', etapa: 3, anterior: '/residencial-coberturas' },
   { path: '/residencial-pagamento', label: 'Residencial 4 - Pagamento', jornada: 'residencial', etapa: 4, anterior: '/residencial-identificacao' },
 
-  // ---------- Seguro de Vida (jornada de 10 etapas) ----------
-  // O Voltar da DPS cai em Assistências porque as etapas 4 a 7 existem na loja
-  // mas não foram construídas aqui.
-  { path: '/vida-cotacao', label: 'Vida 1 - Cotação', jornada: 'vida', etapa: 1, anterior: '/' },
-  { path: '/vida-assistencias', label: 'Vida 3 - Assistências', jornada: 'vida', etapa: 3, anterior: '/vida-cotacao' },
-  { path: '/vida-dps', label: 'Vida 8 - Declaração de Saúde', jornada: 'vida', etapa: 8, anterior: '/vida-assistencias' },
-  { path: '/vida-pagamento', label: 'Vida 9 - Pagamento', jornada: 'vida', etapa: 9, anterior: '/vida-dps' },
+  // ---------- Seguro de Vida (jornada completa, 10 etapas) ----------
+  // Levantada da loja em 08/09/2026. As etapas 6 a 10 ficam atrás da criação
+  // de conta na loja real; foram reconstruídas a partir do modelo de dados da
+  // simulação (ver o cabeçalho de src/vida.ts).
+  { path: '/vida-1', label: 'Vida 1 - Página do produto', anterior: '/' },
+  { path: '/vida-cotacao', label: 'Vida 2 - Cotação', jornada: 'vida', etapa: 1, anterior: '/vida-1' },
+  { path: '/vida-produto', label: 'Vida 3 - Coberturas', jornada: 'vida', etapa: 2, anterior: '/vida-cotacao' },
+  { path: '/vida-assistencias', label: 'Vida 4 - Benefícios e assistências', jornada: 'vida', etapa: 3, anterior: '/vida-produto' },
+  { path: '/vida-composicao', label: 'Vida 5 - Composição', jornada: 'vida', etapa: 4, anterior: '/vida-assistencias' },
+  // Proposta da pesquisa, igual ao Odonto: o login vira etapa com URL própria.
+  // Na loja ele não existe — a conta é criada em silêncio ao sair da
+  // Identificação ("uma conta será criada com os dados informados").
+  { path: '/vida-login', label: 'Vida 5.5 - Login (proposta)', jornada: 'vida', etapa: 5, anterior: '/vida-composicao' },
+  { path: '/vida-cadastro', label: 'Vida 6 - Identificação', loggedIn: true, jornada: 'vida', etapa: 5, anterior: '/vida-login' },
+  { path: '/vida-endereco', label: 'Vida 7 - Endereço', loggedIn: true, jornada: 'vida', etapa: 6, anterior: '/vida-cadastro' },
+  { path: '/vida-beneficiario', label: 'Vida 8 - Beneficiário', loggedIn: true, jornada: 'vida', etapa: 7, anterior: '/vida-endereco' },
+  { path: '/vida-dps', label: 'Vida 9 - Declaração de Saúde', loggedIn: true, jornada: 'vida', etapa: 8, anterior: '/vida-beneficiario' },
+  { path: '/vida-pagamento', label: 'Vida 10 - Pagamento', loggedIn: true, jornada: 'vida', etapa: 9, anterior: '/vida-dps' },
+  { path: '/vida-confirmacao', label: 'Vida 11 - Conclusão', loggedIn: true, jornada: 'vida', etapa: 10, anterior: '/vida-pagamento' },
 ] as const satisfies readonly RouteDef[];
 
 /**

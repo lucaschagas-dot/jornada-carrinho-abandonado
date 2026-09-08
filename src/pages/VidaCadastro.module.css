@@ -1,0 +1,59 @@
+/*
+ * Identificação (Vida) — só o que o jornadaComum não resolve: as duas linhas
+ * com largura própria, o valor vindo da cotação em texto e o bloco do PEP.
+ */
+
+/* O CPF fica sozinho e estreito na primeira linha, como na loja. */
+.linhaCpf {
+  display: grid;
+  grid-template-columns: minmax(0, 240px);
+  width: 100%;
+}
+
+/* Quatro campos curtos lado a lado — o mínimo do s.linhaCampos (220px) só
+   deixaria três caberem. */
+.linhaQuatro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3x);
+  width: 100%;
+}
+
+/* Mesma caixa de um campo, sem a linha de baixo: é leitura, não edição. */
+.valorFixo {
+  margin-top: var(--space-1x);
+  padding-bottom: var(--space-1x);
+  border-bottom: var(--border-width-xs) solid transparent;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+}
+
+.pep {
+  display: flex;
+  flex-direction: column;
+}
+
+.pepTexto {
+  margin-top: var(--space-half);
+  max-width: 72ch;
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+}
+
+.link {
+  color: #006fa9;
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .linhaCpf {
+    grid-template-columns: 1fr;
+  }
+
+  .linhaQuatro {
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  }
+}

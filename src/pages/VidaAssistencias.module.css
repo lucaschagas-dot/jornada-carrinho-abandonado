@@ -1,0 +1,164 @@
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  min-width: 0;
+  flex: 1;
+}
+
+.linhaTitulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1x);
+}
+
+.linhaTitulo label {
+  cursor: pointer;
+}
+
+/* ---------- barra de relevância da recomendação por IA ---------- */
+.barra {
+  display: block;
+  width: 56px;
+  height: 4px;
+  border-radius: var(--radius-circular);
+  background: #eef1f5;
+  overflow: hidden;
+}
+
+.barraPreenchida {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-circular);
+  background: var(--cyan-500);
+}
+
+.score {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #006fa9;
+  white-space: nowrap;
+}
+
+.preco {
+  margin-left: auto;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+  white-space: nowrap;
+}
+
+.precoIncluso {
+  margin-left: auto;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+  white-space: nowrap;
+}
+
+.justificativa {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.maisDetalhes {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  width: fit-content;
+  min-height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- benefícios inclusos ---------- */
+.avisoInclusos {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.marcaInclusa {
+  position: relative;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: var(--radius-circular);
+  background: #eef8fd;
+}
+
+.marcaInclusa::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 4px;
+  width: 5px;
+  height: 9px;
+  border: solid #006fa9;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- aviso da recomendação por IA (texto da loja) ---------- */
+.avisoIa {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.creditoIa {
+  font-size: var(--font-size-3xs);
+  font-style: italic;
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+}
+
+/* ---------- bloco recolhido com as assistências fora do perfil ---------- */
+.outras {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-3x);
+}
+
+.outrasBotao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1x);
+  width: fit-content;
+  min-height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .preco,
+  .precoIncluso {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .barra {
+    width: 44px;
+  }
+}

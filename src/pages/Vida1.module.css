@@ -1,0 +1,449 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* utilitário: cancela o padding horizontal do <main> do PageShell para permitir
+   fundo colorido "de ponta a ponta" dentro do limite de 1440px da página */
+.bleed {
+  margin-left: calc(-1 * var(--space-4x));
+  margin-right: calc(-1 * var(--space-4x));
+  padding-left: var(--space-4x);
+  padding-right: var(--space-4x);
+}
+
+@media (max-width: 640px) {
+  .bleed {
+    margin-left: calc(-1 * var(--space-2x));
+    margin-right: calc(-1 * var(--space-2x));
+    padding-left: var(--space-2x);
+    padding-right: var(--space-2x);
+  }
+}
+
+.eyebrow {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cyan-500);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-1x);
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1x);
+  height: 48px;
+  padding: 0 var(--space-3x);
+  background: var(--cyan-500);
+  color: var(--grey-0);
+  border: none;
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Texto corrido das seções, sempre o mesmo tamanho e a mesma cor. */
+.texto {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.textoCompacto {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--grey-50);
+}
+
+/* Faixas diagonais suaves atrás do carrossel, iguais às da página do plano
+   odontológico. Decorativas: ficam abaixo do conteúdo e não recebem clique. */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 58%;
+  background:
+    radial-gradient(60% 70% at 75% 40%, rgba(0, 158, 219, 0.08), transparent 70%),
+    repeating-linear-gradient(115deg, rgba(0, 111, 169, 0.05) 0 2px, transparent 2px 96px);
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4x);
+}
+
+.heroText {
+  flex: 1 1 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2x);
+  padding: var(--space-6x) 0;
+  min-width: 0;
+}
+
+.heroTitle {
+  font-size: clamp(var(--font-size-lg), 4vw, 56px);
+  line-height: var(--line-height-sm);
+  letter-spacing: var(--letter-spacing-negative);
+  color: var(--text-heading);
+  max-width: 17ch;
+}
+
+.heroSubtitle {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-lg);
+  color: #586880;
+  max-width: 42ch;
+}
+
+.priceCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4x);
+  background: var(--grey-0);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-2x);
+  margin-top: var(--space-2x);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.priceInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.priceLabel {
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-half);
+  white-space: nowrap;
+}
+
+.priceValue {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--grey-900);
+  line-height: var(--line-height-sm);
+}
+
+.pricePeriod {
+  font-size: var(--font-size-3xs);
+  color: var(--text-heading);
+}
+
+.heroAside {
+  display: flex;
+  flex: 1 1 500px;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: var(--space-4x) 0;
+}
+
+@media (max-width: 900px) {
+  .heroInner {
+    flex-direction: column;
+  }
+
+  .heroText {
+    padding: var(--space-4x) 0 0;
+  }
+
+  .heroAside {
+    padding: var(--space-3x) 0 var(--space-4x);
+  }
+
+  /* Empilhado, o degradê diagonal atrás do card atrapalha a leitura. */
+  .hero::after {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .priceCard {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .btnPrimary {
+    width: 100%;
+  }
+}
+
+/* ---------- seções de conteúdo ---------- */
+.secao {
+  padding: var(--space-8x) 0;
+}
+
+.secaoTitulo {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+  margin-bottom: var(--space-4x);
+}
+
+/* ---------- coberturas ---------- */
+.coberturasGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3x);
+}
+
+.coberturaCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+  background: var(--grey-0);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-sm);
+  padding: var(--space-3x);
+  /* Barra cyan à esquerda: separa um card do outro sem precisar de sombra. */
+  border-left: var(--border-width-lg) solid var(--cyan-500);
+}
+
+.coberturaCabeca {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2x);
+}
+
+.coberturaTitulo {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-md);
+  color: var(--text-heading);
+}
+
+.selo {
+  flex-shrink: 0;
+  align-self: center;
+  padding: 2px var(--space-1x);
+  border-radius: var(--radius-circular);
+  background: var(--cyan-0);
+  color: var(--cyan-700);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .coberturasGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .coberturasGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- benefícios inclusos ---------- */
+.faixa {
+  background: var(--grey-50);
+  padding-top: var(--space-8x);
+  padding-bottom: var(--space-8x);
+}
+
+.faixaInner {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.beneficiosGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3x);
+}
+
+.beneficioCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+  background: var(--grey-0);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-level-1);
+  padding: var(--space-3x);
+}
+
+.beneficioTitulo {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-md);
+  color: var(--cyan-700);
+}
+
+@media (max-width: 900px) {
+  .beneficiosGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- assistências opcionais ---------- */
+.assistenciasGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-2x);
+}
+
+.assistenciaCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  padding: var(--space-2x);
+}
+
+.assistenciaTitulo {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-md);
+  color: var(--text-heading);
+}
+
+/* ---------- por que devo ter este seguro ---------- */
+.why {
+  padding: var(--space-8x) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5x);
+}
+
+.whyTitulo {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+  text-align: center;
+  /* Sem max-width de propósito: o título cabe numa linha só acima de ~640px, e
+     no celular quebrar é o certo. */
+}
+
+.whyGrid {
+  width: 100%;
+  max-width: 1028px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5x);
+}
+
+.whyItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+}
+
+/* Traço cyan no lugar da ilustração: as três ilustrações do repositório são do
+   plano odontológico (sorriso, dente) e não servem aqui. */
+.whyMarca {
+  width: 48px;
+  height: 4px;
+  border-radius: var(--radius-circular);
+  background: var(--cyan-500);
+  margin-bottom: var(--space-1x);
+}
+
+.whyItemTitulo {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  color: var(--cyan-700);
+}
+
+@media (max-width: 900px) {
+  .whyGrid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    gap: var(--space-4x);
+  }
+}
+
+/* ---------- FAQ ---------- */
+.faq {
+  padding: 0 0 var(--space-8x);
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+}
+
+.faqItem {
+  border-bottom: var(--border-width-sm) solid #dce0e8;
+}
+
+.faqBotao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  width: 100%;
+  background: none;
+  border: none;
+  padding: var(--space-3x) var(--space-1x);
+  text-align: left;
+}
+
+.faqPergunta {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.faqIcone {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--text-heading);
+  transition: transform 0.2s ease;
+}
+
+.faqIconeAberto {
+  transform: rotate(180deg);
+}
+
+.faqResposta {
+  padding: 0 var(--space-6x) var(--space-3x) var(--space-1x);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faqIcone {
+    transition: none;
+  }
+}
+
+/* ---------- nota da Susep ---------- */
+.susep {
+  padding: 0 0 var(--space-6x);
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #929eb1;
+  max-width: 90ch;
+}

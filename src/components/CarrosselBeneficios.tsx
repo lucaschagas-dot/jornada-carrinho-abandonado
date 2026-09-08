@@ -14,6 +14,8 @@ export type Beneficio = {
 
 type CarrosselBeneficiosProps = {
   beneficios: Beneficio[];
+  /** Rótulo da região para leitor de tela — muda conforme o produto. */
+  rotulo?: string;
 };
 
 /**
@@ -33,7 +35,10 @@ type CarrosselBeneficiosProps = {
  * menos movimento no sistema (`prefers-reduced-motion`) — carrossel que anda
  * sozinho embaixo do cursor tira o controle de quem está lendo.
  */
-export function CarrosselBeneficios({ beneficios }: CarrosselBeneficiosProps) {
+export function CarrosselBeneficios({
+  beneficios,
+  rotulo = 'Principais benefícios do plano',
+}: CarrosselBeneficiosProps) {
   const [atual, setAtual] = useState(0);
   const [pausado, setPausado] = useState(false);
 
@@ -53,7 +58,7 @@ export function CarrosselBeneficios({ beneficios }: CarrosselBeneficiosProps) {
       className={styles.palco}
       role="group"
       aria-roledescription="carrossel"
-      aria-label="Principais benefícios do Plano Odontológico"
+      aria-label={rotulo}
       onMouseEnter={() => setPausado(true)}
       onMouseLeave={() => setPausado(false)}
       onFocus={() => setPausado(true)}

@@ -260,6 +260,9 @@
 }
 
 .linkDiscreto {
+  /* 19px de altura era alvo pequeno demais no celular — e aqui moram atalhos
+     que a pesquisa propôs, como "Dividir igualmente entre todos". */
+  min-height: 32px;
   background: none;
   border: none;
   padding: 0;
@@ -333,13 +336,6 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   color: #192c50;
-}
-
-.resumoVazio {
-  margin-top: var(--space-1x);
-  font-size: var(--font-size-2xs);
-  line-height: var(--line-height-lg);
-  color: #929eb1;
 }
 
 @media (max-width: 900px) {

@@ -1,0 +1,147 @@
+/* Barra de saldo — acompanha a rolagem para a soma ficar sempre à vista. */
+.saldo {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1x);
+  margin-top: var(--space-3x);
+  padding: var(--space-2x) var(--space-3x);
+  background: var(--surface-01);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+}
+
+.saldoTopo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1x);
+}
+
+.saldoNumero {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.saldoTexto {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.barra {
+  overflow: hidden;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-circular);
+  background: #eef1f5;
+}
+
+.barraPreenchida {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-circular);
+  background: #dce0e8;
+  transition: width 120ms ease-out;
+}
+
+.barraCompleta {
+  background: var(--cyan-500);
+}
+
+/* ---------- lista de beneficiários ---------- */
+.lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+}
+
+.cabecalhoTitulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.remover {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: var(--font-size-2xs);
+  color: #586880;
+  text-decoration: underline;
+}
+
+.campos {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr) 120px;
+  gap: var(--space-3x);
+}
+
+.campoPercentual {
+  position: relative;
+  display: block;
+}
+
+.campoPercentual input {
+  padding-right: var(--space-3x);
+}
+
+.sufixo {
+  position: absolute;
+  right: 0;
+  bottom: var(--space-1x);
+  font-size: var(--font-size-xs);
+  color: #929eb1;
+  pointer-events: none;
+}
+
+.valorEmReais {
+  margin-top: var(--space-half);
+  font-size: var(--font-size-3xs);
+  color: #929eb1;
+}
+
+/* ---------- nenhum beneficiário indicado ---------- */
+.vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1x);
+  max-width: 620px;
+  margin-top: var(--space-3x);
+  padding: var(--space-3x);
+  border-left: 3px solid var(--cyan-500);
+  background: #f2f9fd;
+}
+
+.vazioTitulo {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.vazioTexto {
+  margin-bottom: var(--space-1x);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+@media (max-width: 640px) {
+  .campos {
+    grid-template-columns: 1fr;
+  }
+}

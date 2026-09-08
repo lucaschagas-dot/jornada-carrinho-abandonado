@@ -5,6 +5,7 @@ import { PrototypeNav } from './components/PrototypeNav';
 import { ROUTES, type RoutePath } from './routes';
 import { DEMO_USER } from './demoUser';
 import { JornadaProvider } from './jornada';
+import { VidaProvider } from './vidaEstado';
 
 import Start from './pages/Start';
 import Odonto1 from './pages/Odonto1';
@@ -24,10 +25,18 @@ import ResidencialCoberturas from './pages/ResidencialCoberturas';
 import ResidencialIdentificacao from './pages/ResidencialIdentificacao';
 import ResidencialPagamento from './pages/ResidencialPagamento';
 
+import Vida1 from './pages/Vida1';
 import VidaCotacao from './pages/VidaCotacao';
+import VidaProduto from './pages/VidaProduto';
 import VidaAssistencias from './pages/VidaAssistencias';
+import VidaComposicao from './pages/VidaComposicao';
+import VidaLogin from './pages/VidaLogin';
+import VidaCadastro from './pages/VidaCadastro';
+import VidaEndereco from './pages/VidaEndereco';
+import VidaBeneficiario from './pages/VidaBeneficiario';
 import VidaDps from './pages/VidaDps';
 import VidaPagamento from './pages/VidaPagamento';
+import VidaConfirmacao from './pages/VidaConfirmacao';
 
 const PAGES: Record<RoutePath, ComponentType> = {
   '/': Start,
@@ -48,15 +57,24 @@ const PAGES: Record<RoutePath, ComponentType> = {
   '/residencial-identificacao': ResidencialIdentificacao,
   '/residencial-pagamento': ResidencialPagamento,
 
+  '/vida-1': Vida1,
   '/vida-cotacao': VidaCotacao,
+  '/vida-produto': VidaProduto,
   '/vida-assistencias': VidaAssistencias,
+  '/vida-composicao': VidaComposicao,
+  '/vida-login': VidaLogin,
+  '/vida-cadastro': VidaCadastro,
+  '/vida-endereco': VidaEndereco,
+  '/vida-beneficiario': VidaBeneficiario,
   '/vida-dps': VidaDps,
   '/vida-pagamento': VidaPagamento,
+  '/vida-confirmacao': VidaConfirmacao,
 };
 
 function App() {
   return (
     <JornadaProvider>
+      <VidaProvider>
       <HashRouter>
       <Routes>
         {ROUTES.map((route) => {
@@ -84,6 +102,7 @@ function App() {
       </Routes>
       <PrototypeNav />
       </HashRouter>
+      </VidaProvider>
     </JornadaProvider>
   );
 }

@@ -1,0 +1,162 @@
+.caixa {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--space-3x);
+  box-sizing: border-box;
+  background: var(--surface-01);
+  border-top: 4px solid var(--cyan-500);
+  border-radius: 0 0 var(--radius-xs) var(--radius-xs);
+  box-shadow: var(--shadow-level-1);
+}
+
+.topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  flex-wrap: wrap;
+}
+
+.titulo {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.protocolo {
+  font-size: var(--font-size-3xs);
+  color: #929eb1;
+}
+
+.vazio {
+  margin-top: var(--space-3x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  text-align: center;
+  color: #006fa9;
+}
+
+/* ---------- acordeões ---------- */
+.secao {
+  margin-top: var(--space-2x);
+  padding-top: var(--space-2x);
+  border-top: var(--border-width-xs) solid #eef1f5;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+  text-align: left;
+  cursor: pointer;
+  /* Acordeão de largura total: 21px de altura era alvo pequeno demais no
+     celular, e este resumo aparece nas 10 etapas. */
+  min-height: 32px;
+  padding: var(--space-1x) 0;
+}
+
+.seta {
+  flex-shrink: 0;
+  color: #586880;
+  transition: transform 0.15s ease;
+}
+
+.setaAberta {
+  transform: rotate(180deg);
+}
+
+.corpo {
+  margin-top: var(--space-1_5x);
+}
+
+.linha {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.subtitulo {
+  margin-top: var(--space-1_5x);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+/* ---------- total e ações ---------- */
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  margin-top: var(--space-3x);
+  padding-top: var(--space-2x);
+  border-top: var(--border-width-xs) solid #dce0e8;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.total strong {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.totalUnidade {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-regular);
+  color: #586880;
+}
+
+.continuar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: var(--space-2x);
+  padding: var(--space-2x);
+  border: none;
+  border-radius: var(--radius-xs);
+  /* Mesmo azul do "Pagar": branco sobre o ciano da marca dá 2,4:1. */
+  background: var(--cyan-700);
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.continuar:hover:not(:disabled) {
+  background: var(--cyan-800);
+}
+
+.continuar:disabled {
+  background: #dce0e8;
+  color: #4a5568;
+  cursor: not-allowed;
+}
+
+.caracteristicas {
+  margin-top: var(--space-2x);
+  min-height: 32px;
+  padding: var(--space-1x) 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+  text-decoration: underline;
+  cursor: pointer;
+}
