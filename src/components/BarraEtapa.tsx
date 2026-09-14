@@ -7,12 +7,20 @@ type BarraEtapaProps = {
   /** Valor à esquerda na barra. Ausente = a barra fica só com a ação. */
   total?: number;
   rotuloTotal?: string;
+  /** Substitui o par rótulo/valor quando a etapa precisa de algo mais que um número. */
+  valor?: ReactNode;
   /** Conteúdo do painel "Resumo". Ausente = sem aba para abrir. */
   detalhes?: ReactNode;
   /** Botão ou link principal da etapa. */
   children: ReactNode;
   /** Texto miúdo abaixo da ação, só no desktop (ex.: "Ver características gerais"). */
   rodape?: ReactNode;
+  /**
+   * No desktop, prende a caixa na altura da tela em vez de deixá-la rolar junto
+   * com a página: os detalhes ganham rolagem própria e total e ação ficam
+   * colados no rodapé dela. No celular não muda nada — lá a barra já é fixa.
+   */
+  fixo?: boolean;
 };
 
 /**
@@ -28,17 +36,23 @@ type BarraEtapaProps = {
  * 1024px — que é o breakpoint de desktop dela, não os 900px que este protótipo
  * usava antes.
  */
-export function BarraEtapa({ total, rotuloTotal = 'Total/mês', detalhes, children, rodape }: BarraEtapaProps) {
+export function BarraEtapa({ total, rotuloTotal = 'Total/mês', valor, detalhes, children, rodape, fixo }: BarraEtapaProps) {
   const [aberto, setAberto] = useState(false);
 
   // Enquanto a barra existe, avisa a altura dela para quem flutua no rodapé
   // (balão do WhatsApp, menu "Telas") poder subir e não cobrir o botão.
+  // No modo `fixo` avisa também que há uma coluna presa na direita: a caixa vai
+  // até o pé da janela e, sem isso, o balão do WhatsApp cai em cima do rodapé
+  // dela ("Ver características gerais").
   useEffect(() => {
-    document.documentElement.style.setProperty('--altura-barra-etapa', '89px');
+    const raiz = document.documentElement.style;
+    raiz.setProperty('--altura-barra-etapa', '89px');
+    if (fixo) raiz.setProperty('--resumo-fixo', '1');
     return () => {
-      document.documentElement.style.removeProperty('--altura-barra-etapa');
+      raiz.removeProperty('--altura-barra-etapa');
+      raiz.removeProperty('--resumo-fixo');
     };
-  }, []);
+  }, [fixo]);
 
   return (
     <>
@@ -46,7 +60,7 @@ export function BarraEtapa({ total, rotuloTotal = 'Total/mês', detalhes, childr
           conteúdo não ficar escondido atrás dela. */}
       <div className={styles.espacador} aria-hidden="true" />
 
-      <aside className={styles.barra}>
+      <aside className={fixo ? `${styles.barra} ${styles.fixo}` : styles.barra}>
         {detalhes && (
           <button
             type="button"
@@ -68,11 +82,15 @@ export function BarraEtapa({ total, rotuloTotal = 'Total/mês', detalhes, childr
         <div className={styles.linha}>
           {/* Sem total o bloco inteiro sai: renderizá-lo vazio deixava, no
               desktop, um filete de borda solto acima do botão. */}
-          {total !== undefined && (
-            <p className={styles.valor}>
-              <span className={styles.valorRotulo}>{rotuloTotal}</span>
-              <strong className={styles.valorNumero}>{formatarBRL(total)}</strong>
-            </p>
+          {valor !== undefined ? (
+            <div className={styles.valor}>{valor}</div>
+          ) : (
+            total !== undefined && (
+              <p className={styles.valor}>
+                <span className={styles.valorRotulo}>{rotuloTotal}</span>
+                <strong className={styles.valorNumero}>{formatarBRL(total)}</strong>
+              </p>
+            )
           )}
           <div className={styles.acao}>{children}</div>
         </div>

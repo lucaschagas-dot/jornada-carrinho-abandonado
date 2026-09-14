@@ -1,7 +1,6 @@
 import { useRef } from 'react';
-import { BarraEtapa } from '../components/BarraEtapa';
 import { BoletoIcon, CartaoIcon, FormasPagamento, PixIcon, type OpcaoPagamento } from '../components/FormasPagamento';
-import { formatarBRL } from '../jornada';
+import { ResumoResidencial } from '../components/ResumoResidencial';
 import { COMBOS } from '../residencial';
 import b from './residencialBarra.module.css';
 import s from './jornadaComum.module.css';
@@ -27,24 +26,6 @@ export default function ResidencialPagamento() {
   const combo = COMBOS[0];
   const blocoPagamento = useRef<HTMLDivElement>(null);
 
-  const detalhes = (
-    <>
-      <p className={s.resumoTitulo}>Resumo</p>
-      <p className={s.resumoLinha}>
-        <span>{combo.nome}</span>
-        <span>{Object.keys(combo.coberturas).length} coberturas</span>
-      </p>
-      <p className={s.resumoLinha}>
-        <span>Vigência</span>
-        <span>12 meses</span>
-      </p>
-      <p className={s.resumoLinha}>
-        <span>Valor anual</span>
-        <span>{formatarBRL(combo.anual)}</span>
-      </p>
-    </>
-  );
-
   return (
     <section className={s.wrapper}>
       <div className={s.colunas}>
@@ -60,7 +41,7 @@ export default function ResidencialPagamento() {
         {/* O "Pagar" continua dentro do FormasPagamento, onde mora o aceite que
             o habilita — duplicá-lo aqui criaria um botão de pagar sem o aceite.
             A barra leva a pessoa até ele, que no celular fica fora da tela. */}
-        <BarraEtapa total={combo.mensal} rotuloTotal={`Em até ${combo.parcelas}x`} detalhes={detalhes}>
+        <ResumoResidencial combo={combo}>
           <button
             type="button"
             className={`${s.botaoPrimario} ${b.cta}`}
@@ -68,7 +49,7 @@ export default function ResidencialPagamento() {
           >
             Ir para o pagamento
           </button>
-        </BarraEtapa>
+        </ResumoResidencial>
       </div>
     </section>
   );

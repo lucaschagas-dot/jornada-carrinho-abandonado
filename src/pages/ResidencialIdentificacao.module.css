@@ -1,0 +1,62 @@
+/*
+ * Identificação do Residencial — medidas tiradas da própria loja.
+ *
+ * A loja monta esse formulário sobre uma grade de 16 colunas e distribui assim:
+ *   linha 1   CPF 3 · Nome 13
+ *   linha 2   Nascimento 3 · Celular 3 · Email 5 · Sexo 5
+ *   linha 3   CEP 7 · Número 3 · Complemento 6
+ * Abaixo de 1024px (o breakpoint de desktop dela) nada disso vale: os campos
+ * voltam ao `auto-fit` do jornadaComum e se empilham sozinhos.
+ */
+@media (min-width: 1024px) {
+  .linha1 {
+    grid-template-columns: 3fr 13fr;
+  }
+
+  .linha2 {
+    grid-template-columns: 3fr 3fr 5fr 5fr;
+  }
+
+  .linha3 {
+    grid-template-columns: 7fr 3fr 6fr;
+  }
+}
+
+/* O CPF vem da conta e a loja não deixa alterar: aparece como texto, sem a
+   linha de baixo que os campos editáveis têm. */
+.somenteLeitura.somenteLeitura {
+  border-bottom-color: transparent;
+  color: var(--text-heading);
+}
+
+/* Os dois botões dividem a coluna de Sexo, seja ela qual for. Sem isso o
+   `flex: 0 1 220px` do jornadaComum tenta 220px cada e, por volta de 1024px,
+   a dupla não cabe nas 5 colunas e quebra em duas linhas. */
+.toggleSexo.toggleSexo {
+  flex: 1 1 0;
+  min-width: 0;
+  /* No pior caso (1024px em ponto) sobram ~100px de conteúdo para o glifo
+     mais o rótulo; os 24px de respiro do jornadaComum não cabem. */
+  padding-inline: var(--space-1x);
+}
+
+/* Glifo também é item flex: sem isto ele é o primeiro a encolher e some por
+   completo (largura 0) quando a coluna aperta. */
+.toggleSexo svg {
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  /* Dentro do card o botão é um bloco de largura fixa alinhado à esquerda,
+     como na loja — não a barra de largura total das outras etapas. */
+  .continuar.continuar {
+    align-self: flex-start;
+    width: 340px;
+  }
+}
+
+/* Nota de rodapé centralizada sob o card, como a loja a exibe. */
+.legalCentrado {
+  max-width: none;
+  text-align: center;
+}

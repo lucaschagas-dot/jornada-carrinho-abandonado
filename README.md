@@ -131,11 +131,9 @@ monta esses formulários. As cinco primeiras etapas são réplica do que foi vis
 | **Teto de capital visível na cotação** | `VidaCotacao` | Cada profissão tem um `limiteVida` que limita o slider da etapa seguinte. A loja só revela isso no slider; aqui a pessoa já sabe ao escolher a profissão |
 | **Indicador de etapas, Voltar e resumo lateral** | `TopoEtapa` + `ResumoVida` | Valem para as 10 etapas, como no Odonto |
 
-No Residencial, a **proporção** entre as coberturas de cada combo é real (sai
-dos capitais que a loja pratica); o que escala com o slider são os valores
-absolutos e o preço. No capital de referência — R$ 300.000 — os três combos
-mostram exatamente os números da loja: R$ 30,44 / R$ 273,40, R$ 49,09 /
-R$ 490,72 e R$ 92,00 / R$ 920,00.
+No Residencial, os três combos têm os capitais, as franquias e os preços que a
+loja pratica: R$ 30,44 / R$ 273,40, R$ 49,09 / R$ 490,72 e R$ 92,00 /
+R$ 920,00.
 
 No Vida, o preço é calibrado a partir dos dois únicos totais reais observados na loja
 (R$ 52,51 só com as coberturas base e R$ 69,39 com Câncer, Morte Acidental e
@@ -147,12 +145,13 @@ ilustrativas e estão marcadas como tal em `PRECOS_OBSERVADOS`.
 | Ajuste | Onde | Origem na pesquisa |
 | --- | --- | --- |
 | Coberturas essenciais **marcadas por padrão**, com selo "Recomendado" | `ResidencialCoberturas` (personalização) | "Por que que a gente já não deixa tudo marcado? [...] se a pessoa quiser, ela desmarca" |
-| **Slider do capital segurado** na tela de combos, com os valores e o preço de cada combo acompanhando | `ResidencialCoberturas` | proposta: hoje os três combos têm valor fixo, e quem quer mexer cai na personalização item a item — a edição de 30-40 min que a pesquisa apontou como ponto de desistência. O slider é o meio-termo |
 | Cada cobertura com **ícone próprio e a franquia** no card, no lugar do check genérico | `ResidencialCoberturas` + `iconesCoberturas.tsx` | réplica: é assim que a loja apresenta a lista |
 | **Tipo de moradia** com as três opções reais (Habitual, Locação, Veraneio), a explicação de cada uma e o aviso de que aluguel por temporada não tem cobertura | `ResidencialCotacao` | réplica da loja: aqui era um `select` de duas opções, sem explicação |
 | Pergunta de **material combustível**, com a mensagem de análise manual | `ResidencialCotacao` | réplica: responder "Sim" troca o valor da cotação pelo aviso de que a residência precisa de análise mais criteriosa, com o caminho de contato |
+| **Identificação na grade de 16 colunas da loja** (CPF 3 · Nome 13 / Nascimento 3 · Celular 3 · Email 5 · Sexo 5 / CEP 7 · Número 3 · Complemento 6), CPF só leitura e Continuar dentro do card | `ResidencialIdentificacao` | réplica: é a única etapa do Residencial sem resumo lateral, então na loja o botão mora no próprio card |
 | Alerta contextual de tubulação para quem mora em **apartamento** | `ResidencialCoberturas` | "você que mora em apartamento [...] mas se quiser tirar, tá tudo bem" |
 | **Combos em evidência**: "personalizar" virou link discreto **depois** do Continuar | `ResidencialCoberturas` | "o botão de personalizar tá acima do de seguir [...] deixaria menos em evidência" |
+| **Resumo preso na lateral** no pagamento, com Residência segurada, Seguro e Dados pessoais abrindo no chevron e um lápis que volta para a etapa de origem | `ResumoResidencial` + `BarraEtapa` (modo `fixo`) | réplica: é o resumo que a loja usa nas etapas finais. Fica grudado no topo da tela enquanto a pessoa preenche o cartão, com rolagem própria no miolo; no celular vira a barra do rodapé com o painel de tela cheia, como nas demais etapas |
 | Assistências de uso amplo **marcadas por padrão** | `VidaAssistencias` | "aquilo que tá marcado, elas vão ter menos vontade de deselecionar" |
 | Assistências de perfil (pet/auto) só aparecem se o **perfil bater**, coletado na cotação | `VidaCotacao` + `VidaAssistencias` | "ele me sugeria assistência para cachorro [...] mas em nenhum momento disse que eu tinha cachorro" |
 | **Saída para profissão não listada** (sugestão de similar ou "Outros") | `VidaCotacao` | "a plataforma não fala nada, fica em silêncio [...] não tem seguro de vida para essa pessoa" |

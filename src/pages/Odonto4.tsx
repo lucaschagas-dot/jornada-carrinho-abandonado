@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BarraEtapa } from '../components/BarraEtapa';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
+import { MarsIcon, VenusIcon } from '../components/iconesSexo';
 import { DEMO_USER } from '../demoUser';
 import { rotuloPessoas, useJornada } from '../jornada';
 import styles from './Odonto4.module.css';
@@ -23,24 +24,6 @@ function PlusCircleIcon({ size = 14 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.4" />
       <path d="M8 5v6M5 8h6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function MarsIcon({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="6.5" cy="9.5" r="5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M10.5 5.5l4-4M9.5 1.5h5v5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function VenusIcon({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <circle cx="8" cy="6" r="5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M8 11v4M5.5 13.5h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   );
 }

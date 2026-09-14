@@ -1,0 +1,214 @@
+/*
+ * Resumo do Residencial — as seções que abrem no chevron, com o lápis que volta
+ * para a etapa de origem. A moldura (caixa fixa no desktop, barra no celular)
+ * é da BarraEtapa; aqui só mora o conteúdo dela.
+ */
+.topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  flex-wrap: wrap;
+}
+
+.titulo {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+.protocolo {
+  font-size: var(--font-size-3xs);
+  color: #929eb1;
+}
+
+/* ---------- seções ---------- */
+.secao {
+  margin-top: var(--space-1x);
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+}
+
+/* O gatilho ocupa a linha toda menos o lápis: o alvo de toque é o cabeçalho
+   inteiro, não só as palavras. */
+.gatilho {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-1_5x);
+  min-height: 40px;
+  padding: var(--space-1x) 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+  text-align: left;
+  cursor: pointer;
+}
+
+.seta {
+  flex-shrink: 0;
+  color: #586880;
+  transition: transform 0.15s ease;
+}
+
+.setaAberta {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seta {
+    transition: none;
+  }
+}
+
+.editar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #009ee0;
+}
+
+.editar:hover {
+  color: #006fa9;
+}
+
+/* Conteúdo aberto: a loja o coloca numa moldura clara, recuada sob o título. */
+.corpo {
+  margin: var(--space-1x) 0 var(--space-2x);
+  padding: var(--space-2x);
+  border: var(--border-width-xs) solid #eef1f5;
+  border-radius: var(--radius-xs);
+}
+
+.item {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+  /* Endereço e e-mail são longos e a coluna tem 340px. */
+  overflow-wrap: anywhere;
+}
+
+.itemRotulo {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+.subtitulo {
+  margin-top: var(--space-1_5x);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+.cobertura {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-1x);
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.coberturaCapital {
+  flex-shrink: 0;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+/* ---------- total ---------- */
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  width: 100%;
+}
+
+.totalRotulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+.totalValores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.totalAvista {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.totalParcelado {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.totalNumero {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+/* ---------- rodapé ---------- */
+.caracteristicas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1x);
+  min-height: 32px;
+  padding: var(--space-1x) 0;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+  cursor: pointer;
+}
+
+.caracteristicas:hover {
+  text-decoration: underline;
+}
+
+/* Na barra do celular o total divide 89px de altura com a ação: ali o bloco
+   fica numa coluna só, sem o "Total" competindo por espaço na horizontal. */
+@media (max-width: 1023px) {
+  .total {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .totalValores {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .totalRotulo {
+    font-size: var(--font-size-3xs);
+    font-weight: var(--font-weight-regular);
+    color: #586880;
+  }
+
+  /* Uma linha só cabe: no celular vale a parcela, que é o que decide a compra. */
+  .totalAvista {
+    display: none;
+  }
+}

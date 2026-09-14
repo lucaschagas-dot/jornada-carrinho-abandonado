@@ -191,6 +191,48 @@
     margin-top: var(--space-2x);
     text-align: center;
   }
+
+  /* ---------- variante `fixo`: a caixa não rola com a página ---------- */
+  /*
+   * Gruda no topo da tela e cresce até ocupá-la de cima a baixo.
+   *
+   * `align-self: start` é obrigatório: item de grid nasce esticado na linha
+   * inteira, e aí o sticky não teria para onde correr.
+   *
+   * É `max-height`, não `height`: a caixa nasce uns 230px abaixo do topo da
+   * página (cabeçalho + faixa da etapa), então uma altura fixa de 100vh jogaria
+   * justamente o total e o "Continuar" para fora da tela enquanto a pessoa não
+   * rolasse — o contrário do que a caixa existe para fazer. Assim ela fica do
+   * tamanho do conteúdo, e quando ele passa da tela é o miolo que rola.
+   */
+  .fixo {
+    position: sticky;
+    top: var(--space-3x);
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - var(--space-6x));
+    box-sizing: border-box;
+  }
+
+  /* Só o miolo rola; total, ação e rodapé ficam colados embaixo, sempre à
+     vista. `min-height: 0` porque item flex não encolhe abaixo do conteúdo por
+     padrão — sem isso o painel empurra o total para fora da caixa. */
+  .fixo .painel {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .fixo .painelConteudo {
+    /* Respiro para o conteúdo não encostar na barra de rolagem. */
+    padding-right: var(--space-1x);
+  }
+
+  .fixo .linha,
+  .fixo .rodape {
+    flex-shrink: 0;
+  }
 }
 
 /* O rodapé ("Ver características gerais") é `visible-md` na loja: some no celular. */

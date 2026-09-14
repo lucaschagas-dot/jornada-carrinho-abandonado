@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BarraEtapa } from '../components/BarraEtapa';
+import { MarsIcon, VenusIcon } from '../components/iconesSexo';
 import { DEMO_USER } from '../demoUser';
-import b from './residencialBarra.module.css';
+import i from './ResidencialIdentificacao.module.css';
 import s from './jornadaComum.module.css';
 
-/** Residencial — Identificação 3/5. Réplica da loja. */
+/**
+ * Residencial — Identificação 3/5. Réplica da loja.
+ *
+ * Esta é a única etapa do Residencial sem resumo lateral: na loja o "Continuar"
+ * mora dentro do próprio card, alinhado à esquerda, e não na caixa de resumo
+ * que as outras três etapas usam. Por isso aqui não entra a `BarraEtapa`.
+ */
 export default function ResidencialIdentificacao() {
   const [sexo, setSexo] = useState<'masculino' | 'feminino'>('masculino');
 
@@ -14,12 +20,19 @@ export default function ResidencialIdentificacao() {
       <h1 className={s.title}>Identificação</h1>
 
       <div className={s.card}>
-        <div className={s.linhaCampos}>
+        <div className={`${s.linhaCampos} ${i.linha1}`}>
           <div className={s.campo}>
             <label htmlFor="ri-cpf" className={s.label}>
               CPF
             </label>
-            <input id="ri-cpf" className={s.input} type="text" inputMode="numeric" defaultValue={DEMO_USER.cpf} />
+            <input
+              id="ri-cpf"
+              className={`${s.input} ${i.somenteLeitura}`}
+              type="text"
+              inputMode="numeric"
+              readOnly
+              defaultValue={DEMO_USER.cpf}
+            />
           </div>
           <div className={s.campo}>
             <label htmlFor="ri-nome" className={s.label}>
@@ -27,15 +40,15 @@ export default function ResidencialIdentificacao() {
             </label>
             <input id="ri-nome" className={s.input} type="text" defaultValue={DEMO_USER.nomeCompleto} autoComplete="name" />
           </div>
+        </div>
+
+        <div className={`${s.linhaCampos} ${i.linha2}`}>
           <div className={s.campo}>
             <label htmlFor="ri-nasc" className={s.label}>
               Data de nascimento
             </label>
             <input id="ri-nasc" className={s.input} type="text" inputMode="numeric" defaultValue={DEMO_USER.dataNascimento} />
           </div>
-        </div>
-
-        <div className={s.linhaCampos}>
           <div className={s.campo}>
             <label htmlFor="ri-celular" className={s.label}>
               Celular
@@ -54,24 +67,24 @@ export default function ResidencialIdentificacao() {
               <button
                 type="button"
                 aria-pressed={sexo === 'masculino'}
-                className={`${s.toggle} ${sexo === 'masculino' ? s.toggleAtivo : ''}`}
+                className={`${s.toggle} ${i.toggleSexo} ${sexo === 'masculino' ? s.toggleAtivo : ''}`}
                 onClick={() => setSexo('masculino')}
               >
-                Masculino
+                <MarsIcon /> Masculino
               </button>
               <button
                 type="button"
                 aria-pressed={sexo === 'feminino'}
-                className={`${s.toggle} ${sexo === 'feminino' ? s.toggleAtivo : ''}`}
+                className={`${s.toggle} ${i.toggleSexo} ${sexo === 'feminino' ? s.toggleAtivo : ''}`}
                 onClick={() => setSexo('feminino')}
               >
-                Feminino
+                <VenusIcon /> Feminino
               </button>
             </div>
           </div>
         </div>
 
-        <div className={s.linhaCampos}>
+        <div className={`${s.linhaCampos} ${i.linha3}`}>
           <div className={s.campo}>
             <label htmlFor="ri-cep" className={s.label}>
               CEP
@@ -92,16 +105,15 @@ export default function ResidencialIdentificacao() {
             <input id="ri-compl" className={s.input} type="text" />
           </div>
         </div>
-      </div>
 
-      <p className={s.legal}>*A alteração dos seus dados não garante a atualização do seu cadastro junto à sua singular.</p>
-
-      {/* Etapa sem valor a mostrar: a barra carrega só a ação. */}
-      <BarraEtapa>
-        <Link to="/residencial-pagamento" className={`${s.botaoPrimario} ${b.cta}`}>
+        <Link to="/residencial-pagamento" className={`${s.botaoPrimario} ${i.continuar}`}>
           Continuar
         </Link>
-      </BarraEtapa>
+      </div>
+
+      <p className={`${s.legal} ${i.legalCentrado}`}>
+        *A alteração dos seus dados não garante a atualização do seu cadastro junto à sua singular.
+      </p>
     </section>
   );
 }

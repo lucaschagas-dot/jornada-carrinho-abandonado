@@ -55,6 +55,22 @@
   background: var(--grey-0);
 }
 
+/*
+ * Quando a etapa tem resumo preso na lateral (BarraEtapa em modo `fixo`), a
+ * caixa vai até o pé da janela e o balão caía bem em cima do rodapé dela. Aí
+ * ele se desloca para a esquerda da coluna: 340px da coluna + 32px do respiro
+ * do `main` + 16px de folga, mais a sobra da centralização quando a janela
+ * passa dos 1440px do `main`.
+ *
+ * `--resumo-fixo` vale 1 só nessas etapas; sem ela o fator é 0 e o balão fica
+ * onde sempre esteve.
+ */
+@media (min-width: 1024px) {
+  .widget {
+    right: calc(var(--space-3x) + var(--resumo-fixo, 0) * (max(0px, (100% - 1440px) / 2) + 388px));
+  }
+}
+
 @media (max-width: 640px) {
   .widget {
     /* Sobe quando há barra de etapa: sem isto o balão cai exatamente em cima
