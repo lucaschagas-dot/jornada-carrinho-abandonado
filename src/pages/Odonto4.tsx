@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BarraEtapa } from '../components/BarraEtapa';
 import { ChevronDownIcon, ChevronRightIcon } from '../components/icons';
 import { DEMO_USER } from '../demoUser';
 import { rotuloPessoas, useJornada } from '../jornada';
@@ -50,8 +51,13 @@ export default function Odonto4() {
   // Chega-se aqui já logado e com os dados do cadastro carregados, então os
   // campos vêm preenchidos (mas continuam editáveis).
   const [sexo, setSexo] = useState<Sexo>('masculino');
-  const { pessoas } = useJornada();
+  const { pessoas, planoEscolhido } = useJornada();
   const dependentes = pessoas - 1;
+
+  // Fallback para quem abre /odonto-4 direto pelo menu "Telas", sem ter
+  // passado pela escolha de plano (mesmo cálculo da Odonto5).
+  const plano = planoEscolhido ?? { nome: 'Odonto Essencial', precoPorPessoa: 33.5, registro: 'Reg. 471.145/14-9' };
+  const total = plano.precoPorPessoa * pessoas;
 
   return (
     <section className={styles.wrapper}>
@@ -270,15 +276,17 @@ export default function Odonto4() {
         </button>
       </div>
 
-      <div className={styles.continueRow}>
-        <Link to="/odonto-5" className={styles.continueButton}>
-          Continuar
-        </Link>
-      </div>
-
+      {/* O aviso fica antes da barra: no celular a BarraEtapa é fixa no rodapé,
+          então nada pode vir depois dela no fluxo. */}
       <p className={styles.disclaimer}>
         *A alteração dos seus dados não garante a atualização do seu cadastro junto à sua singular.
       </p>
+
+      <BarraEtapa total={total}>
+        <Link to="/odonto-5" className={styles.continueButton}>
+          Continuar
+        </Link>
+      </BarraEtapa>
     </section>
   );
 }

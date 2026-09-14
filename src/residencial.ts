@@ -12,17 +12,19 @@ export type Cobertura = {
   obrigatoria: boolean;
   /** Capital mínimo segurável, em reais. */
   limiteMinimo: number;
+  /** Texto da franquia, quando a cobertura tem. Nem toda cobertura tem. */
+  franquia?: string;
 };
 
 /** As 12 coberturas do produto, na ordem da loja. */
 export const COBERTURAS: Cobertura[] = [
-  { codigo: 'coberturaIncendio', titulo: 'Incêndio, queda de raio, explosão, queda de aeronave', obrigatoria: true, limiteMinimo: 150000 },
-  { codigo: 'coberturaRoubo', titulo: 'Roubo e subtração de bens com vestígios', obrigatoria: false, limiteMinimo: 3000 },
+  { codigo: 'coberturaIncendio', titulo: 'Incêndio, queda de raio, explosão, queda de aeronave', obrigatoria: true, limiteMinimo: 150000, franquia: '15% dos prejuízos com mín de R$ 750,00 para queda de raio' },
+  { codigo: 'coberturaRoubo', titulo: 'Roubo e subtração de bens com vestígios', obrigatoria: false, limiteMinimo: 3000, franquia: '10% dos prejuízos com mín de R$ 500,00' },
   { codigo: 'coberturaAluguel', titulo: 'Aluguel garantido', obrigatoria: false, limiteMinimo: 2000 },
-  { codigo: 'coberturaRcf', titulo: 'Responsabilidade civil familiar', obrigatoria: false, limiteMinimo: 15000 },
+  { codigo: 'coberturaRcf', titulo: 'Responsabilidade civil familiar', obrigatoria: false, limiteMinimo: 15000, franquia: '10% dos prejuízos com mín de R$ 500,00' },
   { codigo: 'coberturaRompimentoTubulacao', titulo: 'Rompimento de tubulação', obrigatoria: false, limiteMinimo: 1500 },
   { codigo: 'coberturaImpactoVeiculos', titulo: 'Impacto de veículos terrestres', obrigatoria: false, limiteMinimo: 2000 },
-  { codigo: 'coberturaDanosEletricos', titulo: 'Danos elétricos', obrigatoria: true, limiteMinimo: 2000 },
+  { codigo: 'coberturaDanosEletricos', titulo: 'Danos elétricos', obrigatoria: true, limiteMinimo: 2000, franquia: '15% dos prejuízos com mín de R$ 750,00' },
   { codigo: 'coberturaQuebraVidros', titulo: 'Quebra de vidros', obrigatoria: false, limiteMinimo: 3000 },
   { codigo: 'coberturaEscritorioResidencia', titulo: 'Escritório na residência', obrigatoria: false, limiteMinimo: 1500 },
   { codigo: 'coberturaVendaval', titulo: 'Vendaval, Furacão, Ciclone, Tornado, Queda de Granizo e Neve', obrigatoria: false, limiteMinimo: 2000 },

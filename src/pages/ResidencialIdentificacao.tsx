@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BarraEtapa } from '../components/BarraEtapa';
 import { DEMO_USER } from '../demoUser';
+import b from './residencialBarra.module.css';
 import s from './jornadaComum.module.css';
 
 /** Residencial — Identificação 3/5. Réplica da loja. */
@@ -92,13 +94,14 @@ export default function ResidencialIdentificacao() {
         </div>
       </div>
 
-      <div className={s.acoes}>
-        <Link to="/residencial-pagamento" className={s.botaoPrimario}>
+      <p className={s.legal}>*A alteração dos seus dados não garante a atualização do seu cadastro junto à sua singular.</p>
+
+      {/* Etapa sem valor a mostrar: a barra carrega só a ação. */}
+      <BarraEtapa>
+        <Link to="/residencial-pagamento" className={`${s.botaoPrimario} ${b.cta}`}>
           Continuar
         </Link>
-      </div>
-
-      <p className={s.legal}>*A alteração dos seus dados não garante a atualização do seu cadastro junto à sua singular.</p>
+      </BarraEtapa>
     </section>
   );
 }

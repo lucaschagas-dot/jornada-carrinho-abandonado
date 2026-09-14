@@ -1,7 +1,8 @@
 .wrap {
   position: fixed;
   left: 16px;
-  bottom: 16px;
+  /* Sobe junto com o WhatsApp quando há barra de etapa (ver BarraEtapa). */
+  bottom: calc(16px + var(--altura-barra-etapa, 0px));
   z-index: 100;
   font-family: var(--font-family-base);
 }

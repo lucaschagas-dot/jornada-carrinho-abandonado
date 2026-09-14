@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { BarraEtapa } from '../components/BarraEtapa';
 import styles from './Odonto2_1.module.css';
 
 export default function Odonto2_1() {
@@ -52,9 +53,12 @@ export default function Odonto2_1() {
           <span className={styles.legalLink}>Política de Privacidade</span>
         </p>
 
-        <Link to="/odonto-2-3" className={styles.continueButton}>
-          Continuar
-        </Link>
+        {/* Etapa sem valor calculado: a barra leva só a ação. */}
+        <BarraEtapa>
+          <Link to="/odonto-2-3" className={styles.continueButton}>
+            Continuar
+          </Link>
+        </BarraEtapa>
       </div>
     </section>
   );

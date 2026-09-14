@@ -10,6 +10,9 @@
   grid-template-columns: minmax(0, 1fr) 410px;
   gap: var(--space-6x);
   margin-top: var(--space-2x);
+  /* A BarraEtapa é a própria caixa no desktop: sem isto ela esticaria até a
+     altura do formulário de pagamento. */
+  align-items: start;
 }
 
 .main {
@@ -32,22 +35,20 @@
   margin-top: var(--space-1x);
 }
 
-/* ---------- formas de pagamento ---------- */
-/* ---------- resumo (coluna direita) ---------- */
-.sidebar {
-  border-left: var(--border-width-xs) solid #dce0e8;
-  padding-left: var(--space-6x);
-}
+/* ---------- resumo (conteúdo do painel da BarraEtapa) ---------- */
+/* Fundo, borda superior, sombra e padding agora são da BarraEtapa: aqui fica
+   só o conteúdo. */
 
-.summaryBox {
-  max-height: 230px;
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding: var(--space-2x) var(--space-3x) var(--space-3x);
-  background: var(--surface-01);
-  border-top: 4px solid var(--cyan-500);
-  border-radius: 0 0 var(--radius-xs) var(--radius-xs);
-  box-shadow: var(--shadow-level-1);
+/*
+ * O corte em 230px é uma réplica deliberada de um defeito da loja — o resumo
+ * nasce cortado (achado de pesquisa, ver README). Só no desktop: no celular
+ * este conteúdo vive dentro do painel da BarraEtapa, que já rola sozinho.
+ */
+@media (min-width: 1024px) {
+  .summaryBox {
+    max-height: 230px;
+    overflow-y: auto;
+  }
 }
 
 .summaryHead {
@@ -214,17 +215,35 @@
   color: #192c50;
 }
 
-@media (max-width: 900px) {
+/* ---------- ação da BarraEtapa ---------- */
+/* Mesma aparência do "Pagar" do bloco de pagamento, mas sem largura mínima:
+   quem manda na largura é a barra. */
+.pagarBarra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-2x);
+  border: none;
+  border-radius: var(--radius-xs);
+  background: var(--cyan-700);
+  font-family: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.pagarBarra:disabled {
+  background: #dce0e8;
+  color: #4a5568;
+  cursor: not-allowed;
+}
+
+/* Mesmo breakpoint da loja (desktop a partir de 1024px). */
+@media (max-width: 1023px) {
   .columns {
     grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    border-left: none;
-    padding-left: 0;
-  }
-
-  .summaryBox {
-    max-height: none;
   }
 }

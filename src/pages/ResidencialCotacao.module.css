@@ -1,0 +1,64 @@
+/* Texto de apoio abaixo de uma pergunta (o que é habitual / locação / veraneio,
+   o que conta como material combustível). */
+.explicacao {
+  max-width: 78ch;
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.explicacao strong {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+.atencao {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1x);
+  max-width: 78ch;
+  margin-top: var(--space-1_5x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.atencaoIcone {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: #d4351c;
+}
+
+/* Mensagem que substitui o valor quando a residência precisa de análise
+   manual. A barra lateral ciano é a marca visual que a loja usa nesse card. */
+.analise {
+  width: 100%;
+  max-width: 520px;
+  margin-top: var(--space-3x);
+  padding: var(--space-3x);
+  box-sizing: border-box;
+  border-left: 4px solid var(--cyan-500);
+  border-radius: var(--radius-xs);
+  background: var(--surface-01);
+  box-shadow: var(--shadow-level-1);
+}
+
+.analiseTitulo {
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-lg);
+  font-weight: var(--font-weight-bold);
+  color: #006fa9;
+}
+
+.analiseTexto {
+  margin-top: var(--space-2x);
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.analiseLink {
+  color: #006fa9;
+  text-decoration: underline;
+}

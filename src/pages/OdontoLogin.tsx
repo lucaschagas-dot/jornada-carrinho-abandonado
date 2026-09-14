@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BarraEtapa } from '../components/BarraEtapa';
 import { DEMO_USER } from '../demoUser';
 import styles from './OdontoLogin.module.css';
 
@@ -80,16 +81,25 @@ export default function OdontoLogin() {
               />
             </div>
 
-            <Link to="/odonto-4" className={styles.primaryButtonLink}>
-              Continuar
-            </Link>
-
             <button type="button" className={styles.linkButton} onClick={() => setCodigoEnviado(false)}>
               Reenviar código ou trocar de e-mail
             </button>
           </>
         )}
       </div>
+
+      {/* O "Continuar" é o avanço da etapa, não uma ação de dentro do card:
+          vai para a BarraEtapa e no celular cai na barra fixa do rodapé, no
+          mesmo lugar das outras etapas. Sem total nem resumo nesta tela. */}
+      {codigoEnviado && (
+        <div className={styles.barraCta}>
+          <BarraEtapa>
+            <Link to="/odonto-4" className={styles.primaryButtonLink}>
+              Continuar
+            </Link>
+          </BarraEtapa>
+        </div>
+      )}
     </section>
   );
 }

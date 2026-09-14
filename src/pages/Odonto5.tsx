@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BarraEtapa } from '../components/BarraEtapa';
 import { CartaoIcon, FormasPagamento, PixIcon, type OpcaoPagamento } from '../components/FormasPagamento';
 import { ChevronDownIcon } from '../components/icons';
 import { DEMO_USER } from '../demoUser';
@@ -77,6 +78,128 @@ export default function Odonto5() {
 
   const alternar = (secao: SecaoResumo) => setAbertas((prev) => ({ ...prev, [secao]: !prev[secao] }));
 
+  const detalhes = (
+    <div className={styles.summaryBox}>
+      <div className={styles.summaryHead}>
+        <p className={styles.planQty}>
+          {pessoas} x {plano.nome.replace('Odonto ', '')}
+        </p>
+        <p className={styles.planPrice}>
+          {formatarBRL(total)}
+          <span className={styles.planPriceUnit}>/mês</span>
+        </p>
+        {pessoas > 1 && (
+          <p className={styles.planPorPessoa}>
+            {formatarBRL(plano.precoPorPessoa)} por pessoa · {rotuloPessoas(pessoas)}
+          </p>
+        )}
+        <p className={styles.planReg}>{plano.registro}</p>
+      </div>
+
+      <div className={styles.summaryTitleRow}>
+        <h2 className={styles.summaryTitle}>Resumo</h2>
+        <span className={styles.protocolo}>Protocolo n° {DEMO_USER.protocolo}</span>
+      </div>
+
+      <div className={styles.accordion}>
+        <div className={styles.accordionHeader}>
+          <button
+            type="button"
+            aria-expanded={abertas.plano}
+            className={styles.accordionToggle}
+            onClick={() => alternar('plano')}
+          >
+            <ChevronDownIcon
+              size={18}
+              className={abertas.plano ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}
+            />
+            <span className={styles.accordionTitle}>Plano</span>
+          </button>
+          <button type="button" className={styles.editButton} aria-label="Editar plano">
+            <EditIcon />
+          </button>
+        </div>
+
+        {abertas.plano && (
+          <div className={styles.accordionBody}>
+            <p className={styles.bodyStrong}>{plano.nome}</p>
+            <button type="button" className={styles.coverageLink}>
+              Ver coberturas
+            </button>
+            <p className={styles.bodyLabel}>Carência</p>
+            {CARENCIAS.map((item) => (
+              <p className={styles.bodyLine} key={item}>
+                {item}
+              </p>
+            ))}
+            <p className={styles.bodyLine}>
+              <strong>Vigência:</strong> Contrato válido por 1 ano
+            </p>
+            <p className={styles.bodyLine}>Sem coparticipação</p>
+          </div>
+        )}
+      </div>
+
+      <div className={styles.accordion}>
+        <div className={styles.accordionHeader}>
+          <button
+            type="button"
+            aria-expanded={abertas.titular}
+            className={styles.accordionToggle}
+            onClick={() => alternar('titular')}
+          >
+            <ChevronDownIcon
+              size={18}
+              className={abertas.titular ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}
+            />
+            <span className={styles.accordionTitle}>Titular</span>
+          </button>
+          <button type="button" className={styles.editButton} aria-label="Editar dados do titular">
+            <EditIcon />
+          </button>
+        </div>
+
+        {abertas.titular && (
+          <div className={styles.accordionBody}>
+            {TITULAR_CAMPOS.map(([rotulo, valor]) => (
+              <p className={styles.bodyLine} key={rotulo}>
+                <strong>{rotulo}</strong> {valor}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className={styles.accordion}>
+        <div className={styles.accordionHeader}>
+          <button
+            type="button"
+            aria-expanded={abertas.guias}
+            className={styles.accordionToggle}
+            onClick={() => alternar('guias')}
+          >
+            <ChevronDownIcon
+              size={18}
+              className={abertas.guias ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}
+            />
+            <span className={styles.accordionTitle}>Guias e manuais</span>
+          </button>
+        </div>
+
+        {abertas.guias && (
+          <div className={styles.accordionBody}>
+            {GUIAS.map((label) => (
+              <button type="button" className={styles.guiaItem} key={label}>
+                <DocumentIcon />
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <section className={styles.wrapper}>
       <div className={styles.columns}>
@@ -87,127 +210,12 @@ export default function Odonto5() {
           <FormasPagamento opcoes={OPCOES} total={total} periodicidade="/mês" />
         </div>
 
-        <aside className={styles.sidebar}>
-          <div className={styles.summaryBox}>
-            <div className={styles.summaryHead}>
-              <p className={styles.planQty}>
-                {pessoas} x {plano.nome.replace('Odonto ', '')}
-              </p>
-              <p className={styles.planPrice}>
-                {formatarBRL(total)}
-                <span className={styles.planPriceUnit}>/mês</span>
-              </p>
-              {pessoas > 1 && (
-                <p className={styles.planPorPessoa}>
-                  {formatarBRL(plano.precoPorPessoa)} por pessoa · {rotuloPessoas(pessoas)}
-                </p>
-              )}
-              <p className={styles.planReg}>{plano.registro}</p>
-            </div>
-
-            <div className={styles.summaryTitleRow}>
-              <h2 className={styles.summaryTitle}>Resumo</h2>
-              <span className={styles.protocolo}>Protocolo n° {DEMO_USER.protocolo}</span>
-            </div>
-
-            <div className={styles.accordion}>
-              <div className={styles.accordionHeader}>
-                <button
-                  type="button"
-                  aria-expanded={abertas.plano}
-                  className={styles.accordionToggle}
-                  onClick={() => alternar('plano')}
-                >
-                  <ChevronDownIcon
-                    size={18}
-                    className={abertas.plano ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}
-                  />
-                  <span className={styles.accordionTitle}>Plano</span>
-                </button>
-                <button type="button" className={styles.editButton} aria-label="Editar plano">
-                  <EditIcon />
-                </button>
-              </div>
-
-              {abertas.plano && (
-                <div className={styles.accordionBody}>
-                  <p className={styles.bodyStrong}>{plano.nome}</p>
-                  <button type="button" className={styles.coverageLink}>
-                    Ver coberturas
-                  </button>
-                  <p className={styles.bodyLabel}>Carência</p>
-                  {CARENCIAS.map((item) => (
-                    <p className={styles.bodyLine} key={item}>
-                      {item}
-                    </p>
-                  ))}
-                  <p className={styles.bodyLine}>
-                    <strong>Vigência:</strong> Contrato válido por 1 ano
-                  </p>
-                  <p className={styles.bodyLine}>Sem coparticipação</p>
-                </div>
-              )}
-            </div>
-
-            <div className={styles.accordion}>
-              <div className={styles.accordionHeader}>
-                <button
-                  type="button"
-                  aria-expanded={abertas.titular}
-                  className={styles.accordionToggle}
-                  onClick={() => alternar('titular')}
-                >
-                  <ChevronDownIcon
-                    size={18}
-                    className={abertas.titular ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}
-                  />
-                  <span className={styles.accordionTitle}>Titular</span>
-                </button>
-                <button type="button" className={styles.editButton} aria-label="Editar dados do titular">
-                  <EditIcon />
-                </button>
-              </div>
-
-              {abertas.titular && (
-                <div className={styles.accordionBody}>
-                  {TITULAR_CAMPOS.map(([rotulo, valor]) => (
-                    <p className={styles.bodyLine} key={rotulo}>
-                      <strong>{rotulo}</strong> {valor}
-                    </p>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className={styles.accordion}>
-              <div className={styles.accordionHeader}>
-                <button
-                  type="button"
-                  aria-expanded={abertas.guias}
-                  className={styles.accordionToggle}
-                  onClick={() => alternar('guias')}
-                >
-                  <ChevronDownIcon
-                    size={18}
-                    className={abertas.guias ? `${styles.chevron} ${styles.chevronOpen}` : styles.chevron}
-                  />
-                  <span className={styles.accordionTitle}>Guias e manuais</span>
-                </button>
-              </div>
-
-              {abertas.guias && (
-                <div className={styles.accordionBody}>
-                  {GUIAS.map((label) => (
-                    <button type="button" className={styles.guiaItem} key={label}>
-                      <DocumentIcon />
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </aside>
+        <BarraEtapa total={total} detalhes={detalhes}>
+          {/* O "Pagar" de verdade vive no bloco de formas de pagamento; este é o atalho fixo do rodapé no celular. */}
+          <button type="button" className={styles.pagarBarra} disabled>
+            Pagar
+          </button>
+        </BarraEtapa>
       </div>
     </section>
   );

@@ -1,0 +1,23 @@
+/*
+ * Ajuste do CTA das quatro telas do Residencial quando ele passa a viver dentro
+ * da BarraEtapa. Nada de novo visualmente: continua sendo o `.botaoPrimario` do
+ * jornadaComum, só sem a largura mínima que estouraria a barra no celular.
+ */
+
+/* Classe dobrada de propósito: `.acao > *` (BarraEtapa) e `.botaoPrimario`
+   (jornadaComum) têm a mesma especificidade, então sem isso quem vence
+   dependeria da ordem dos módulos no bundle. */
+.cta.cta {
+  width: 100%;
+  /* Na barra a ação recebe 37,5% da tela; os 220px do .botaoPrimario não cabem. */
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .cta.cta {
+    /* Só a tela de Pagamento tem coluna lateral. Nas outras três a caixa ocupa
+       a largura inteira no desktop, e um botão de mil pixels ficaria absurdo —
+       340px é a mesma largura da coluna de resumo. */
+    max-width: 340px;
+  }
+}

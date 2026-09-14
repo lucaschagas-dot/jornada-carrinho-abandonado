@@ -1,0 +1,201 @@
+/*
+ * Medidas retiradas do CSS da loja (`.simulacao-resumo-box` e vizinhas):
+ * barra de 89px, painel colado em bottom 89px com padding 24/16,
+ * aba em top -24px, conteúdo reservando 120px, virada em 1024px.
+ *
+ * Mobile é o estado base (a loja é mobile-first); o desktop entra no
+ * @media (min-width: 1024px) lá embaixo.
+ */
+
+/* ---------- celular: barra fixa no rodapé ---------- */
+.espacador {
+  height: 120px;
+}
+
+.barra {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 30;
+  width: 100%;
+  height: 89px;
+  background: var(--surface-01);
+  box-shadow: 0 -2px 16px rgba(29, 58, 83, 0.12);
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  height: 100%;
+  padding: 0 var(--space-2x);
+}
+
+.valor {
+  display: flex;
+  flex: 1 1 62.5%;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.valorRotulo {
+  font-size: var(--font-size-3xs);
+  color: #586880;
+}
+
+.valorNumero {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-sm);
+  color: var(--text-heading);
+}
+
+/* A loja dá 37,5% da largura para a ação (col-xs-6 de 16). */
+.acao {
+  display: flex;
+  flex: 0 0 37.5%;
+  justify-content: flex-end;
+}
+
+.acao > * {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ---------- aba "Resumo", grudada acima da barra ---------- */
+.aba {
+  position: absolute;
+  top: -24px;
+  left: var(--space-2x);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1x);
+  height: 24px;
+  padding: 0 var(--space-1_5x);
+  border: none;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+  background: var(--surface-01);
+  box-shadow: 0 -2px 8px rgba(29, 58, 83, 0.1);
+  font-family: inherit;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: #006fa9;
+  cursor: pointer;
+}
+
+.seta {
+  transition: transform 0.2s ease;
+}
+
+.setaAberta {
+  transform: rotate(180deg);
+}
+
+/* ---------- painel que sobe do rodapé ---------- */
+.painel {
+  position: absolute;
+  bottom: 89px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 89px);
+  overflow-y: auto;
+  background: var(--surface-01);
+  box-shadow: 0 -2px 16px rgba(29, 58, 83, 0.12);
+  transform: translateY(100%);
+  visibility: hidden;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+}
+
+.painelAberto {
+  transform: none;
+  visibility: visible;
+  opacity: 1;
+}
+
+.painelConteudo {
+  padding: var(--space-3x) var(--space-2x);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .painel {
+    transition: none;
+  }
+}
+
+/* ---------- desktop: volta a ser a coluna lateral ---------- */
+@media (min-width: 1024px) {
+  .espacador {
+    display: none;
+  }
+
+  .barra {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: var(--space-3x);
+    border-top: 4px solid var(--cyan-500);
+    border-radius: 0 0 var(--radius-xs) var(--radius-xs);
+    box-shadow: var(--shadow-level-1);
+  }
+
+  .aba {
+    display: none;
+  }
+
+  .painel {
+    position: static;
+    height: auto;
+    overflow: visible;
+    box-shadow: none;
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+    transition: none;
+  }
+
+  .painelConteudo {
+    padding: 0;
+  }
+
+  .linha {
+    display: block;
+    height: auto;
+    padding: 0;
+  }
+
+  .valor {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2x);
+    margin-top: var(--space-3x);
+    padding-top: var(--space-2x);
+    border-top: var(--border-width-xs) solid #dce0e8;
+  }
+
+  .valorRotulo {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-heading);
+  }
+
+  .acao {
+    display: block;
+    margin-top: var(--space-2x);
+  }
+
+  .rodape {
+    margin-top: var(--space-2x);
+    text-align: center;
+  }
+}
+
+/* O rodapé ("Ver características gerais") é `visible-md` na loja: some no celular. */
+@media (max-width: 1023px) {
+  .rodape {
+    display: none;
+  }
+}

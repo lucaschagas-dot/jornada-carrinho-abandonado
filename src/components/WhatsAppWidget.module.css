@@ -57,7 +57,9 @@
 
 @media (max-width: 640px) {
   .widget {
-    bottom: 16px;
+    /* Sobe quando há barra de etapa: sem isto o balão cai exatamente em cima
+       do botão "Continuar" da barra fixa. */
+    bottom: calc(16px + var(--altura-barra-etapa, 0px));
     right: 16px;
     border-radius: var(--radius-circular);
   }

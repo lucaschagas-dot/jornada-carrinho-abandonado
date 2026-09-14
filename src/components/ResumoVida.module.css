@@ -1,15 +1,3 @@
-.caixa {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: var(--space-3x);
-  box-sizing: border-box;
-  background: var(--surface-01);
-  border-top: 4px solid var(--cyan-500);
-  border-radius: 0 0 var(--radius-xs) var(--radius-xs);
-  box-shadow: var(--shadow-level-1);
-}
-
 .topo {
   display: flex;
   align-items: baseline;
@@ -92,30 +80,6 @@
 }
 
 /* ---------- total e ações ---------- */
-.total {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-2x);
-  margin-top: var(--space-3x);
-  padding-top: var(--space-2x);
-  border-top: var(--border-width-xs) solid #dce0e8;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-heading);
-}
-
-.total strong {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-}
-
-.totalUnidade {
-  font-size: var(--font-size-3xs);
-  font-weight: var(--font-weight-regular);
-  color: #586880;
-}
-
 .continuar {
   display: flex;
   align-items: center;

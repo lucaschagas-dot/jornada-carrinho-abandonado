@@ -234,15 +234,14 @@
   white-space: nowrap;
 }
 
-.continueRow {
-  margin-top: var(--space-2x);
-}
-
+/* Dentro da BarraEtapa o filho tem que ocupar 100% da largura recebida, então
+   nada de min-width até o desktop, onde a barra volta a ser caixa no fluxo. */
 .continueButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 220px;
+  width: 100%;
+  min-width: 0;
   height: 48px;
   padding: 0 var(--space-6x);
   background: var(--cyan-500);
@@ -251,6 +250,13 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .continueButton {
+    width: auto;
+    min-width: 220px;
+  }
 }
 
 .disclaimer {
@@ -290,11 +296,6 @@
 
   .addDependentButton {
     width: 100%;
-  }
-
-  .continueButton {
-    width: 100%;
-    min-width: 0;
   }
 }
 

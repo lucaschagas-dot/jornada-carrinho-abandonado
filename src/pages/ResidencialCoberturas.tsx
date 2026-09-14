@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { BarraEtapa } from '../components/BarraEtapa';
+import { IconeCobertura } from '../components/iconesCoberturas';
 import { formatarBRL } from '../jornada';
 import {
   ALERTA_APARTAMENTO,
@@ -8,18 +10,11 @@ import {
   RECOMENDADAS_POR_PADRAO,
   formatarCapital,
 } from '../residencial';
+import b from './residencialBarra.module.css';
 import s from './jornadaComum.module.css';
 import p from './ResidencialCoberturas.module.css';
 
-function CheckIcon() {
-  return (
-    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
-      <path d="M1 5l4 4 8-8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-const TITULO_POR_CODIGO = Object.fromEntries(COBERTURAS.map((c) => [c.codigo, c.titulo]));
+const POR_CODIGO = Object.fromEntries(COBERTURAS.map((c) => [c.codigo, c]));
 
 export default function ResidencialCoberturas() {
   const { state } = useLocation() as { state: { tipo?: 'casa' | 'apartamento' } | null };
@@ -50,6 +45,7 @@ export default function ResidencialCoberturas() {
   );
 
   const podeContinuar = personalizando ? marcadas.size > 0 : comboEscolhido !== null;
+  const comboSelecionado = COMBOS.find((c) => c.id === comboEscolhido);
 
   return (
     <section className={s.wrapper}>
@@ -75,16 +71,27 @@ export default function ResidencialCoberturas() {
                     Valor anual <strong>{formatarBRL(combo.anual)}</strong>
                   </span>
 
+                  <span className={p.cabecalhoLista}>
+                    <span>Coberturas inclusas</span>
+                    <span>Valor da cobertura</span>
+                  </span>
+
                   <span className={p.listaCoberturas}>
-                    {Object.entries(combo.coberturas).map(([codigo, capital]) => (
-                      <span className={p.itemCobertura} key={codigo}>
-                        <CheckIcon />
-                        <span>
-                          <span className={p.itemTitulo}>{TITULO_POR_CODIGO[codigo]}</span>
-                          <span className={p.itemCapital}>{formatarCapital(capital)}</span>
+                    {Object.entries(combo.coberturas).map(([codigo, valorCobertura]) => {
+                      const cobertura = POR_CODIGO[codigo];
+                      return (
+                        <span className={p.itemCobertura} key={codigo}>
+                          <IconeCobertura codigo={codigo} className={p.itemIcone} />
+                          <span className={p.itemTextos}>
+                            <span className={p.itemTitulo}>{cobertura.titulo}</span>
+                            {cobertura.franquia && (
+                              <span className={p.itemFranquia}>Franquia: {cobertura.franquia}</span>
+                            )}
+                          </span>
+                          <span className={p.itemCapital}>{formatarCapital(valorCobertura)}</span>
                         </span>
-                      </span>
-                    ))}
+                      );
+                    })}
                   </span>
                 </button>
               );
@@ -103,28 +110,33 @@ export default function ResidencialCoberturas() {
             </button>
           </div>
 
-          <div className={s.acoes}>
-            {podeContinuar ? (
-              <Link to="/residencial-identificacao" className={s.botaoPrimario}>
-                Continuar
-              </Link>
-            ) : (
-              <button type="button" className={s.botaoPrimario} disabled>
-                Continuar
-              </button>
-            )}
-          </div>
-
           {/* PROPOSTA DA PESQUISA: na loja, "Quero personalizar minhas coberturas
               e valores" é um link em destaque DENTRO de cada card, acima do
               "Continuar" — e puxa a pessoa para uma edição que consome 30-40 min
-              e é onde muita gente desiste. Aqui ele vira um link discreto,
-              DEPOIS do Continuar. */}
+              e é onde muita gente desiste. Aqui ele vira um link discreto, sem
+              a força do CTA (que agora vive na barra da etapa). */}
           <div className={p.personalizarRodape}>
             <button type="button" className={s.linkDiscreto} onClick={() => setPersonalizando(true)}>
               Prefiro montar minhas coberturas uma a uma
             </button>
           </div>
+
+          {/* O card fala "em até N vezes de", não "por mês": a barra repete o
+              mesmo rótulo para não parecer outro valor. */}
+          <BarraEtapa
+            total={comboSelecionado?.mensal}
+            rotuloTotal={comboSelecionado ? `Em até ${comboSelecionado.parcelas}x` : undefined}
+          >
+            {podeContinuar ? (
+              <Link to="/residencial-identificacao" className={`${s.botaoPrimario} ${b.cta}`}>
+                Continuar
+              </Link>
+            ) : (
+              <button type="button" className={`${s.botaoPrimario} ${b.cta}`} disabled>
+                Continuar
+              </button>
+            )}
+          </BarraEtapa>
         </>
       ) : (
         <>
@@ -169,14 +181,25 @@ export default function ResidencialCoberturas() {
             Estimativa mensal: <strong>{formatarBRL(totalPersonalizado)}</strong> · {marcadas.size} coberturas
           </p>
 
+          {/* Só o CTA vai para a barra; a volta para os combos é secundária e
+              continua no fluxo da página. */}
           <div className={s.acoes}>
-            <Link to="/residencial-identificacao" className={s.botaoPrimario}>
-              Continuar
-            </Link>
             <button type="button" className={s.botaoSecundario} onClick={() => setPersonalizando(false)}>
               Voltar para os combos
             </button>
           </div>
+
+          <BarraEtapa total={totalPersonalizado} rotuloTotal="Estimativa/mês">
+            {podeContinuar ? (
+              <Link to="/residencial-identificacao" className={`${s.botaoPrimario} ${b.cta}`}>
+                Continuar
+              </Link>
+            ) : (
+              <button type="button" className={`${s.botaoPrimario} ${b.cta}`} disabled>
+                Continuar
+              </button>
+            )}
+          </BarraEtapa>
         </>
       )}
     </section>

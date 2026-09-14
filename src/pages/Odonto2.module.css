@@ -89,29 +89,37 @@
   color: var(--cyan-500);
 }
 
+/*
+ * O botão vive dentro da BarraEtapa: quem manda na largura é ela (37,5% da
+ * barra fixa no celular), então aqui não pode haver min-width — só no desktop,
+ * onde a barra vira caixa e o botão volta ao tamanho de sempre.
+ */
 .continueButton {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 220px;
+  width: 100%;
+  min-width: 0;
   height: 48px;
-  padding: 0 var(--space-6x);
-  margin-top: var(--space-1x);
+  padding: 0 var(--space-2x);
   background: #dce0e8;
   border-radius: var(--radius-xs);
   color: var(--grey-0);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   text-align: center;
+  white-space: nowrap;
 }
 
 @media (max-width: 640px) {
   .cepRow {
     max-width: 100%;
   }
+}
 
+@media (min-width: 1024px) {
   .continueButton {
-    width: 100%;
-    min-width: 0;
+    min-width: 220px;
+    padding: 0 var(--space-6x);
   }
 }

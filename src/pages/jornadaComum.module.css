@@ -302,15 +302,6 @@
   min-width: 0;
 }
 
-.resumo {
-  align-self: start;
-  padding: var(--space-3x);
-  background: var(--surface-01);
-  border-top: 4px solid var(--cyan-500);
-  border-radius: 0 0 var(--radius-xs) var(--radius-xs);
-  box-shadow: var(--shadow-level-1);
-}
-
 .resumoTitulo {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
@@ -326,19 +317,10 @@
   color: #586880;
 }
 
-.resumoTotal {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-2x);
-  margin-top: var(--space-2x);
-  padding-top: var(--space-2x);
-  border-top: var(--border-width-xs) solid #dce0e8;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  color: #192c50;
-}
-
-@media (max-width: 900px) {
+/* 1024px é o breakpoint de desktop da loja (`min-width: 1024px` no CSS dela).
+   Antes usávamos 900px, então entre 900 e 1024 mostrávamos duas colunas onde a
+   loja ainda empilha. */
+@media (max-width: 1023px) {
   .colunas {
     grid-template-columns: 1fr;
   }

@@ -98,6 +98,21 @@
   color: #192c50;
 }
 
+/* Caixa do CTA da etapa (BarraEtapa). No celular ela é fixa no rodapé e só o
+   espaçador fica aqui; no desktop volta ao fluxo, então limitamos à mesma
+   largura do card para não virar um bloco de ponta a ponta. */
+.barraCta {
+  width: 100%;
+  max-width: 480px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .barraCta {
+    margin-top: var(--space-3x);
+  }
+}
+
 .linkButton {
   margin-top: var(--space-2x);
   background: none;

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { BarraEtapa } from '../components/BarraEtapa';
 import { SeletorPessoas } from '../components/SeletorPessoas';
 import styles from './Odonto2_3.module.css';
 
@@ -110,9 +111,13 @@ export default function Odonto2_3() {
           <span className={styles.legalLink}>Política de Privacidade</span>
         </p>
 
-        <Link to="/odonto-3" className={styles.continueButton}>
-          Continuar
-        </Link>
+        <div className={styles.ctaBarra}>
+          <BarraEtapa>
+            <Link to="/odonto-3" className={styles.continueButton}>
+              Continuar
+            </Link>
+          </BarraEtapa>
+        </div>
       </div>
     </section>
   );

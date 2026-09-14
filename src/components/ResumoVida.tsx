@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { BarraEtapa } from './BarraEtapa';
 import { ChevronDownIcon } from './icons';
-import { formatarBRL } from '../jornada';
 import { formatarCapital, useVida } from '../vidaEstado';
 import { ASSISTENCIAS_VIDA, BENEFICIOS_VIDA, COBERTURAS_VIDA } from '../vida';
 import styles from './ResumoVida.module.css';
@@ -16,11 +16,12 @@ type ResumoVidaProps = {
 };
 
 /**
- * Resumo lateral da jornada de Vida, presente em todas as etapas na loja.
+ * Resumo da jornada de Vida, presente em todas as etapas na loja.
  *
- * Traz o protocolo, dois acordeões (Perfil e Seguro), o total mensal e o
- * "Continuar". Enquanto não há dados, mostra o mesmo texto de espera da loja
- * ("Todos os dados relativos à sua compra serão exibidos aqui").
+ * O conteúdo é o mesmo em qualquer tamanho de tela — protocolo, acordeões de
+ * Perfil e Seguro, total e "Continuar" —, mas quem decide a forma é a
+ * `BarraEtapa`: coluna lateral no desktop, barra fixa no rodapé no celular,
+ * como a loja faz.
  */
 export function ResumoVida({ continuarPara, rotuloContinuar = 'Continuar', onContinuar, children }: ResumoVidaProps) {
   const { sim, totalMensal, protocolo } = useVida();
@@ -40,8 +41,8 @@ export function ResumoVida({ continuarPara, rotuloContinuar = 'Continuar', onCon
   );
   const assistenciasAtivas = ASSISTENCIAS_VIDA.filter((a) => sim.assistencias[a.codigo]);
 
-  return (
-    <aside className={styles.caixa}>
+  const detalhes = (
+    <>
       <div className={styles.topo}>
         <h2 className={styles.titulo}>Resumo</h2>
         <span className={styles.protocolo}>Protocolo n° {protocolo}</span>
@@ -119,16 +120,19 @@ export function ResumoVida({ continuarPara, rotuloContinuar = 'Continuar', onCon
       )}
 
       {children}
+    </>
+  );
 
-      {temSeguro && (
-        <p className={styles.total}>
-          <span>
-            Total<span className={styles.totalUnidade}>/mês</span>
-          </span>
-          <strong>{formatarBRL(totalMensal)}</strong>
-        </p>
-      )}
-
+  return (
+    <BarraEtapa
+      total={temSeguro ? totalMensal : undefined}
+      detalhes={detalhes}
+      rodape={
+        <button type="button" className={styles.caracteristicas}>
+          Ver características gerais
+        </button>
+      }
+    >
       {continuarPara ? (
         <Link to={continuarPara} className={styles.continuar} onClick={onContinuar}>
           {rotuloContinuar}
@@ -138,10 +142,6 @@ export function ResumoVida({ continuarPara, rotuloContinuar = 'Continuar', onCon
           {rotuloContinuar}
         </button>
       )}
-
-      <button type="button" className={styles.caracteristicas}>
-        Ver características gerais
-      </button>
-    </aside>
+    </BarraEtapa>
   );
 }

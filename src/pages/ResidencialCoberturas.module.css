@@ -63,66 +63,76 @@
   text-align: left;
 }
 
-.itemCobertura {
+/* Cabeçalho da tabela de coberturas, como no material da loja. */
+.cabecalhoLista {
   display: flex;
-  align-items: flex-start;
-  gap: var(--space-1x);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2x);
+  width: 100%;
+  margin-top: var(--space-3x);
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+  text-align: left;
+}
+
+/* Ícone | título + franquia | valor. */
+.itemCobertura {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-1_5x);
+  padding-bottom: var(--space-2x);
+  border-bottom: var(--border-width-xs) solid #eef1f5;
+}
+
+.itemCobertura:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.itemIcone {
+  flex-shrink: 0;
   color: var(--cyan-500);
 }
 
-.itemCobertura svg {
-  flex-shrink: 0;
-  margin-top: 5px;
+.itemTextos {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .itemTitulo {
-  display: block;
   font-size: var(--font-size-2xs);
   line-height: var(--line-height-lg);
   color: #192c50;
 }
 
+/* A bolinha antes do texto é a marca que a loja usa na linha de franquia. */
+.itemFranquia {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1x);
+  margin-top: 2px;
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: var(--cyan-500);
+}
+
+.itemFranquia::before {
+  content: '';
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 .itemCapital {
-  display: block;
-  font-size: var(--font-size-2xs);
-  font-weight: var(--font-weight-bold);
-  color: var(--cyan-500);
-}
-
-.downloads {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3x);
-  margin-top: var(--space-3x);
-}
-
-/* O link de personalizar fica DEPOIS do Continuar e sem destaque (proposta). */
-.personalizarRodape {
-  margin-top: var(--space-3x);
-  padding-top: var(--space-2x);
-  border-top: var(--border-width-xs) solid #eceef2;
-}
-
-.listaPersonalizar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2x);
-  margin-top: var(--space-3x);
-}
-
-.estimativa {
-  margin-top: var(--space-3x);
   font-size: var(--font-size-xs);
-  color: #586880;
-}
-
-.estimativa strong {
-  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
   color: var(--cyan-500);
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
 }

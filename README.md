@@ -131,7 +131,13 @@ monta esses formulários. As cinco primeiras etapas são réplica do que foi vis
 | **Teto de capital visível na cotação** | `VidaCotacao` | Cada profissão tem um `limiteVida` que limita o slider da etapa seguinte. A loja só revela isso no slider; aqui a pessoa já sabe ao escolher a profissão |
 | **Indicador de etapas, Voltar e resumo lateral** | `TopoEtapa` + `ResumoVida` | Valem para as 10 etapas, como no Odonto |
 
-O preço é calibrado a partir dos dois únicos totais reais observados na loja
+No Residencial, a **proporção** entre as coberturas de cada combo é real (sai
+dos capitais que a loja pratica); o que escala com o slider são os valores
+absolutos e o preço. No capital de referência — R$ 300.000 — os três combos
+mostram exatamente os números da loja: R$ 30,44 / R$ 273,40, R$ 49,09 /
+R$ 490,72 e R$ 92,00 / R$ 920,00.
+
+No Vida, o preço é calibrado a partir dos dois únicos totais reais observados na loja
 (R$ 52,51 só com as coberturas base e R$ 69,39 com Câncer, Morte Acidental e
 Farma Assist, para capital de R$ 288.000). As mensalidades por item são
 ilustrativas e estão marcadas como tal em `PRECOS_OBSERVADOS`.
@@ -141,6 +147,10 @@ ilustrativas e estão marcadas como tal em `PRECOS_OBSERVADOS`.
 | Ajuste | Onde | Origem na pesquisa |
 | --- | --- | --- |
 | Coberturas essenciais **marcadas por padrão**, com selo "Recomendado" | `ResidencialCoberturas` (personalização) | "Por que que a gente já não deixa tudo marcado? [...] se a pessoa quiser, ela desmarca" |
+| **Slider do capital segurado** na tela de combos, com os valores e o preço de cada combo acompanhando | `ResidencialCoberturas` | proposta: hoje os três combos têm valor fixo, e quem quer mexer cai na personalização item a item — a edição de 30-40 min que a pesquisa apontou como ponto de desistência. O slider é o meio-termo |
+| Cada cobertura com **ícone próprio e a franquia** no card, no lugar do check genérico | `ResidencialCoberturas` + `iconesCoberturas.tsx` | réplica: é assim que a loja apresenta a lista |
+| **Tipo de moradia** com as três opções reais (Habitual, Locação, Veraneio), a explicação de cada uma e o aviso de que aluguel por temporada não tem cobertura | `ResidencialCotacao` | réplica da loja: aqui era um `select` de duas opções, sem explicação |
+| Pergunta de **material combustível**, com a mensagem de análise manual | `ResidencialCotacao` | réplica: responder "Sim" troca o valor da cotação pelo aviso de que a residência precisa de análise mais criteriosa, com o caminho de contato |
 | Alerta contextual de tubulação para quem mora em **apartamento** | `ResidencialCoberturas` | "você que mora em apartamento [...] mas se quiser tirar, tá tudo bem" |
 | **Combos em evidência**: "personalizar" virou link discreto **depois** do Continuar | `ResidencialCoberturas` | "o botão de personalizar tá acima do de seguir [...] deixaria menos em evidência" |
 | Assistências de uso amplo **marcadas por padrão** | `VidaAssistencias` | "aquilo que tá marcado, elas vão ter menos vontade de deselecionar" |
@@ -198,8 +208,47 @@ Detalhes:
 
 ## Celular
 
-O protótipo foi revisado em **320px, 360px e 375px** — as 20 rotas, sem scroll
-horizontal e sem nenhum elemento passando da borda. O que mudou nessa revisão:
+O celular segue o desenho da própria loja, levantado lendo o CSS dela em
+14/09/2026 (`.simulacao-resumo-box` e vizinhas). A diferença que importa: **a
+loja não empilha o resumo no fim da página — ela o transforma numa barra fixa
+no rodapé.**
+
+| | Celular (< 1024px) | Desktop (>= 1024px) |
+| --- | --- | --- |
+| Colunas | tudo 100%, empilhado | conteúdo 62,5% / resumo 37,5% |
+| Resumo | **barra fixa no rodapé, 89px** | coluna lateral |
+| Dentro da barra | total à esquerda, ação à direita (37,5%) | tudo empilhado |
+| Detalhes | painel que sobe, `calc(100vh - 89px)` | sempre visíveis |
+| Aba "Resumo" | colada acima da barra, `top: -24px` | escondida |
+| Conteúdo | reserva 120px no fim | sem reserva |
+| "Ver características gerais" | some | aparece |
+
+Isso vive em `src/components/BarraEtapa.tsx`, usado pelas três jornadas — o
+`ResumoVida` passa por ele, e as telas de Odonto e Residencial entregam a ele o
+CTA que antes ficava solto no fim do conteúdo.
+
+Duas coisas que o mapeamento corrigiu:
+
+- **O breakpoint da loja é 1024px, não 900.** Entre 900 e 1024 o protótipo
+  mostrava duas colunas enquanto a loja ainda empilha.
+- **A barra existe em toda etapa**, mesmo nas que ainda não têm valor: na
+  primeira tela de cotação ela carrega só o "Continuar". É o que mantém a ação
+  principal ao alcance do polegar, sem rolar.
+
+Ficaram de fora, de propósito: a **Odonto 3** (cada um dos 3 cards tem o próprio
+"Escolher plano", e uma barra única não comporta três ações) e o **primeiro
+estado do login** (o botão ali é a ação de dentro do card, não o avanço da
+etapa).
+
+A barra é `position: fixed` no rodapé, onde já moravam o balão do WhatsApp e o
+menu "Telas" — o balão caía exatamente em cima do "Continuar". A `BarraEtapa`
+publica a própria altura numa variável CSS (`--altura-barra-etapa`) enquanto
+está montada, e os dois flutuantes sobem com `calc()`. Em página sem barra a
+variável não existe e eles ficam onde sempre estiveram.
+
+### Revisão anterior de responsivo
+
+Medido em **320px, 360px e 375px**, sem scroll horizontal em nenhuma rota:
 
 | Problema | Onde | Correção |
 | --- | --- | --- |

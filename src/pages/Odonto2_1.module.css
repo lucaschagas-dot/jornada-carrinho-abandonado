@@ -136,14 +136,16 @@
   color: var(--cyan-500);
 }
 
+/* Dentro da BarraEtapa quem manda na largura é a barra: sem min-width e sem
+   margem própria, senão o botão desalinha na barra fixa do celular. */
 .continueButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 220px;
+  width: 100%;
+  min-width: 0;
   height: 48px;
   padding: 0 var(--space-6x);
-  margin-top: var(--space-1x);
   background: #dce0e8;
   border-radius: var(--radius-xs);
   color: var(--grey-0);
@@ -165,9 +167,11 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
 
+/* No desktop a barra volta a ser caixa estática: devolve a largura original. */
+@media (min-width: 1024px) {
   .continueButton {
-    width: 100%;
-    min-width: 0;
+    min-width: 220px;
   }
 }
