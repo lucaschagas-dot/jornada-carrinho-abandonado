@@ -71,6 +71,17 @@
   }
 }
 
+/*
+ * A barra de etapa é fixa no rodapé até 1023px, mas a subida do balão só valia
+ * abaixo de 640px — entre 641 e 1023 ele caía em cima do "Continuar" da barra.
+ * A base continua 24px, então em página sem barra nada se move.
+ */
+@media (max-width: 1023px) {
+  .widget {
+    bottom: calc(24px + var(--altura-barra-etapa, 0px));
+  }
+}
+
 @media (max-width: 640px) {
   .widget {
     /* Sobe quando há barra de etapa: sem isto o balão cai exatamente em cima

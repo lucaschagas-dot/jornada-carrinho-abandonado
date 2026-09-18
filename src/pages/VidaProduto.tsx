@@ -1,7 +1,8 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 import { ResumoVida } from '../components/ResumoVida';
 import { ChevronDownIcon } from '../components/icons';
-import { CAPITAL_MINIMO, CAPITAL_PASSO, COBERTURAS_VIDA, FUNERAL_CAPITAL_FIXO } from '../vida';
+import { formatarBRL } from '../jornada';
+import { CAPITAL_MINIMO, CAPITAL_PASSO, COBERTURAS_VIDA, FUNERAL_CAPITAL_FIXO, TAXA_POR_MIL } from '../vida';
 import { formatarCapital, useVida } from '../vidaEstado';
 import s from './jornadaComum.module.css';
 import p from './VidaProduto.module.css';
@@ -9,15 +10,25 @@ import p from './VidaProduto.module.css';
 /**
  * Vida — Coberturas 2/10.
  *
- * O slider de capital manda na tela: o valor grande no topo e os valores das
- * cinco coberturas se movem junto com ele, para a pessoa ver o que está
- * comprando enquanto arrasta. As três coberturas obrigatórias aparecem só com
- * o check, sem controle; as duas opcionais têm caixa de seleção e o preço
- * reage no resumo lateral.
+ * A escolha do capital é feita em três cards, como nos combos do Residencial e
+ * nos planos do Odonto: cada um mostra o valor coberto, a mensalidade e o que
+ * já vem incluído, e o card inteiro é o alvo do clique.
+ *
+ * PROPOSTA: a loja resolve isso num slider contínuo de R$ 1.000 em R$ 1.000,
+ * que obriga a pessoa a descobrir sozinha quanto contratar. Os três valores
+ * saem do que a própria loja já calcula (36x a renda, dentro do teto da
+ * profissão) — o do meio é a sugestão dela, marcada como recomendada. Quem
+ * quiser outro valor continua podendo: o slider vive atrás de um link
+ * discreto, no mesmo lugar em que o Residencial guarda a personalização.
+ *
+ * A lista de baixo não mudou: as três coberturas obrigatórias aparecem só com
+ * o check, as duas opcionais têm caixa de seleção, e os valores acompanham o
+ * capital escolhido.
  */
 export default function VidaProduto() {
   const { sim, atualizar, limiteCapital, capitalSugerido } = useVida();
   const [detalhesAbertos, setDetalhesAbertos] = useState<string[]>([]);
+  const [outroValor, setOutroValor] = useState(false);
 
   // Quem cai direto aqui pelo menu Telas não passou pela cotação e chegaria com
   // o capital zerado — o slider precisa de um ponto de partida. E se a pessoa
@@ -31,6 +42,12 @@ export default function VidaProduto() {
   const capital = Math.min(sim.capitalSegurado || capitalSugerido, limiteCapital);
   const faixa = Math.max(limiteCapital - CAPITAL_MINIMO, CAPITAL_PASSO);
   const preenchido = ((capital - CAPITAL_MINIMO) / faixa) * 100;
+
+  const faixas = faixasDeCapital(capitalSugerido, limiteCapital);
+  // A recomendada é a mais perto do que a loja sugere para a renda informada.
+  const faixaRecomendada = faixas.reduce((melhor, atual) =>
+    Math.abs(atual - capitalSugerido) < Math.abs(melhor - capitalSugerido) ? atual : melhor,
+  );
 
   const alternarDetalhes = (codigo: string) =>
     setDetalhesAbertos((abertos) =>
@@ -53,32 +70,81 @@ export default function VidaProduto() {
           <p className={s.pergunta}>Defina o valor do seu seguro</p>
           <p className={s.subtitle}>Este é o valor máximo que você estará coberto.</p>
 
-          <div className={s.card}>
-            <div className={p.painelCapital}>
-              <label className={p.capitalRotulo} htmlFor="capital-segurado">
-                Capital segurado
-              </label>
-              <span className={p.capitalValor}>{formatarCapital(capital)}</span>
+          <div className={p.grid}>
+            {faixas.map((valorFaixa, indice) => {
+              const escolhida = capital === valorFaixa;
+              const recomendada = valorFaixa === faixaRecomendada;
+              return (
+                <button
+                  type="button"
+                  key={valorFaixa}
+                  aria-pressed={escolhida}
+                  className={`${p.card} ${escolhida ? p.cardEscolhido : ''}`}
+                  onClick={() => atualizar({ capitalSegurado: valorFaixa })}
+                >
+                  <span className={p.faixaTopo}>
+                    <span className={p.faixaNome}>{NOMES_FAIXA[indice] ?? `Opção ${indice + 1}`}</span>
+                    {recomendada && <span className={p.selo}>RECOMENDADO</span>}
+                  </span>
 
-              <input
-                id="capital-segurado"
-                type="range"
-                className={p.slider}
-                min={CAPITAL_MINIMO}
-                max={limiteCapital}
-                step={CAPITAL_PASSO}
-                value={capital}
-                aria-valuetext={formatarCapital(capital)}
-                onChange={(evento) => atualizar({ capitalSegurado: Number(evento.target.value) })}
-                style={{ '--preenchido': `${preenchido}%` } as CSSProperties}
-              />
+                  <span className={p.faixaRotulo}>Capital segurado</span>
+                  <span className={p.faixaCapital}>{formatarCapital(valorFaixa)}</span>
+                  <span className={p.faixaMensal}>
+                    {formatarBRL(mensalidadeDoCapital(valorFaixa))}
+                    <span className={p.faixaPorMes}>/mês</span>
+                  </span>
 
-              <div className={p.limites}>
-                <span>{emMil(CAPITAL_MINIMO)}</span>
-                <span>{emMil(limiteCapital)}</span>
+                  <span className={p.faixaCabecalho}>Já incluso</span>
+                  <span className={p.faixaLista}>
+                    {COBERTURAS_VIDA.filter((c) => !c.opcional).map((cobertura) => (
+                      <span className={p.faixaItem} key={cobertura.codigo}>
+                        <IconeCheck size={14} />
+                        <span className={p.faixaItemTitulo}>{cobertura.titulo}</span>
+                      </span>
+                    ))}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mesma saída que o Residencial dá para quem quer montar tudo à mão:
+              um link discreto, sem a força do CTA, que devolve o controle
+              contínuo da loja a quem realmente quiser outro valor. */}
+          <div className={p.outroValorRodape}>
+            <button type="button" className={s.linkDiscreto} onClick={() => setOutroValor((atual) => !atual)}>
+              {outroValor ? 'Voltar para os valores sugeridos' : 'Prefiro definir outro valor'}
+            </button>
+          </div>
+
+          {outroValor && (
+            <div className={s.card}>
+              <div className={p.painelCapital}>
+                <label className={p.capitalRotulo} htmlFor="capital-segurado">
+                  Capital segurado
+                </label>
+                <span className={p.capitalValor}>{formatarCapital(capital)}</span>
+
+                <input
+                  id="capital-segurado"
+                  type="range"
+                  className={p.slider}
+                  min={CAPITAL_MINIMO}
+                  max={limiteCapital}
+                  step={CAPITAL_PASSO}
+                  value={capital}
+                  aria-valuetext={formatarCapital(capital)}
+                  onChange={(evento) => atualizar({ capitalSegurado: Number(evento.target.value) })}
+                  style={{ '--preenchido': `${preenchido}%` } as CSSProperties}
+                />
+
+                <div className={p.limites}>
+                  <span>{emMil(CAPITAL_MINIMO)}</span>
+                  <span>{emMil(limiteCapital)}</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <p className={s.pergunta}>O que está coberto</p>
 
@@ -141,6 +207,31 @@ export default function VidaProduto() {
       </div>
     </section>
   );
+}
+
+const NOMES_FAIXA = ['Essencial', 'Equilibrado', 'Ampliado'];
+
+/** Mensalidade só das coberturas base — opcionais e assistências entram depois. */
+function mensalidadeDoCapital(capital: number): number {
+  return (capital / 1000) * TAXA_POR_MIL;
+}
+
+/**
+ * Os três valores oferecidos nos cards, sempre múltiplos do passo da loja e
+ * dentro do piso do produto e do teto da profissão.
+ *
+ * Partem da sugestão que a própria loja calcula (36x a renda). Quando renda
+ * baixa ou teto apertado achatam os três num valor só, abre-se a faixa inteira
+ * — assim a tela nunca cai para um card sozinho sem necessidade.
+ */
+function faixasDeCapital(sugerido: number, teto: number): number[] {
+  const limitar = (valor: number) =>
+    Math.min(Math.max(Math.round(valor / CAPITAL_PASSO) * CAPITAL_PASSO, CAPITAL_MINIMO), teto);
+
+  const naSugestao = [...new Set([sugerido * 0.6, sugerido, sugerido * 1.5].map(limitar))];
+  if (naSugestao.length === 3) return naSugestao.sort((a, b) => a - b);
+
+  return [...new Set([CAPITAL_MINIMO, (CAPITAL_MINIMO + teto) / 2, teto].map(limitar))].sort((a, b) => a - b);
 }
 
 /** O valor de cada cobertura deriva do capital — ver `valor` em COBERTURAS_VIDA. */

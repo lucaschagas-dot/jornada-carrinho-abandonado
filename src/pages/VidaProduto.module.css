@@ -1,3 +1,132 @@
+/* ---------- cards de escolha do capital ----------
+   Mesmas medidas dos combos do Residencial: grade de três, card inteiro
+   clicável, borda ciano quando escolhido. */
+.grid {
+  display: grid;
+  /* Diferente do Residencial, esta grade divide a largura com o resumo lateral:
+     a 1024px sobram ~570px para ela. Fixar três colunas dava cards de 170px e o
+     capital ("R$ 173.000" pede 209px) vazava para fora. Com o piso de 260px a
+     grade cai sozinha para duas colunas e depois para uma. */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-3x);
+  margin-top: var(--space-3x);
+  align-items: stretch;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-3x);
+  box-sizing: border-box;
+  border: var(--border-width-xs) solid #dce0e8;
+  border-radius: var(--radius-xs);
+  background: var(--surface-01);
+  box-shadow: var(--shadow-level-1);
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+
+.cardEscolhido {
+  border-color: var(--cyan-500);
+  box-shadow: var(--shadow-level-2);
+}
+
+.faixaTopo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-1x);
+  min-height: 24px;
+}
+
+.faixaNome {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #192c50;
+}
+
+.selo {
+  padding: 2px var(--space-1x);
+  border-radius: var(--radius-xs);
+  background: #eef8fd;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  color: #006fa9;
+}
+
+.faixaRotulo {
+  margin-top: var(--space-2x);
+  font-size: var(--font-size-2xs);
+  color: #586880;
+}
+
+.faixaCapital {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-default);
+  font-weight: var(--font-weight-bold);
+  color: var(--cyan-500);
+}
+
+.faixaMensal {
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+}
+
+.faixaPorMes {
+  margin-left: 2px;
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-regular);
+  color: #586880;
+}
+
+.faixaCabecalho {
+  width: 100%;
+  margin-top: var(--space-3x);
+  padding-top: var(--space-3x);
+  border-top: var(--border-width-xs) solid #eceef2;
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: #192c50;
+  text-align: left;
+}
+
+.faixaLista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1_5x);
+  width: 100%;
+  margin-top: var(--space-2x);
+  text-align: left;
+}
+
+.faixaItem {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-1_5x);
+  color: var(--cyan-500);
+}
+
+.faixaItemTitulo {
+  font-size: var(--font-size-2xs);
+  line-height: var(--line-height-lg);
+  color: #192c50;
+}
+
+.outroValorRodape {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-3x);
+}
+
 /* ---------- painel do capital segurado ---------- */
 .painelCapital {
   display: flex;

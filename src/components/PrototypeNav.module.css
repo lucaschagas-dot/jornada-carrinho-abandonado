@@ -1,10 +1,18 @@
 .wrap {
   position: fixed;
   left: 16px;
-  /* Sobe junto com o WhatsApp quando há barra de etapa (ver BarraEtapa). */
-  bottom: calc(16px + var(--altura-barra-etapa, 0px));
+  bottom: 16px;
   z-index: 100;
   font-family: var(--font-family-base);
+}
+
+/* Sobe junto com o WhatsApp quando a barra de etapa é fixa — o que só acontece
+   abaixo de 1024px. A variável é publicada em qualquer largura, então sem esta
+   media query o menu subia 89px também no desktop, onde a barra é coluna. */
+@media (max-width: 1023px) {
+  .wrap {
+    bottom: calc(16px + var(--altura-barra-etapa, 0px));
+  }
 }
 
 .toggle {

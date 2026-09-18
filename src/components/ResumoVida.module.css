@@ -25,31 +25,38 @@
   color: #006fa9;
 }
 
-/* ---------- acordeões ---------- */
+/* ---------- seções ----------
+   Mesmo desenho do ResumoResidencial: cabeçalho com gatilho + lápis, e o corpo
+   aberto dentro de uma moldura clara. As classes são copiadas, não extraídas
+   para um módulo comum: os dois resumos replicam telas diferentes da loja e
+   podem divergir de novo. */
 .secao {
-  margin-top: var(--space-2x);
-  padding-top: var(--space-2x);
-  border-top: var(--border-width-xs) solid #eef1f5;
+  margin-top: var(--space-1x);
 }
 
 .cabecalho {
   display: flex;
   align-items: center;
   gap: var(--space-1x);
-  width: 100%;
-  padding: 0;
+}
+
+/* O gatilho ocupa a linha toda menos o lápis: o alvo de toque é o cabeçalho
+   inteiro, não só as palavras — e este resumo aparece nas nove etapas. */
+.gatilho {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-1_5x);
+  min-height: 40px;
+  padding: var(--space-1x) 0;
   border: none;
   background: none;
   font-family: inherit;
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   color: var(--text-heading);
   text-align: left;
   cursor: pointer;
-  /* Acordeão de largura total: 21px de altura era alvo pequeno demais no
-     celular, e este resumo aparece nas 10 etapas. */
-  min-height: 32px;
-  padding: var(--space-1x) 0;
 }
 
 .seta {
@@ -62,19 +69,75 @@
   transform: rotate(180deg);
 }
 
-.corpo {
-  margin-top: var(--space-1_5x);
+@media (prefers-reduced-motion: reduce) {
+  .seta {
+    transition: none;
+  }
 }
 
+.editar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #009ee0;
+}
+
+.editar:hover {
+  color: #006fa9;
+}
+
+.corpo {
+  margin: var(--space-1x) 0 var(--space-2x);
+  padding: var(--space-2x);
+  border: var(--border-width-xs) solid #eef1f5;
+  border-radius: var(--radius-xs);
+}
+
+/* Par rótulo/valor. */
+.item {
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+  /* Profissão e relação com cigarro são textos longos numa coluna de 340px. */
+  overflow-wrap: anywhere;
+}
+
+.itemRotulo {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-heading);
+}
+
+/* Item solto de lista (cobertura, benefício, assistência): sem rótulo. */
 .linha {
   font-size: var(--font-size-3xs);
   line-height: var(--line-height-lg);
   color: #586880;
+  overflow-wrap: anywhere;
 }
 
 .subtitulo {
   margin-top: var(--space-1_5x);
   font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-heading);
+}
+
+/* Linha com valor à direita — usada pelos beneficiários (nome · grau | %). */
+.cobertura {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-1x);
+  margin-top: var(--space-1x);
+  font-size: var(--font-size-3xs);
+  line-height: var(--line-height-lg);
+  color: #586880;
+}
+
+.coberturaCapital {
+  flex-shrink: 0;
   font-weight: var(--font-weight-semibold);
   color: var(--text-heading);
 }
@@ -112,6 +175,10 @@
 }
 
 .caracteristicas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1x);
   margin-top: var(--space-2x);
   min-height: 32px;
   padding: var(--space-1x) 0;
